@@ -78,10 +78,14 @@ body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-in
 .menu-btn:focus-visible{outline:2px solid var(--blue); outline-offset:2px}
 .menu-btn.hint::after{content:""; position:absolute; inset:0; border-radius:8px; animation:ring 1.6s ease-out 4}
 @keyframes ring{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--blue) 45%,transparent)}100%{box-shadow:0 0 0 10px transparent}}
-.menu-tip{position:absolute; top:calc(100% + 16px); right:-4px; z-index:25; background:var(--ink); color:var(--bg); font-size:14px; font-weight:500; line-height:1.3; padding:10px 14px; border-radius:12px; white-space:nowrap; box-shadow:0 10px 30px rgba(0,0,0,.2); cursor:pointer; animation:tipIn .45s cubic-bezier(.2,.8,.2,1) both, tipBob 2s ease-in-out .6s 3}
-.menu-tip::before{content:""; position:absolute; top:-5px; right:15px; width:10px; height:10px; background:inherit; transform:rotate(45deg); border-radius:2px}
-.menu-tip[hidden]{display:none}
-.menu-tip.out{animation:tipOut .25s ease both}
+.menu-tip,.dl-tip{position:absolute; top:calc(100% + 16px); right:-4px; z-index:25; background:var(--ink); color:var(--bg); font-size:14px; font-weight:500; line-height:1.3; padding:10px 14px; border-radius:12px; white-space:nowrap; box-shadow:0 10px 30px rgba(0,0,0,.2); cursor:pointer; animation:tipIn .45s cubic-bezier(.2,.8,.2,1) both, tipBob 2s ease-in-out .6s 3}
+.menu-tip::before,.dl-tip::before{content:""; position:absolute; top:-5px; right:15px; width:10px; height:10px; background:inherit; transform:rotate(45deg); border-radius:2px}
+.menu-tip[hidden],.dl-tip[hidden]{display:none}
+.menu-tip.out,.dl-tip.out{animation:tipOut .25s ease both}
+/* the PDF tip hangs from the right edge like the menu tip; its arrow is moved under the CV button */
+.dl-tip{white-space:normal; width:max-content; max-width:calc(100vw - 40px)}
+.dl-tip::before{right:var(--ar,28px)}
+.pill-btn.hint{animation:ring 1.6s ease-out 3}
 @keyframes tipIn{from{opacity:0; transform:translateY(-6px)} to{opacity:1; transform:none}}
 @keyframes tipBob{50%{transform:translateY(3px)}}
 @keyframes tipOut{to{opacity:0; transform:translateY(-4px)}}
@@ -572,9 +576,10 @@ footer .wrap{padding-block:18px 26px; display:flex; flex-wrap:wrap; justify-cont
     <nav class="links" id="links" aria-label="Sections"></nav>
     <div class="nav-r">
       <button type="button" class="lang-sw" id="lang-sw" aria-label="Change language">RU</button>
-      <button type="button" class="pill-btn dl" id="dl-nav" data-k="dl_short">CV</button>
+      <button type="button" class="pill-btn dl" id="dl-nav" data-k="dl_short" aria-describedby="dl-tip">CV</button>
       <button type="button" class="menu-btn" id="menu-btn" aria-label="Menu" aria-expanded="false" aria-controls="mnav"><span></span><span></span></button>
       <div class="menu-tip" id="menu-tip" role="tooltip" hidden><span data-k="menu_tip"></span></div>
+      <div class="dl-tip" id="dl-tip" role="tooltip" hidden><span data-k="dl_tip"></span></div>
     </div>
   </div>
 </header>
@@ -860,7 +865,7 @@ const T = {
  dl_s:{en:"Download CV (PDF, 1 page)",ru:"Скачать резюме (PDF, 1 стр.)"}, dl_f:{en:"Download CV (PDF, 2 pages)",ru:"Скачать резюме (PDF, 2 стр.)"}, dl_short:{en:"CV",ru:"Резюме"},
  tb_text:{en:"Open to new roles as METRO exits the Kazakhstan market",ru:"Открыт к предложениям в связи с уходом METRO с рынка Казахстана"},
  tb_cta:{en:"Get in touch →",ru:"Связаться →"},
- menu_tip:{en:"Jump to any section here",ru:"Здесь навигация по разделам"},
+ menu_tip:{en:"Jump to any section here",ru:"Здесь навигация по разделам"}, dl_tip:{en:"Download the PDF version here",ru:"Нажмите, чтобы скачать PDF-версию"},
  n_glance:{en:"Profile",ru:"Профиль"},
  sh_q:{en:"Choose language, format and focus",ru:"Выберите язык, формат и направление"},
  sh_short_d:{en:"The essentials for a recruiter: profile, results, recommendations, experience. The CV in PDF is one page.",ru:"Главное для рекрутера: профиль, результаты, рекомендации, опыт. Резюме в PDF на 1 страницу."},
@@ -1510,11 +1515,12 @@ function render(){
   $("#cta-wa").href = `https://wa.me/77757435931?text=${encodeURIComponent(tr(WA))}`;
   $("#contacts").innerHTML = CONTACTS.map((c,i)=>`<div class="crow"><span class="l">${tr(c.l)}</span>${c.href?`<a class="v" href="${c.href}" ${c.href.startsWith("http")?'target="_blank" rel="noopener"':""}>${c.v}</a>`:`<span class="v">${c.v}</span>`}<button type="button" class="copy" id="copy-${i}" data-copy="${c.copy}">${ru()?"Копировать":"Copy"}</button></div>`).join("");
   watchVideos(); setupReveal(); carUpdate(); navUpdate();
+  if(!$("#dl-tip").hidden) placeDlTip();
 }
 
 /* ===== language sheet ===== */
 function setLang(l){ L=l; try{localStorage.setItem("ba-lang",L)}catch(e){} render(); }
-function closeSheet(){ $("#sheet").hidden = true; document.body.style.overflow=""; menuTip(); }
+function closeSheet(){ $("#sheet").hidden = true; document.body.style.overflow=""; introTips(); }
 function openSheet(){ const s=$("#sheet"); s.hidden=false; document.body.style.overflow="hidden"; $('#aud-opts [aria-pressed="true"]').focus({preventScroll:true}); }
 function setView(m){ if(m!=="short" && m!=="full") return; M=m; try{localStorage.setItem("ba-view",M)}catch(e){} document.documentElement.dataset.view=M; render(); }
 function setAud(a){ if(!AUD_IDS.includes(a)) return; A=a; try{localStorage.setItem("ba-aud",A)}catch(e){} render(); }
@@ -1526,8 +1532,29 @@ function toggleMenu(open){
   const next = open ?? b.getAttribute("aria-expanded")!=="true";
   b.setAttribute("aria-expanded", String(next)); m.hidden = !next;
   if(next) placeMenu();
-  hideTip();
+  endDlTip(false); hideTip();
 }
+/* once the choices are made, point at the PDF button on every visit; then menuTip() takes over */
+let dlTipOn = false;
+function introTips(){
+  dlTipOn = true; clearTimeout(introTips.t);
+  introTips.t = setTimeout(()=>{
+    if($("#menu-btn").getAttribute("aria-expanded")==="true") return endDlTip(false);
+    placeDlTip(); $("#dl-tip").hidden = false; $("#dl-nav").classList.add("hint");
+    introTips.t = setTimeout(endDlTip, 5000);
+  }, 700);
+}
+function placeDlTip(){
+  const b=$("#dl-nav").getBoundingClientRect(), r=$(".nav-r").getBoundingClientRect();
+  $("#dl-tip").style.setProperty("--ar", Math.round(r.right + 4 - (b.left + b.width/2) - 5) + "px");
+}
+function endDlTip(next=true){
+  if(!dlTipOn) return; dlTipOn = false; clearTimeout(introTips.t); $("#dl-nav").classList.remove("hint");
+  const tip=$("#dl-tip");
+  if(!tip.hidden){ tip.classList.add("out"); setTimeout(()=>{ tip.hidden=true; tip.classList.remove("out"); }, 250); }
+  if(next) menuTip();
+}
+addEventListener("resize", ()=>{ if(!$("#dl-tip").hidden) placeDlTip(); });
 /* mobile only: point at the burger once per session, after the language is chosen */
 function menuTip(){
   if(getComputedStyle($("#menu-btn")).display==="none") return;
@@ -1596,7 +1623,7 @@ document.addEventListener("click", e=>{
   if(e.target.closest("#menu-btn")){ toggleMenu(); return; }
   if(e.target.closest("#menu-tip")){ toggleMenu(true); return; }
   if(e.target.closest("#mnav a")){ toggleMenu(false); return; }
-  if(e.target.closest(".dl")){ downloadCV(); return; }
+  if(e.target.closest(".dl,#dl-tip")){ endDlTip(); downloadCV(); return; }
   const more = e.target.closest(".qcard .more");
   if(more){ const c=more.closest(".qcard"); const open=c.classList.toggle("open"); more.setAttribute("aria-expanded",String(open)); more.textContent = open ? (ru()?"Свернуть":"Show less") : (ru()?"Читать полностью":"Read in full"); return; }
   const cp = e.target.closest(".copy");
@@ -1675,7 +1702,7 @@ function setupReveal(){
 
 render();
 requestAnimationFrame(()=>$("#hero-photo").classList.add("in"));
-if(!urlLang) openSheet(); else menuTip();
+if(!urlLang) openSheet(); else introTips();
 </script>
 </body>
 </html>
