@@ -1546,6 +1546,8 @@ function hideTip(){
 /* the top banner scrolls away, so the dropdown follows the nav's real bottom edge */
 function placeMenu(){ $("#mnav").style.top = Math.max(0, $(".nav").getBoundingClientRect().bottom) + "px"; }
 addEventListener("scroll", ()=>{ if(!$("#mnav").hidden) placeMenu(); }, {passive:true});
+/* framed on Tilda, an iOS status-bar tap lands on the parent page; its embed.js forwards it here */
+addEventListener("message", e=>{ if(e.source===parent && parent!==window && e.data==="ba-scroll-top") scrollTo({top:0, behavior:reduce?"auto":"smooth"}); });
 
 /* ===== download ===== */
 let dlApi = null;
