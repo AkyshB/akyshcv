@@ -318,13 +318,15 @@ section .tile{background:var(--bg2)}
 .pcard h4{font-size:14px; font-weight:800; letter-spacing:0; text-transform:uppercase; color:var(--mn); margin:2px 0 4px}
 .pcard .cu{align-self:flex-start; margin-top:auto; padding-top:0; background:var(--my); color:var(--mn); font-weight:700; font-size:11px; padding:4px 9px; border-radius:7px}
 .pcard .meta p + .cu{margin-top:8px}
-.yt-photos{display:grid; gap:14px; grid-template-rows:1fr 1fr}
+.yt-photos{display:grid; gap:14px; grid-template-rows:3fr 2fr}  /* the vertical clip gets the taller cell */
 .zoom{all:unset; box-sizing:border-box; cursor:zoom-in; position:relative; display:block; border-radius:16px; overflow:hidden; background:#16376F; min-height:0}
 .zoom img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; transition:transform .8s cubic-bezier(.2,.8,.2,1)}
 .zoom:hover img{transform:scale(1.04)}
+.zoom video{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 12%; display:block}
+.zoom .play{position:absolute; top:10px; right:10px; width:32px; height:32px; border-radius:50%; background:rgba(0,0,0,.5); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px)}
+.zoom .play::after{content:""; position:absolute; left:12px; top:10px; border-style:solid; border-width:6px 0 6px 10px; border-color:transparent transparent transparent #fff}
 .zoom:focus-visible{outline:3px solid var(--my); outline-offset:3px}
 .zoom .cap{position:absolute; left:10px; right:10px; bottom:10px; font-size:11px; font-weight:600; line-height:1.3; color:#fff; background:rgba(0,0,0,.5); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); padding:6px 9px; border-radius:10px}
-.yt-photos .zoom:first-child img{object-position:50% 18%}
 .yt-photos .zoom:last-child img{object-position:50% 22%}
 @media (max-width:760px){
   .yt-row{grid-template-columns:1fr}
@@ -334,6 +336,8 @@ section .tile{background:var(--bg2)}
   .pcard{scroll-snap-align:start}
   .yt-photos{grid-template-rows:none; grid-template-columns:repeat(2,minmax(0,1fr))}
   .yt-photos .zoom{aspect-ratio:4/5}
+  .zoom .play{width:26px; height:26px; top:8px; right:8px}
+  .zoom .play::after{left:10px; top:7px; border-width:6px 0 6px 9px}
 }
 .yt-cols{display:grid; gap:28px 40px; grid-template-columns:minmax(0,1fr) minmax(0,1.2fr)}
 @media (max-width:760px){ .yt-cols{grid-template-columns:1fr} }
@@ -494,7 +498,8 @@ footer .wrap{padding-block:18px 26px; display:flex; flex-wrap:wrap; justify-cont
 @keyframes pop{from{transform:scale(.92) translateY(10px)}}
 
 .lightbox{position:fixed; inset:0; z-index:70; background:rgba(0,0,0,.92); display:grid; place-items:center; padding:max(24px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(24px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
-.lightbox img{display:block; max-width:100%; max-height:80vh; margin:0 auto; border-radius:16px}
+.lightbox img,.lightbox video{display:block; max-width:100%; max-height:80vh; margin:0 auto; border-radius:16px}
+.lightbox video{background:#000}
 .lightbox p{color:#fff; text-align:center; margin-top:12px; font-size:15px}
 .lightbox button{all:unset; cursor:pointer; position:absolute; top:max(16px,env(safe-area-inset-top,0px)); right:max(16px,env(safe-area-inset-right,0px)); color:#fff; font-size:14px; padding:8px 14px; border-radius:980px; background:rgba(255,255,255,.15)}
 .toast{position:fixed; left:50%; bottom:max(22px, calc(env(safe-area-inset-bottom,0px) + 14px)); transform:translate(-50%,16px); background:var(--ink); color:var(--bg); font-size:14px; padding:11px 18px; border-radius:980px; opacity:0; pointer-events:none; transition:all .3s; z-index:80}
@@ -1155,7 +1160,7 @@ const YT_PEOPLE = [
   {ini:{en:"MZ",ru:"МЖ"}, n:{en:"Mukhammed Zhaskairat",ru:"Мухаммед Жаскайрат"}, v:"Veranda Fire&Place", a:{en:"Age 27 · 7 years' experience",ru:"27 лет · опыт 7 лет"}, b:{en:"Born in Pavlodar",ru:"Родом из Павлодара"}, c:{en:"Middle Eastern cuisine",ru:"Ближневосточная кухня"}}
 ];
 const YT_PHOTOS = [
-  {src:"media/yt-shoot.jpg", c:{en:"Omar Salayev on a METRO shoot",ru:"Омар Салаев на съёмке METRO"}},
+  {video:"media/yt-omar-moments.mp4", start:3.5, src:"media/yt-omar-moments.jpg", c:{en:"Omar Salayev · My METRO moments",ru:"Омар Салаев · My METRO moments"}},
   {src:"media/yt-stanfood.jpg", c:{en:"Pavel Tsoi at Andrey Shmakov's master class, Stanfood Academy, Moscow",ru:"Павел Цой на мастер-классе Андрея Шмакова, Stanfood Academy, Москва"}}
 ];
 const YT_GIVE = {en:["PR support","HoReCa events","Media visibility","Shoots and special projects","Social media promotion","A chance to become a face of METRO"],
@@ -1260,6 +1265,14 @@ try{ const q=new URLSearchParams(location.search).get("lang"); if(q==="en"||q===
 const tr = o => (o && typeof o==="object" && !Array.isArray(o)) ? (o[L] ?? o.en) : (o ?? "");
 const $ = s => document.querySelector(s);
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+/* inline clips play muted only while on screen (and never with reduced motion), looping from data-start past the intro; a tap opens the full clip with sound */
+const vidIO = !reduce && "IntersectionObserver" in window && new IntersectionObserver(es=>es.forEach(e=>{
+  const v=e.target; if(e.isIntersecting){ v.preload="auto"; v.play().catch(()=>{}); } else v.pause();
+}),{threshold:.25});
+const watchVideos = root => { if(!vidIO) return; vidIO.disconnect(); root.querySelectorAll("video").forEach(v=>{
+  v.addEventListener("ended",()=>{ v.currentTime=+v.dataset.start||0; v.play().catch(()=>{}); });
+  vidIO.observe(v);
+}); };
 const ru = () => L==="ru";
 const fmtBig = b => ru() ? b.replace(/(\d),(\d)/g,"$1 $2").replace(" d → "," д → ").replace(" min"," мин") : b;
 
@@ -1420,7 +1433,10 @@ function render(){
       ${p.img?`<div class="art"><img src="${p.img}" alt="${tr(p.n)}, METRO Young Talents" loading="lazy"></div>`:`<div class="art ph" aria-hidden="true"><span>${tr(p.ini)}</span></div>`}
       <div class="meta"><p class="ven">${p.v}</p><h4>${tr(p.n)}</h4><p>${tr(p.a)}</p><p>${tr(p.b)}</p><span class="cu">${tr(p.c)}</span></div>
     </article>`).join("");
-  $("#yt-photos").innerHTML = YT_PHOTOS.map(p=>`<button type="button" class="zoom" data-zoom="${p.src}" data-cap="${tr(p.c)}"><img src="${p.src}" alt="${tr(p.c)}" loading="lazy"><span class="cap">${tr(p.c)}</span></button>`).join("");
+  $("#yt-photos").innerHTML = YT_PHOTOS.map(p=>`<button type="button" class="zoom${p.video?" vid":""}" data-zoom="${p.src}"${p.video?` data-video="${p.video}"`:""} data-cap="${tr(p.c)}">${p.video
+    ? `<video src="${p.video}#t=${p.start||0}" data-start="${p.start||0}" poster="${p.src}" muted playsinline preload="none" aria-hidden="true"></video><span class="play" aria-hidden="true"></span>`
+    : `<img src="${p.src}" alt="${tr(p.c)}" loading="lazy">`}<span class="cap">${tr(p.c)}</span></button>`).join("");
+  watchVideos($("#yt-photos"));
   $("#yt-give").innerHTML = YT_GIVE[L].map(g=>`<li>${g}</li>`).join("");
   $("#yt-got").innerHTML = YT_GOT.map(g=>`<li>${tr(g)}</li>`).join("");
   $("#pod-chaps").innerHTML = CHAPTERS.map(c=>`<button type="button" data-t="${c.t}"><b class="num">${fmtTime(c.t)}</b>${tr(c.l)}</button>`).join("");
@@ -1522,14 +1538,19 @@ document.addEventListener("click", e=>{
     return;
   }
   const z = e.target.closest("[data-zoom]");
-  if(z){ lightbox(z.dataset.zoom, z.dataset.cap); }
+  if(z){ lightbox(z.dataset.zoom, z.dataset.cap, z.dataset.video); }
 });
 function toast(m){ const t=$("#toast"); t.textContent=m; t.classList.add("on"); clearTimeout(toast.h); toast.h=setTimeout(()=>t.classList.remove("on"),1800); }
-function lightbox(src,cap){
+function lightbox(src,cap,video){
   const d=document.createElement("div"); d.className="lightbox"; d.setAttribute("role","dialog"); d.setAttribute("aria-modal","true");
-  d.innerHTML=`<button type="button">${ru()?"Закрыть":"Close"}</button><figure><img src="${src}" alt=""><p></p></figure>`;
+  d.innerHTML=`<button type="button">${ru()?"Закрыть":"Close"}</button><figure>${video ? `<video src="${video}" poster="${src}" controls autoplay playsinline></video>` : `<img src="${src}" alt="">`}<p></p></figure>`;
   d.querySelector("p").textContent = cap || "";
-  const close=()=>{d.remove(); removeEventListener("keydown",esc)}; const esc=e=>{ if(e.key==="Escape") close(); };
+  /* the muted tile pauses while its clip plays here with sound, and resumes on close if still on screen */
+  const held = video ? [...document.querySelectorAll(".zoom video")].filter(v=>!v.paused) : [];
+  held.forEach(v=>v.pause());
+  const close=()=>{d.remove(); removeEventListener("keydown",esc);
+    held.forEach(v=>{ const r=v.getBoundingClientRect(); if(r.bottom>0 && r.top<innerHeight) v.play().catch(()=>{}); }); };
+  const esc=e=>{ if(e.key==="Escape") close(); };
   d.addEventListener("click",e=>{ if(e.target===d||e.target.tagName==="BUTTON") close(); });
   addEventListener("keydown",esc); document.body.appendChild(d); d.querySelector("button").focus();
 }
