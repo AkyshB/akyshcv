@@ -216,7 +216,7 @@ html[data-view="short"] #res-grid, html:not([data-aud="general"]) #res-grid{grid
 .tile.w6{grid-column:span 6}
 @media (max-width:860px){ .bento{grid-template-columns:repeat(2,minmax(0,1fr))} .tile,.tile.w3{grid-column:span 1} .tile.w4,.tile.w6{grid-column:span 2} }
 @media (max-width:540px){ .bento{grid-template-columns:1fr; gap:14px} .tile,.tile.w3,.tile.w4,.tile.w6{grid-column:span 1} .tile{padding:26px}
-  .bento.compact{grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px} .bento.compact .tile{padding:20px} .bento.compact .tile.w6,.bento.compact .tile.w4,.bento.compact .tile.w3{grid-column:span 2} .bento.compact .big{font-size:34px} }
+  .bento.compact{grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px} .bento.compact .tile{padding:20px} .bento.compact .tile.w6,.bento.compact .tile.w4,.bento.compact .tile.w3{grid-column:span 2} .bento.compact .big{font-size:min(34px,7.2vw)} }  /* "30 000+" stays on one line down to 320 px */
 section .tile{background:var(--bg2)}
 .tile .k{font-size:14px; font-weight:600; color:var(--ink2)}
 .tile .big{font-size:clamp(40px,5.6vw,60px); font-weight:700; line-height:1; letter-spacing:-.05em}
@@ -266,9 +266,35 @@ section .tile{background:var(--bg2)}
 .refs span{font-size:13px; padding:7px 12px; border-radius:980px; background:var(--tile); color:var(--ink)}
 .refs span small{font-size:12px; color:var(--ink2)}
 
+/* METRO in numbers: the six figures beside the year's reel, the department below */
+.scale-row{display:grid; gap:20px; grid-template-columns:minmax(0,1fr) minmax(0,.42fr); margin-bottom:20px}
+.scale-row .bento{grid-template-columns:repeat(2,minmax(0,1fr))}
+.scale-row .tile{grid-column:span 1}
+.scale-clip .zoom{width:100%; height:100%; min-height:320px; border-radius:var(--r)}  /* a block button still shrinks to fit, so stretch it */
+@media (max-width:600px){ .scale-row{grid-template-columns:1fr} .scale-clip .zoom{height:auto; min-height:0; aspect-ratio:4/5; max-width:420px; margin:0 auto} }
+@media (max-width:540px){ .scale-row{gap:12px; margin-bottom:12px} }
+
 /* story */
 .story{display:grid; gap:20px; grid-template-columns:1fr}
 @media (min-width:860px){ .story{grid-template-columns:minmax(0,1fr) minmax(0,1fr)} }
+/* UltraFresh: the two text tiles on the left, the campaign film and the shoot as vertical clips on the right */
+.uf-tiles{display:grid; gap:20px; align-content:start; min-width:0}
+.uf-tiles .tile{grid-column:auto}
+@media (min-width:860px){ .uf-story{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr); align-items:start} }
+/* clip rows: vertical tiles, side by side on desktop, swiped on a phone */
+.reels{display:grid; gap:16px; grid-template-columns:repeat(3,minmax(0,1fr))}
+.uf-reels{grid-template-columns:repeat(2,minmax(0,1fr))}
+.uf-reels .zoom{aspect-ratio:9/16}
+.reel{margin:0; display:grid; gap:14px; align-content:start; min-width:0}
+.reel .zoom{aspect-ratio:4/5; border-radius:22px}
+.reel h4{font-size:18px; font-weight:700; letter-spacing:-.02em; line-height:1.25}
+.reel p{font-size:15px; line-height:1.45; color:var(--ink2); margin-top:4px}
+@media (max-width:760px){
+  .reels{grid-template-columns:none; grid-auto-flow:column; grid-auto-columns:74%; overflow-x:auto; overscroll-behavior-x:contain; scroll-snap-type:x mandatory; scrollbar-width:none}
+  .reels::-webkit-scrollbar{display:none}
+  .reels > *{scroll-snap-align:start}
+  .uf-reels{grid-auto-columns:56%}
+}
 .timeline-mini{display:grid; grid-template-columns:auto 1fr; gap:8px 16px; font-size:15px}
 .timeline-mini .y{font-weight:700; color:var(--gold)}
 .timeline-mini .t{color:var(--ink)}
@@ -322,9 +348,11 @@ section .tile{background:var(--bg2)}
 .zoom{all:unset; box-sizing:border-box; cursor:zoom-in; position:relative; display:block; border-radius:16px; overflow:hidden; background:#16376F; min-height:0}
 .zoom img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; transition:transform .8s cubic-bezier(.2,.8,.2,1)}
 .zoom:hover img{transform:scale(1.04)}
-.zoom video{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 12%; display:block}
-.zoom .play{position:absolute; top:10px; right:10px; width:32px; height:32px; border-radius:50%; background:rgba(0,0,0,.5); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px)}
-.zoom .play::after{content:""; position:absolute; left:12px; top:10px; border-style:solid; border-width:6px 0 6px 10px; border-color:transparent transparent transparent #fff}
+.zoom video{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 40%; display:block}
+.yt-photos .zoom video{object-position:50% 12%}
+/* clip badge: the tile is a muted preview, a tap opens the clip with sound */
+.vplay{position:absolute; z-index:1; top:10px; right:10px; width:32px; height:32px; border-radius:50%; background:rgba(0,0,0,.5); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px)}
+.vplay::after{content:""; position:absolute; left:12px; top:10px; border-style:solid; border-width:6px 0 6px 10px; border-color:transparent transparent transparent #fff}
 .zoom:focus-visible{outline:3px solid var(--my); outline-offset:3px}
 .zoom .cap{position:absolute; left:10px; right:10px; bottom:10px; font-size:11px; font-weight:600; line-height:1.3; color:#fff; background:rgba(0,0,0,.5); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); padding:6px 9px; border-radius:10px}
 .yt-photos .zoom:last-child img{object-position:50% 22%}
@@ -336,8 +364,8 @@ section .tile{background:var(--bg2)}
   .pcard{scroll-snap-align:start}
   .yt-photos{grid-template-rows:none; grid-template-columns:repeat(2,minmax(0,1fr))}
   .yt-photos .zoom{aspect-ratio:4/5}
-  .zoom .play{width:26px; height:26px; top:8px; right:8px}
-  .zoom .play::after{left:10px; top:7px; border-width:6px 0 6px 9px}
+  .yt-photos .vplay{width:26px; height:26px; top:8px; right:8px}
+  .yt-photos .vplay::after{left:10px; top:7px; border-width:6px 0 6px 9px}
 }
 .yt-cols{display:grid; gap:28px 40px; grid-template-columns:minmax(0,1fr) minmax(0,1.2fr)}
 @media (max-width:760px){ .yt-cols{grid-template-columns:1fr} }
@@ -371,8 +399,9 @@ section .tile{background:var(--bg2)}
 @media (max-width:860px){ .track{grid-auto-columns:calc((100% - 16px)/2.25)} }
 @media (max-width:540px){ .track{grid-auto-columns:70%; gap:12px} }
 .slide{all:unset; box-sizing:border-box; cursor:zoom-in; position:relative; display:block; aspect-ratio:4/5; border-radius:22px; overflow:hidden; background:var(--bg2); scroll-snap-align:start; min-width:0}
-.slide img{width:100%; height:100%; object-fit:cover; object-position:50% 25%; display:block; transition:transform .8s cubic-bezier(.2,.8,.2,1)}
-.slide:hover img{transform:scale(1.04)}
+.slide img,.slide video{width:100%; height:100%; object-fit:cover; object-position:50% 25%; display:block; transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+.slide video{object-position:50% 40%}
+.slide:hover img,.slide:hover video{transform:scale(1.04)}
 .slide .cap{position:absolute; left:12px; bottom:12px; max-width:calc(100% - 24px); font-size:12px; font-weight:600; color:#fff; background:rgba(0,0,0,.45); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); padding:5px 10px; border-radius:980px}
 .slide:focus-visible{outline:3px solid var(--blue); outline-offset:3px}
 .car-t{font-size:19px; font-weight:600; letter-spacing:-.02em}
@@ -614,7 +643,11 @@ footer .wrap{padding-block:18px 26px; display:flex; flex-wrap:wrap; justify-cont
         <h2 class="h2" data-k="s_title"></h2>
         <p class="sub" data-k="s_sub"></p>
       </div>
-      <div class="bento compact" id="scale-grid"></div>
+      <div class="scale-row">
+        <div class="bento compact" id="scale-grid"></div>
+        <div class="scale-clip rv" id="scale-clip"></div>
+      </div>
+      <div class="bento compact" id="scale-dept"></div>
     </div>
   </div>
 
@@ -661,16 +694,19 @@ footer .wrap{padding-block:18px 26px; display:flex; flex-wrap:wrap; justify-cont
         </figure>
         <p class="swipe" data-k="ba_swipe"></p>
       </div>
-      <div class="story">
-        <div class="tile rv">
-          <p class="k" data-k="uf_k1"></p>
-          <div class="chips lt" id="uf-vs"></div>
+      <div class="story uf-story">
+        <div class="uf-tiles">
+          <div class="tile rv">
+            <p class="k" data-k="uf_k1"></p>
+            <div class="chips lt" id="uf-vs"></div>
+          </div>
+          <div class="tile rv">
+            <p class="k" data-k="uf_k2"></p>
+            <div class="timeline-mini" id="uf-line"></div>
+            <div style="display:grid; gap:10px; margin-top:8px" id="uf-videos"></div>
+          </div>
         </div>
-        <div class="tile rv">
-          <p class="k" data-k="uf_k2"></p>
-          <div class="timeline-mini" id="uf-line"></div>
-          <div style="display:grid; gap:10px; margin-top:8px" id="uf-videos"></div>
-        </div>
+        <div class="reels uf-reels rv" id="uf-reels"></div>
       </div>
 
       <div class="chap-head center rv" style="margin-top:110px">
@@ -705,6 +741,13 @@ footer .wrap{padding-block:18px 26px; display:flex; flex-wrap:wrap; justify-cont
           <p class="yt-small" data-k="yt_around"></p>
         </div>
       </div>
+
+      <div class="chap-head center rv" style="margin-top:110px">
+        <p class="eyebrow" data-k="pp_eyebrow"></p>
+        <h2 class="h2" data-k="pp_title"></h2>
+        <p class="sub" data-k="pp_sub"></p>
+      </div>
+      <div class="reels pp-reels rv" id="pp-reels"></div>
 
       <div class="chap-head center rv" style="margin-top:110px" id="tools-head">
         <p class="eyebrow" data-k="t_eyebrow"></p>
@@ -873,12 +916,15 @@ const T = {
  yt_who:{en:"Who can apply: citizens of Kazakhstan under 30 who communicate with confidence, by motivation letter.",ru:"Кто может участвовать: граждане Казахстана до 30 лет, уверенные и коммуникабельные, по мотивационному письму."},
  yt_got:{en:"What it gave METRO",ru:"Что это дало METRO"},
  yt_around:{en:"Around it: METRO's Choice award at WhereToEat 2025, judged by top chefs, and a BBQ festival with a Top-10 chef that sold out in 2 days.",ru:"Вокруг программы: номинация «Выбор METRO» на WhereToEat 2025 с жюри из топ-шефов и BBQ-фестиваль с шефом из топ-10, распроданный за 2 дня."},
+ pp_eyebrow:{en:"Story 03 · Partner projects",ru:"Кейс 03 · Проекты с партнёрами"},
+ pp_title:{en:"Suppliers, brands and restaurants on one team.",ru:"Поставщики, бренды и рестораны в одной команде."},
+ pp_sub:{en:"Formats my team and I ran together with METRO's partners. Tap a clip to watch it with sound.",ru:"Форматы, которые мы с командой делали вместе с партнёрами METRO. Нажмите на ролик, чтобы посмотреть его со звуком."},
  t_eyebrow:{en:"Tools I built",ru:"Инструменты, которые я сделал"},
  t_title:{en:"Days of work, now minutes.",ru:"Дни работы теперь занимают минуты."},
  a_eyebrow:{en:"Awards",ru:"Награды"},
  a_title:{en:"Recognized for results.",ru:"Признание за результат."},
  m_eyebrow:{en:"Media",ru:"Медиа"},
- m_car:{en:"Event photos",ru:"Фото с событий"},
+ m_car:{en:"Event photos and videos",ru:"Фото и видео с событий"},
  pod_k:{en:"think out loud! · season 2, episode 11 · in Russian",ru:"думай вслух! · 2 сезон, 11 выпуск"},
  pod_t:{en:"Why do restaurants cut corners on your safety?",ru:"Почему рестораны экономят на вашей безопасности?"},
  pod_q:{en:"“It isn't the restaurant that takes on the risk of food poisoning. The guest does.” A conversation about food safety, suppliers and what guests never see behind the kitchen door.",ru:"«Риск отравления берёт на себя не ресторан. Риск берёт на себя гость». Разговор о безопасности еды, поставщиках и о том, чего гость не видит за дверью кухни."},
@@ -951,14 +997,14 @@ const AUD = {
     sf:["years8","ind5","b2b","teams0"], kpis:KPIS, hq:HERO_Q, recs:["alkina","drazilovic"],
     look:{en:"<strong>Head of Growth, CMO or CCO.</strong>",ru:"<strong>Head of Growth, CMO или CCO.</strong>"},
     str:{f:"automation", en:"Data and automation: tasks that took days now take minutes.",ru:"Данные и автоматизация: задачи на дни теперь занимают минуты."},
-    more:{en:["Why me and METRO's scale","All results","UltraFresh and Young Talents cases","Tools I built","Awards, talks and the podcast","Experience in detail","Two more recommendations"],
-          ru:["Почему я и масштаб METRO","Все результаты","Кейсы UltraFresh и Young Talents","Инструменты, которые я сделал","Награды, выступления и подкаст","Опыт с деталями","Ещё две рекомендации"]}
+    more:{en:["Why me and METRO's scale","All results","UltraFresh, Young Talents and partner projects","Tools I built","Awards, talks and the podcast","Experience in detail","Two more recommendations"],
+          ru:["Почему я и масштаб METRO","Все результаты","Кейсы UltraFresh, Young Talents и проекты с партнёрами","Инструменты, которые я сделал","Награды, выступления и подкаст","Опыт с деталями","Ещё две рекомендации"]}
   },
   product:{
     name:{en:"IT & Product",ru:"IT и продукт"}, chip:{en:"IT & Product",ru:"IT и продукт"},
     desc:{en:"Products, data and automation",ru:"Продукты, данные, автоматизация"}, cv:"Product",
-    more:{en:["Two more proofs","Why me and METRO's scale","METRO results","UltraFresh and Young Talents cases","Awards, talks and the podcast","Experience in detail","Two more recommendations"],
-          ru:["Ещё два доказательства","Почему я и масштаб METRO","Результаты METRO","Кейсы UltraFresh и Young Talents","Награды, выступления и подкаст","Опыт с деталями","Ещё две рекомендации"]},
+    more:{en:["Two more proofs","Why me and METRO's scale","METRO results","UltraFresh, Young Talents and partner projects","Awards, talks and the podcast","Experience in detail","Two more recommendations"],
+          ru:["Ещё два доказательства","Почему я и масштаб METRO","Результаты METRO","Кейсы UltraFresh, Young Talents и проекты с партнёрами","Награды, выступления и подкаст","Опыт с деталями","Ещё две рекомендации"]},
     t:{
       h_role:{en:"Products, data and automation.",ru:"Продукты, данные и автоматизация."},
       h_sub:{en:"Not a product manager by title, but I build products: I find manual work that costs the business days and turn it into a tool.",ru:"Не продакт по должности, но делаю продукты: нахожу ручную работу, которая стоит бизнесу дни, и превращаю её в инструмент."},
@@ -989,8 +1035,8 @@ const AUD = {
   marketing:{
     name:{en:"Marketing & PR",ru:"Маркетинг и PR"}, chip:{en:"Marketing & PR",ru:"Маркетинг и PR"},
     desc:{en:"Brand, performance and PR",ru:"Бренд, перформанс и PR"}, cv:"Marketing",
-    more:{en:["Two more proofs","Why me and METRO's scale","More results","UltraFresh and Young Talents cases","Tools I built","Awards, talks and the podcast","Experience in detail","Two more recommendations"],
-          ru:["Ещё два доказательства","Почему я и масштаб METRO","Ещё результаты","Кейсы UltraFresh и Young Talents","Инструменты, которые я сделал","Награды, выступления и подкаст","Опыт с деталями","Ещё две рекомендации"]},
+    more:{en:["Two more proofs","Why me and METRO's scale","More results","UltraFresh, Young Talents and partner projects","Tools I built","Awards, talks and the podcast","Experience in detail","Two more recommendations"],
+          ru:["Ещё два доказательства","Почему я и масштаб METRO","Ещё результаты","Кейсы UltraFresh, Young Talents и проекты с партнёрами","Инструменты, которые я сделал","Награды, выступления и подкаст","Опыт с деталями","Ещё две рекомендации"]},
     t:{
       h_role:{en:"Brand, performance and PR that drive growth.",ru:"Бренд, перформанс и PR, которые дают рост."},
       h_sub:{en:"8+ years in marketing and PR, agency side and in-house.",ru:"8+ лет в маркетинге и PR, в агентстве и in-house."},
@@ -1022,8 +1068,8 @@ const AUD = {
   commercial:{
     name:{en:"Commercial & Profitability",ru:"Коммерция и прибыльность"}, chip:{en:"Commercial",ru:"Коммерция"},
     desc:{en:"Pricing, sales and margin",ru:"Цены, продажи и маржа"}, cv:"Commercial",
-    more:{en:["Two more proofs","Why me and METRO's scale","More results","UltraFresh and Young Talents cases","Tools I built","Awards, talks and the podcast","Experience in detail","Two more recommendations"],
-          ru:["Ещё два доказательства","Почему я и масштаб METRO","Ещё результаты","Кейсы UltraFresh и Young Talents","Инструменты, которые я сделал","Награды, выступления и подкаст","Опыт с деталями","Ещё две рекомендации"]},
+    more:{en:["Two more proofs","Why me and METRO's scale","More results","UltraFresh, Young Talents and partner projects","Tools I built","Awards, talks and the podcast","Experience in detail","Two more recommendations"],
+          ru:["Ещё два доказательства","Почему я и масштаб METRO","Ещё результаты","Кейсы UltraFresh, Young Talents и проекты с партнёрами","Инструменты, которые я сделал","Награды, выступления и подкаст","Опыт с деталями","Ещё две рекомендации"]},
     t:{
       h_role:{en:"Pricing, sales and margin. One P&L.",ru:"Цены, продажи и маржа. Один P&L."},
       h_sub:{en:"I run pricing, telesales and the call center together with marketing. KPIs: margin, Total Income and price index.",ru:"Руковожу ценообразованием, телесейлз и колл-центром вместе с маркетингом. KPI: маржа, Total Income и price index."},
@@ -1082,6 +1128,8 @@ const SCALE = [
   {f:"cust", big:"30,000+", k:{en:"business customers",ru:"бизнес-клиентов"}},
   {f:"channels", big:"2", k:{en:"channels: delivery and Cash & Carry",ru:"канала: доставка и Cash & Carry"}}
 ];
+/* METRO Kazakhstan's 2025 in one minute: a reel of the team's work (video from Beibit) */
+const METRO_CLIP = {video:"media/v-metro.mp4", prev:"media/v-metro-p.mp4", src:"media/v-metro.jpg", c:{en:"METRO Kazakhstan's 2025 in one minute",ru:"2025 год METRO Kazakhstan за минуту"}};
 /* the department tile tells the team's make-up in full, so it owns these facts in the detailed view */
 const ORG_F = ["func12","dept","mkt_teams"];
 const ORG = [
@@ -1145,8 +1193,11 @@ const UF_LINE = [
   {y:"2026", t:{en:"METRO UltraFresh: HoReCa customers star in ours.",ru:"METRO UltraFresh: HoReCa-клиенты стали героями нашей рекламы."}}
 ];
 const UF_VIDEOS = [
-  {href:"https://lnkd.in/p/d_NcpwfS", t:{en:"UltraFresh campaign video",ru:"Видео кампании UltraFresh"}, s:{en:"LinkedIn",ru:"LinkedIn"}},
   {href:"https://www.youtube.com/watch?v=PtkYVIyslB0", t:{en:"Alfa-Bank case video",ru:"Видео кейса Alfa-Bank"}, s:{en:"YouTube",ru:"YouTube"}}
+];
+const UF_CLIPS = [
+  {video:"media/v-ufcamp.mp4", prev:"media/v-ufcamp-p.mp4", src:"media/v-ufcamp.jpg", c:{en:"UltraFresh campaign film · Broadway Burger",ru:"Ролик кампании UltraFresh · Broadway Burger"}},
+  {video:"media/v-ufshoot.mp4", prev:"media/v-ufshoot-p.mp4", src:"media/v-ufshoot.jpg", c:{en:"Behind the scenes: shooting the chefs",ru:"За кадром: съёмка шефов"}}
 ];
 
 const YT_STATS = [
@@ -1160,7 +1211,7 @@ const YT_PEOPLE = [
   {ini:{en:"MZ",ru:"МЖ"}, n:{en:"Mukhammed Zhaskairat",ru:"Мухаммед Жаскайрат"}, v:"Veranda Fire&Place", a:{en:"Age 27 · 7 years' experience",ru:"27 лет · опыт 7 лет"}, b:{en:"Born in Pavlodar",ru:"Родом из Павлодара"}, c:{en:"Middle Eastern cuisine",ru:"Ближневосточная кухня"}}
 ];
 const YT_PHOTOS = [
-  {video:"media/yt-omar-moments.mp4", start:3.5, src:"media/yt-omar-moments.jpg", c:{en:"Omar Salayev · My METRO moments",ru:"Омар Салаев · My METRO moments"}},
+  {video:"media/yt-omar-moments.mp4", prev:"media/yt-omar-moments-p.mp4", src:"media/yt-omar-moments.jpg", c:{en:"Omar Salayev · My METRO moments",ru:"Омар Салаев · My METRO moments"}},
   {src:"media/yt-stanfood.jpg", c:{en:"Pavel Tsoi at Andrey Shmakov's master class, Stanfood Academy, Moscow",ru:"Павел Цой на мастер-классе Андрея Шмакова, Stanfood Academy, Москва"}}
 ];
 const YT_GIVE = {en:["PR support","HoReCa events","Media visibility","Shoots and special projects","Social media promotion","A chance to become a face of METRO"],
@@ -1170,6 +1221,15 @@ const YT_GOT = [
   {en:"<strong>Real faces for campaigns.</strong> Pavel Tsoi, our first ambassador, starred in UltraFresh.",ru:"<strong>Живые лица для кампаний.</strong> Павел Цой, наш первый амбассадор, снялся в UltraFresh."},
   {en:"<strong>Careers that moved.</strong> Several sous-chefs have become chefs.",ru:"<strong>Карьерный рост.</strong> Несколько су-шефов выросли до шефов."},
   {en:"<strong>Tomorrow's customers.</strong> Today's sous-chefs are the head chefs who will choose suppliers.",ru:"<strong>Клиенты завтрашнего дня.</strong> Сегодняшние су-шефы — это шефы, которые будут выбирать поставщиков."}
+];
+/* Partner projects: what the team ran with suppliers, brands and restaurants (videos from Beibit) */
+const PP = [
+  {f:"supconf", video:"media/v-supconf.mp4", prev:"media/v-supconf-p.mp4", src:"media/v-supconf.jpg", c:{en:"METRO supplier conference",ru:"Конференция поставщиков METRO"},
+   p:{en:"Organized with my team for METRO's 16 years in Kazakhstan: talks, category analytics and supplier awards.",ru:"Организовал с командой к 16-летию METRO в Казахстане: выступления, аналитика по категориям, награждение поставщиков."}},
+  {f:"cola", video:"media/v-cola.mp4", prev:"media/v-cola-p.mp4", src:"media/v-cola.jpg", c:{en:"Coca-Cola caravan at METRO",ru:"Караван Coca-Cola у METRO"},
+   p:{en:"Organized together with Coca-Cola: the holiday caravan came to our store.",ru:"Организовал вместе с Coca-Cola: новогодний караван приехал к нашему торговому центру."}},
+  {f:"spmenu", video:"media/v-spmenu.mp4", prev:"media/v-spmenu-p.mp4", src:"media/v-spmenu.jpg", c:{en:"Special menus with restaurants",ru:"Спецменю с ресторанами"},
+   p:{en:"One of our collaborations: Steak & Fries at Broadway Burger.",ru:"Одна из наших коллабораций: Steak & Fries в Broadway Burger."}}
 ];
 
 const TOOLS = [
@@ -1183,7 +1243,9 @@ const AWARDS = [
   {f:"rj", big:"3×", k:{en:"Red Jolbors 2021",ru:"Red Jolbors 2021"}, p:{en:"Awards at Kazakhstan's advertising festival for agency campaigns I led.",ru:"Награды казахстанского фестиваля рекламы за агентские кампании, которые я вёл."}, link:JOLBORS}
 ];
 const SLIDES = [
+  {f:"qonaq_v", video:"media/v-qonaq.mp4", prev:"media/v-qonaq-p.mp4", src:"media/v-qonaq.jpg", c:{en:"Qonaq Expo · highlights",ru:"Qonaq Expo · как это было"}},
   {f:"qonaq_s", src:"media/qonaq-speaker.jpg", c:{en:"Qonaq Expo · speaker",ru:"Qonaq Expo · спикер"}},
+  {f:"wte_v", video:"media/v-wte.mp4", prev:"media/v-wte-p.mp4", src:"media/v-wte.jpg", c:{en:"WhereToEat 2025 · the ceremony",ru:"WhereToEat 2025 · церемония"}},
   {f:"wte", src:"media/wheretoeat.jpg", c:{en:"WhereToEat Kazakhstan 2025 · expert",ru:"WhereToEat Kazakhstan 2025 · эксперт"}},
   {f:"qonaq_j", src:"media/qonaq-wall.jpg", c:{en:"Qonaq HoReCa Expo · jury",ru:"Qonaq HoReCa Expo · жюри"}}
 ];
@@ -1265,16 +1327,18 @@ try{ const q=new URLSearchParams(location.search).get("lang"); if(q==="en"||q===
 const tr = o => (o && typeof o==="object" && !Array.isArray(o)) ? (o[L] ?? o.en) : (o ?? "");
 const $ = s => document.querySelector(s);
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-/* inline clips play muted only while on screen (and never with reduced motion), looping from data-start past the intro; a tap opens the full clip with sound */
+/* A clip tile loops a light silent preview (~1 MB) only while on screen, and never with reduced motion;
+   a tap opens the full clip with sound in the lightbox, so the heavy file loads only on demand. */
 const vidIO = !reduce && "IntersectionObserver" in window && new IntersectionObserver(es=>es.forEach(e=>{
   const v=e.target; if(e.isIntersecting){ v.preload="auto"; v.play().catch(()=>{}); } else v.pause();
 }),{threshold:.25});
-const watchVideos = root => { if(!vidIO) return; vidIO.disconnect(); root.querySelectorAll("video").forEach(v=>{
-  v.addEventListener("ended",()=>{ v.currentTime=+v.dataset.start||0; v.play().catch(()=>{}); });
-  vidIO.observe(v);
-}); };
+const watchVideos = () => { if(!vidIO) return; vidIO.disconnect(); document.querySelectorAll("video.inl").forEach(v=>vidIO.observe(v)); };
+const tileMedia = (p, alt) => p.video
+  ? `<video class="inl" src="${p.prev}" poster="${p.src}" muted loop playsinline preload="none" aria-hidden="true"></video><span class="vplay" aria-hidden="true"></span>`
+  : `<img src="${p.src}" alt="${alt}" loading="lazy">`;
+const zoomData = p => `data-zoom="${p.src}"${p.video?` data-video="${p.video}" aria-label="${tr(p.c)} · ${ru()?"смотреть видео":"watch the video"}"`:""} data-cap="${tr(p.c)}"`;
 const ru = () => L==="ru";
-const fmtBig = b => ru() ? b.replace(/(\d),(\d)/g,"$1 $2").replace(" d → "," д → ").replace(" min"," мин") : b;
+const fmtBig = b => ru() ? b.replace(/(\d),(\d)/g,"$1\u202F$2").replace(" d → "," д → ").replace(" min"," мин") : b;
 
 /* bento rows are 6 columns wide: tiles keep their order and each row is stretched so it never ends in a gap */
 const SPAN = {w3:3, w4:4, w6:6};
@@ -1360,7 +1424,9 @@ function render(){
   } else $("#proof-grid").innerHTML = "";
 
   if(full){
-    $("#scale-grid").innerHTML = pack(keep(SCALE)).map(s=>tile({k:s.k, big:s.big, c:s.c, cls:s.cls})).join("") +
+    $("#scale-grid").innerHTML = pack(keep(SCALE)).map(s=>tile({k:s.k, big:s.big, c:s.c, cls:s.cls})).join("");
+    $("#scale-clip").innerHTML = `<button type="button" class="zoom" ${zoomData(METRO_CLIP)}>${tileMedia(METRO_CLIP, tr(METRO_CLIP.c))}<span class="cap">${tr(METRO_CLIP.c)}</span></button>`;
+    $("#scale-dept").innerHTML =
       `<div class="tile w6 dark rv"><p class="k">${ru()?"Мой департамент":"My department"}</p><h3>${ru()?"12 функций в двух блоках: рост и прибыльность.":"12 functions in two blocks: growth and profitability."}</h3>
        <div class="org">${ORG.map(g=>`<div><b>${tr(g.t)}</b>${g.items.map(i=>`<span>${i}</span>`).join("")}</div>`).join("")}</div></div>`;
     claim({f:ORG_F});
@@ -1370,6 +1436,8 @@ function render(){
       if(w.ph && free(w.ph)) claim(w.ph); else delete x.ph;
       return x;
     })).map(tile).join("");
+    $("#pp-reels").innerHTML = keep(PP).map(p=>`<figure class="reel"><button type="button" class="zoom" ${zoomData(p)}>${tileMedia(p, tr(p.c))}</button>
+      <figcaption><h4>${tr(p.c)}</h4><p>${tr(p.p)}</p></figcaption></figure>`).join("");
     const tools = keep(TOOLS);
     $("#tools-grid").innerHTML = pack(tools.map(t=>({k:t.k, big:t.big, c:"blue", p:t.p}))).map(tile).join("");
     $("#tools-head").hidden = $("#tools-grid").hidden = !tools.length;
@@ -1378,7 +1446,7 @@ function render(){
     $("#awards-grid").innerHTML = aw.map(a=>`<div class="award rv ${a.cls||""}"><div class="big">${a.big}</div><p class="k">${tr(a.k)}</p><p>${tr(a.p)}</p>${a.link?`<div class="alinks"><a class="tlink" href="${a.link.href}" target="_blank" rel="noopener">${tr(a.link.t)}</a></div>`:""}</div>`).join("");
     const slides = keep(SLIDES);
     $("#track").style.setProperty("--n", Math.min(4, Math.max(3, slides.length)));  /* on desktop a short set fills the row instead of leaving a gap */
-    $("#track").innerHTML = slides.map(s=>`<button type="button" class="slide" data-zoom="${s.src}" data-cap="${tr(s.c)}"><img src="${s.src}" alt="${tr(s.c)}" loading="lazy"><span class="cap">${tr(s.c)}</span></button>`).join("");
+    $("#track").innerHTML = slides.map(s=>`<button type="button" class="slide" ${zoomData(s)}>${tileMedia(s, tr(s.c))}<span class="cap">${tr(s.c)}</span></button>`).join("");
   }
 
   /* results: both views for the general profile, the detailed view for a role (its short view shows #proof instead) */
@@ -1427,23 +1495,21 @@ function render(){
   $("#refs").innerHTML = REFS.map(r=>`<span>${r.n} <small>· ${tr(r.r)}</small></span>`).join("");
   $("#uf-vs").innerHTML = UF_CHANNELS[L].map(c=>`<span>${c}</span>`).join("");
   $("#uf-line").innerHTML = UF_LINE.map(r=>`<span class="y num">${r.y}</span><span class="t">${tr(r.t)}</span>`).join("");
+  $("#uf-reels").innerHTML = UF_CLIPS.map(p=>`<button type="button" class="zoom" ${zoomData(p)}>${tileMedia(p, tr(p.c))}<span class="cap">${tr(p.c)}</span></button>`).join("");
   $("#uf-videos").innerHTML = UF_VIDEOS.map(v=>`<a class="video-card" href="${v.href}" target="_blank" rel="noopener"><span class="poster ${v.web?"web":""}"></span><span style="min-width:0"><span class="vt">${tr(v.t)}</span><span class="vs2">${tr(v.s)}</span></span></a>`).join("");
   $("#yt-stats").innerHTML = YT_STATS.map(s=>`<div><b class="num">${tr(s.b)}</b><span>${tr(s.k)}</span></div>`).join("");
   $("#yt-cards").innerHTML = YT_PEOPLE.map(p=>`<article class="pcard">
       ${p.img?`<div class="art"><img src="${p.img}" alt="${tr(p.n)}, METRO Young Talents" loading="lazy"></div>`:`<div class="art ph" aria-hidden="true"><span>${tr(p.ini)}</span></div>`}
       <div class="meta"><p class="ven">${p.v}</p><h4>${tr(p.n)}</h4><p>${tr(p.a)}</p><p>${tr(p.b)}</p><span class="cu">${tr(p.c)}</span></div>
     </article>`).join("");
-  $("#yt-photos").innerHTML = YT_PHOTOS.map(p=>`<button type="button" class="zoom${p.video?" vid":""}" data-zoom="${p.src}"${p.video?` data-video="${p.video}"`:""} data-cap="${tr(p.c)}">${p.video
-    ? `<video src="${p.video}#t=${p.start||0}" data-start="${p.start||0}" poster="${p.src}" muted playsinline preload="none" aria-hidden="true"></video><span class="play" aria-hidden="true"></span>`
-    : `<img src="${p.src}" alt="${tr(p.c)}" loading="lazy">`}<span class="cap">${tr(p.c)}</span></button>`).join("");
-  watchVideos($("#yt-photos"));
+  $("#yt-photos").innerHTML = YT_PHOTOS.map(p=>`<button type="button" class="zoom" ${zoomData(p)}>${tileMedia(p, tr(p.c))}<span class="cap">${tr(p.c)}</span></button>`).join("");
   $("#yt-give").innerHTML = YT_GIVE[L].map(g=>`<li>${g}</li>`).join("");
   $("#yt-got").innerHTML = YT_GOT.map(g=>`<li>${tr(g)}</li>`).join("");
   $("#pod-chaps").innerHTML = CHAPTERS.map(c=>`<button type="button" data-t="${c.t}"><b class="num">${fmtTime(c.t)}</b>${tr(c.l)}</button>`).join("");
   $("#cta-mail").href = `mailto:beibyt1996@gmail.com?subject=${encodeURIComponent(tr(MAIL))}`;
   $("#cta-wa").href = `https://wa.me/77757435931?text=${encodeURIComponent(tr(WA))}`;
   $("#contacts").innerHTML = CONTACTS.map((c,i)=>`<div class="crow"><span class="l">${tr(c.l)}</span>${c.href?`<a class="v" href="${c.href}" ${c.href.startsWith("http")?'target="_blank" rel="noopener"':""}>${c.v}</a>`:`<span class="v">${c.v}</span>`}<button type="button" class="copy" id="copy-${i}" data-copy="${c.copy}">${ru()?"Копировать":"Copy"}</button></div>`).join("");
-  setupReveal(); carUpdate(); navUpdate();
+  watchVideos(); setupReveal(); carUpdate(); navUpdate();
 }
 
 /* ===== language sheet ===== */
@@ -1546,7 +1612,7 @@ function lightbox(src,cap,video){
   d.innerHTML=`<button type="button">${ru()?"Закрыть":"Close"}</button><figure>${video ? `<video src="${video}" poster="${src}" controls autoplay playsinline></video>` : `<img src="${src}" alt="">`}<p></p></figure>`;
   d.querySelector("p").textContent = cap || "";
   /* the muted tile pauses while its clip plays here with sound, and resumes on close if still on screen */
-  const held = video ? [...document.querySelectorAll(".zoom video")].filter(v=>!v.paused) : [];
+  const held = video ? [...document.querySelectorAll("video.inl")].filter(v=>!v.paused) : [];
   held.forEach(v=>v.pause());
   const close=()=>{d.remove(); removeEventListener("keydown",esc);
     held.forEach(v=>{ const r=v.getBoundingClientRect(); if(r.bottom>0 && r.top<innerHeight) v.play().catch(()=>{}); }); };
