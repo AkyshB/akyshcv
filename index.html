@@ -179,7 +179,7 @@ html[data-view="short"]:not([data-aud="general"]) #recs{margin-top:0; padding-to
 .aud-chips button:focus-visible{outline:2px solid var(--blue); outline-offset:2px}
 .mnav .aud-bar{margin:4px 0 12px}
 @media (max-width:860px){ .aud-bar{flex-direction:column} .aud-chips{justify-content:center} }
-@media (max-width:540px){ .aud-chips{display:grid; grid-template-columns:1fr 1fr; width:min(100%,360px)} .mnav .aud-bar{align-items:stretch} .mnav .aud-chips{width:100%; max-width:none} }
+@media (max-width:540px){ .aud-chips{display:grid; grid-template-columns:1fr 1fr; width:min(100%,360px)} .aud-chips button:last-child:nth-child(odd){grid-column:1/-1} .mnav .aud-bar{align-items:stretch} .mnav .aud-chips{width:100%; max-width:none} }
 .tile.ph-tile{display:grid; grid-template-columns:minmax(0,1.15fr) minmax(0,1fr); gap:28px; align-items:center; padding:18px}
 .ph-tile .txt{display:flex; flex-direction:column; gap:10px; padding:10px 14px 10px 0; min-width:0}
 .tile-ph{all:unset; box-sizing:border-box; cursor:zoom-in; display:block; border-radius:18px; overflow:hidden; aspect-ratio:16/10; background:var(--line)}
@@ -239,6 +239,7 @@ section .tile{background:var(--bg2)}
 .minis{margin-top:auto; padding-top:18px; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; border-top:1px solid var(--dark-chip)}
 .minis b{display:block; font-size:clamp(30px,3.4vw,40px); font-weight:700; letter-spacing:-.045em; line-height:1; color:var(--gold)}
 .minis span{display:block; margin-top:6px; font-size:13px; line-height:1.3; color:var(--dark-ink2)}
+.minis.two{grid-template-columns:repeat(2,minmax(0,1fr))}
 .proof small{display:block; margin-top:4px; font-size:12px; font-weight:400; color:var(--ink2)}
 
 /* team map */
@@ -513,7 +514,6 @@ footer .wrap{padding-block:18px 26px; display:flex; flex-wrap:wrap; justify-cont
 .sheet .sheet-desc{min-height:2.7em; margin-top:8px; font-size:13px; line-height:1.35}
 .sheet .sheet-h{margin-top:14px; font-size:15px; font-weight:700; color:var(--ink)}
 .sheet .opts{display:grid; gap:10px; margin-top:18px}
-@media (max-height:640px){ .sheet .mark{display:none} }
 .sheet .opts button{all:unset; cursor:pointer; display:flex; justify-content:space-between; align-items:center; gap:12px; padding:15px 18px; border-radius:14px; background:var(--bg2); font-size:17px; font-weight:600; text-align:left; transition:background .2s}
 .sheet .opts button span{display:grid; gap:3px}
 .sheet .opts button::after{content:"›"; font-size:22px; font-weight:400; color:var(--ink2)}
@@ -527,6 +527,10 @@ footer .wrap{padding-block:18px 26px; display:flex; flex-wrap:wrap; justify-cont
 .sheet .opts.aud-opts button::after{content:none}
 .sheet .opts.aud-opts button small{font-size:12px; line-height:1.3}
 .sheet .opts.aud-opts button[aria-pressed="true"]{box-shadow:inset 0 0 0 1.5px var(--blue)}
+.sheet .opts.aud-opts button:last-child:nth-child(odd){grid-column:1/-1}
+/* short screens (iPhone Safari with its bars shows ~660px): tighten the card so all five roles fit without scrolling */
+@media (max-height:780px){ .sheet .card{padding:24px 20px 18px} .sheet .mark{width:60px; height:60px; margin-bottom:10px} .sheet .mode-seg{margin-top:12px} .sheet .sheet-h{margin-top:10px} .sheet .opts.aud-opts button{padding:10px 12px} }
+@media (max-height:700px){ .sheet .mark{display:none} }
 @keyframes fade{from{opacity:0}}
 @keyframes pop{from{transform:scale(.92) translateY(10px)}}
 
@@ -991,10 +995,10 @@ const VP_PHOTO = {src:"media/vp-review-w.jpg", full:"media/vp-review.jpg",
 
 const JOLBORS = {href:"https://jolbors.com/en/awards/jolbors-festival-awards-2021/entry/615/?list_type=winners", t:{en:"The entry on jolbors.com, credited as Account Manager",ru:"Работа на jolbors.com, в титрах как Account Manager"}};
 
-/* Role focus. "general" is the original page; the other three re-cut the first screen, add a #proof chapter,
+/* Role focus. "general" is the original page; the others re-cut the first screen, add a #proof chapter,
    pick the recommendations and serve a tailored PDF. Facts match the hh.kz and LinkedIn CVs; percentages only.
    sf: facts the focus's hero subtitle already states. */
-const AUD_IDS = ["general","product","marketing","commercial"];
+const AUD_IDS = ["general","product","marketing","commercial","analyst"];
 const AUD = {
   general:{
     name:{en:"General profile",ru:"Общий профиль"}, chip:{en:"General",ru:"Общее"},
@@ -1099,6 +1103,41 @@ const AUD = {
         {s:1, sc:"w3", f:["int_occ","int_ticket","int_rep"], k:{en:"Clinic occupancy, from 40%",ru:"Загрузка клиники, было 40%"}, big:"130%", c:"gold", p:{en:"Interna Clinic: a waiting list, average ticket <strong>+20%</strong>, repeat visits 15% → 70%.",ru:"Interna Clinic: лист ожидания, средний чек <strong>+20%</strong>, повторные визиты 15% → 70%."}},
         {f:["choco139","field"], k:{en:"HoReCa partners signed",ru:"HoReCa-партнёров подключил"}, big:"139", c:"gold", p:{en:"Chocofamily, full B2B sales cycle. Field team scaled 20 → 100 with payroll <strong>−30%</strong>.",ru:"Chocofamily, полный цикл B2B-продаж. Полевая команда 20 → 100 при ФОТ <strong>−30%</strong>."}},
         {cls:"w6", photo:VP_PHOTO, f:"vp", k:{en:"Reporting to METRO AG",ru:"Отчёт перед METRO AG"}, h:{en:"1.5 hours, 70+ slides.",ru:"1,5 часа, 70+ слайдов."}, p:{en:"Results and plans for marketing, PR and pricing, presented to Adrian Ariciu, VP of METRO AG for Eastern Europe.",ru:"Итоги и планы по маркетингу, PR и ценообразованию для Adrian Ariciu, вице-президента METRO AG по Восточной Европе."}}
+      ]
+    }
+  },
+  analyst:{
+    name:{en:"Business Analyst",ru:"Бизнес-аналитик"}, chip:{en:"Business Analyst",ru:"Бизнес-аналитик"},
+    desc:{en:"Metrics, dashboards and data-driven decisions",ru:"Метрики, дашборды и решения на данных"}, cv:"Analyst",
+    more:{en:["Three more proofs","Why me and METRO's scale","More results","UltraFresh, Young Talents and partner projects","Awards, talks and the podcast","Experience in detail","Two more recommendations"],
+          ru:["Ещё три доказательства","Почему я и масштаб METRO","Ещё результаты","Кейсы UltraFresh, Young Talents и проекты с партнёрами","Награды, выступления и подкаст","Опыт с деталями","Ещё две рекомендации"]},
+    t:{
+      h_role:{en:"Business analysis that turns data into decisions.",ru:"Бизнес-аналитика, которая превращает данные в решения."},
+      h_sub:{en:"I analyse pricing, customers and the funnel, automate reporting and turn business needs into working tools.",ru:"Анализирую цены, клиентов и воронку, автоматизирую отчётность и перевожу задачи бизнеса в рабочие инструменты."},
+      c_sub:{en:"Open to Lead or Senior Business Analyst and Head of Business Analytics roles. Based in Almaty, ready for Astana and travel. Telegram, WhatsApp or phone is fastest.",ru:"Рассматриваю роли Lead или Senior Business Analyst и руководителя бизнес-аналитики. Алматы, готов к Астане и командировкам. Быстрее всего в Telegram, WhatsApp или по телефону."}
+    },
+    sf:[], kpis:[],
+    hq:{img:"media/rec-alkina.jpg", n:"Aizhan Alkina",
+      q:{en:"“…always looks for ways to optimize existing processes and address challenges at their root.”",ru:"«…всегда ищет, как оптимизировать процессы и решать проблемы в корне»."},
+      r:HERO_Q.r},
+    look:{en:"<strong>Lead or Senior Business Analyst, Head of Business Analytics.</strong> Analysis where pricing, sales, marketing and the customer meet.",ru:"<strong>Lead или Senior Business Analyst, руководитель бизнес-аналитики.</strong> Анализ на стыке цен, продаж, маркетинга и клиента."},
+    str:{f:"intcourses", en:"I speak both business and data, and teach colleagues in internal METRO courses on Looker Studio and AI at work.",ru:"Говорю на языке бизнеса и данных, учу коллег на внутренних курсах METRO по Looker Studio и AI в работе."},
+    recs:["alkina","hilbert"],
+    pulls:{alkina:{en:"“…a highly skilled professional who excels at combining creativity with strong analytical thinking.”",ru:"«…высококвалифицированный профессионал, который умеет сочетать креативность с сильным аналитическим мышлением»."},
+           hilbert:{en:"“…a solid understanding of customer behavior, data analytics, and strategic market insights.”",ru:"«…глубокое понимание поведения клиентов, анализа данных и стратегических рыночных инсайтов»."}},
+    proof:{
+      eyebrow:{en:"For the role · Business Analyst",ru:"Для роли · Бизнес-аналитик"},
+      title:{en:"I find the answer in the data and take it to the result.",ru:"Нахожу ответ в данных и довожу его до результата."},
+      sub:{en:"Pricing, customers, the funnel and processes.",ru:"Цены, клиенты, воронка и процессы."},
+      tiles:[
+        {s:1, cls:"w3", f:["pidx","dash360"], k:{en:"Real-time analytics",ru:"Real-time аналитика"}, big:"360°", c:"blue", p:{en:"Dashboards of key metrics and a live Price Index replaced manual price checks and reporting.",ru:"Дашборды ключевых метрик и живой Price Index заменили ручные проверки цен и отчёты."}},
+        {s:1, cls:"w3", f:["vat","sku"], k:{en:"VAT increase: analysis and repricing",ru:"Рост НДС: анализ и переоценка"}, big:"12% → 16%", c:"blue", p:{en:"After a review of socially important goods, the full range of <strong>10,000+ SKUs</strong> was repriced with no disruption.",ru:"После анализа социально значимых товаров весь ассортимент, <strong>10 000+ SKU</strong>, переоценён без сбоев."}},
+        {s:1, sc:"w3", f:["int_crm","int_ticket","int_rep"], k:{en:"Average ticket after segmentation",ru:"Средний чек после сегментации"}, big:"+20%", c:"gold", p:{en:"Interna Clinic: CRM segmentation of 15,000+ patients. Repeat visits <strong>15% → 70%</strong> with a new call center.",ru:"Interna Clinic: CRM-сегментация 15 000+ пациентов. Повторные визиты <strong>15% → 70%</strong> с новым колл-центром."}},
+        {s:1, sc:"w3", f:["funnel","reg39","buy32"], k:{en:"New B2B registrations, year over year",ru:"Новые B2B-регистрации, год к году"}, big:"+39%", c:"blue", p:{en:"Buying B2B customers <strong>+32%</strong>. I ran the funnel on CPM, cost per registration, CAC, retention and LTV.",ru:"Покупающие B2B-клиенты <strong>+32%</strong>. Вёл воронку по CPM, стоимости регистрации, CAC, retention и LTV."}},
+        {f:"field", k:{en:"Payroll after finding fraud",ru:"ФОТ после поиска фрода"}, big:"−30%", c:"gold", p:{en:"Chocofamily: I spotted fraudulent practices and tightened controls while scaling the field team from 20 to 100.",ru:"Chocofamily: выявил фрод и усилил контроль, пока растил полевую команду с 20 до 100 человек."}},
+        {cls:"w3", f:["research","ann81"], k:{en:"Market research",ru:"Исследование рынка"}, big:"1,300", c:"blue", p:{en:"HoReCa and retail businesses in 9 cities covered by our research. The anniversary campaign was rebuilt from customer research: sales <strong>+81%</strong>.",ru:"предприятий HoReCa и ритейла в 9 городах в нашем исследовании. Юбилейную кампанию пересобрали на основе исследования клиентов: продажи <strong>+81%</strong>."}},
+        {cls:"w3 dark", f:["posm","match","automation"], k:{en:"Process automation",ru:"Автоматизация процессов"}, h:{en:"From a business need to a working tool.",ru:"От задачи бизнеса до рабочего инструмента."}, p:{en:"I measure how much time a manual process eats, then build the tool myself with data, AI and vibe coding.",ru:"Считаю, сколько времени съедает ручной процесс, и сам собираю инструмент на данных, AI и vibe coding."},
+         mc:"two", minis:[{b:{en:"15 min",ru:"15 мин"},k:{en:"instead of 7 days: assortment matching",ru:"вместо 7 дней: сопоставление ассортимента"}},{b:{en:"20 min",ru:"20 мин"},k:{en:"instead of 2 days: POSM layouts, adopted in 4 more countries",ru:"вместо 2 дней: макеты POSM, взяли ещё 4 страны"}}]}
       ]
     }
   }
@@ -1259,46 +1298,46 @@ const POD = {src:"media/oylaout-s2e11.mp3", title:{en:"Why do restaurants cut co
 const CHAPTERS = []; /* [{t:seconds, l:{en,ru}}] */
 
 /* Experience, kept by hand next to cv/cv-data.js. s: the role's scope, p: one-line summaries for the short view,
-   b: the detailed view's bullets, tagged g/p/m/c so the chosen focus's come first. Every line names its facts in f;
+   b: the detailed view's bullets, tagged g/p/m/c/a so the chosen focus's come first. Every line names its facts in f;
    where several lines are given, the first whose facts are still free is shown. */
 const JOBS = [
   {t:{en:"Head of Growth & Profitability · METRO Kazakhstan",ru:"Head of Growth & Profitability · METRO Kazakhstan"}, d:{en:"2025 — now",ru:"2025 — н.в."},
    s:[{f:"dept", en:"Took on pricing, revenue and telesales on top of marketing & PR.",ru:"К маркетингу и PR добавились ценообразование, выручка и телесейлз."}],
    b:[
-   {t:"cg", f:"kpis", en:"Pricing strategy and revenue management; KPIs: gross margin, contribution margin, Total Income and price index.",ru:"Pricing strategy и revenue management; KPI: gross margin, contribution margin, Total Income и price index."},
+   {t:"cga", f:"kpis", en:"Pricing strategy and revenue management; KPIs: gross margin, contribution margin, Total Income and price index.",ru:"Pricing strategy и revenue management; KPI: gross margin, contribution margin, Total Income и price index."},
    {t:"mg", f:["brandstrat","priceperc"], en:"Own brand awareness, price perception and the Marketing & PR strategy.",ru:"Отвечаю за brand awareness, price perception, маркетинговую и PR-стратегию."},
-   {t:"cg", f:"gov", en:"Work with government authorities on pricing.",ru:"Взаимодействие с госорганами по ценообразованию."},
-   {t:"p", f:["dash360","intcourses"], en:"Analytics tools with a 360° view of key metrics; internal courses on Tilda, Looker Studio, AI at work and vibe coding.",ru:"Аналитические инструменты с 360° view ключевых метрик; внутренние курсы по Tilda, Looker Studio, AI в работе и vibe coding."}]},
+   {t:"cga", f:"gov", en:"Work with government authorities on pricing.",ru:"Взаимодействие с госорганами по ценообразованию."},
+   {t:"pa", f:["dash360","intcourses"], en:"Analytics tools with a 360° view of key metrics; internal courses on Tilda, Looker Studio, AI at work and vibe coding.",ru:"Аналитические инструменты с 360° view ключевых метрик; внутренние курсы по Tilda, Looker Studio, AI в работе и vibe coding."}]},
   {t:{en:"Head of Marketing & PR · METRO Kazakhstan",ru:"Руководитель маркетинга и PR · METRO Kazakhstan"}, d:"2024 — 2025",
    s:[{f:["mkt_teams","brands"], en:"Performance, SMM, PR and ATL/BTL teams; METRO, private labels and the MyMart franchise.",ru:"Команды Performance, SMM, PR и ATL/BTL; METRO, СТМ и франшиза MyMart."},
       {f:"brands", en:"Brands: METRO, private labels and the MyMart franchise.",ru:"Бренды: METRO, СТМ и франшиза MyMart."}],
    b:[
    {t:"mg", f:"traffic", en:"Year over year: social audience +21%, website traffic +31%, store traffic +13%.",ru:"Год к году: аудитория соцсетей +21%, трафик сайта +31%, посещаемость магазинов +13%."},
-   {t:"m", f:"funnel", en:"Managed the funnel and unit economics: CPM, cost per registration, CAC, retention and LTV.",ru:"Управлял воронкой и юнит-экономикой: CPM, стоимость регистрации, CAC, retention, LTV."},
-   {t:"pmg", f:"b2bplat", en:"Built a digital B2B registration platform that centralized lead and customer data.",ru:"Создал цифровую платформу регистрации B2B-клиентов, централизовал лиды и клиентские данные."},
-   {t:"mg", f:["partners","research"], en:"Partnerships with WhereToEat 2025 and Qonaq Expo 2026; research of 1,300 HoReCa and retail businesses in 9 cities.",ru:"Партнёрства с WhereToEat 2025 и Qonaq Expo 2026; исследование 1 300 предприятий HoReCa и ритейла в 9 городах."}]},
+   {t:"ma", f:"funnel", en:"Managed the funnel and unit economics: CPM, cost per registration, CAC, retention and LTV.",ru:"Управлял воронкой и юнит-экономикой: CPM, стоимость регистрации, CAC, retention, LTV."},
+   {t:"pmga", f:"b2bplat", en:"Built a digital B2B registration platform that centralized lead and customer data.",ru:"Создал цифровую платформу регистрации B2B-клиентов, централизовал лиды и клиентские данные."},
+   {t:"mga", f:["partners","research"], en:"Partnerships with WhereToEat 2025 and Qonaq Expo 2026; research of 1,300 HoReCa and retail businesses in 9 cities.",ru:"Партнёрства с WhereToEat 2025 и Qonaq Expo 2026; исследование 1 300 предприятий HoReCa и ритейла в 9 городах."}]},
   {t:{en:"Head of Marketing → Commercial · Interna Clinic",ru:"Маркетинг → коммерция · Interna Clinic"}, d:"2022 — 2024",
    p:[{f:["clinic","int_occ","int_rep"], en:"Launched a clinic from zero; occupancy from 40% to 130%, repeat visits from 15% to 70%.",ru:"Запустил клинику с нуля: загрузка с 40% до 130%, повторные визиты с 15% до 70%."},
       {f:"clinic", en:"Launched a clinic from zero.",ru:"Запустил клинику с нуля."}],
    b:[
-   {t:"pmcg", f:"clinic", en:"Launched a new healthcare business from zero: naming, brand identity, go-to-market, website, CRM and customer communications.",ru:"Запустил клинику с нуля: нейминг, айдентика, go-to-market, сайт, CRM и клиентские коммуникации."},
-   {t:"pmcg", f:"int_occ", en:"Clinic occupancy 40% → 130%, with a waiting list.",ru:"Загрузка клиники 40% → 130%, появился лист ожидания."},
-   {t:"pmcg", f:["int_crm","int_ticket"], en:"CRM segmentation of 15,000+ patients raised the average ticket by 20%.",ru:"CRM-сегментация 15 000+ пациентов подняла средний чек на 20%."},
-   {t:"pcg", f:"int_rep", en:"Launched a call center; repeat-visit conversion 15% → 70%.",ru:"Запустил колл-центр; конверсия в повторный визит 15% → 70%."}]},
+   {t:"pmcga", f:"clinic", en:"Launched a new healthcare business from zero: naming, brand identity, go-to-market, website, CRM and customer communications.",ru:"Запустил клинику с нуля: нейминг, айдентика, go-to-market, сайт, CRM и клиентские коммуникации."},
+   {t:"pmcga", f:"int_occ", en:"Clinic occupancy 40% → 130%, with a waiting list.",ru:"Загрузка клиники 40% → 130%, появился лист ожидания."},
+   {t:"pmcga", f:["int_crm","int_ticket"], en:"CRM segmentation of 15,000+ patients raised the average ticket by 20%.",ru:"CRM-сегментация 15 000+ пациентов подняла средний чек на 20%."},
+   {t:"pcga", f:"int_rep", en:"Launched a call center; repeat-visit conversion 15% → 70%.",ru:"Запустил колл-центр; конверсия в повторный визит 15% → 70%."}]},
   {t:{en:"Marketing Manager · Metayasi, Abu Dhabi",ru:"Маркетинг-менеджер · Metayasi, Абу-Даби"}, d:"2022",
    p:[{f:"dd", en:"Go-to-market for Digital Dirham, a Web3 product.",ru:"Вывод на рынок Web3-продукта Digital Dirham."}],
-   b:[{t:"pmcg", f:"dd", en:"Go-to-market for Digital Dirham, a new Web3 product: positioning, visual concept and communication platform; built the marketing team.",ru:"Вывод на рынок Web3-продукта Digital Dirham: позиционирование, визуальная концепция и коммуникационная платформа; собрал маркетинговую команду."}]},
+   b:[{t:"pmcga", f:"dd", en:"Go-to-market for Digital Dirham, a new Web3 product: positioning, visual concept and communication platform; built the marketing team.",ru:"Вывод на рынок Web3-продукта Digital Dirham: позиционирование, визуальная концепция и коммуникационная платформа; собрал маркетинговую команду."}]},
   {t:{en:"Account Manager · GForce Grey",ru:"Аккаунт-менеджер · GForce Grey"}, d:"2020 — 2021",
    p:[{f:["gforce100","clients"], en:"100+ projects for Beeline, Alfa-Bank and Magnum, from brief to launch.",ru:"100+ проектов для Beeline, Alfa-Bank и Magnum, от брифа до запуска."},
       {f:"gforce100", en:"100+ projects, from brief to launch.",ru:"100+ проектов, от брифа до запуска."}]},
   {t:{en:"Web Marketing · Decathlon Kazakhstan",ru:"Веб-маркетинг · Decathlon Kazakhstan"}, d:"2019 — 2020",
    p:[{f:"decathlon", en:"1,500+ SKUs on Kaspi; Product of the Day lifted sales 15–18%.",ru:"1 500+ SKU на Kaspi; «Товар дня» дал +15–18% продаж."}],
-   b:[{t:"pmcg", f:"decathlon", en:"E-commerce, website usability and online merchandising; 1,500+ SKUs listed on Kaspi; a “Product of the Day” mechanic lifted sales 15–18%.",ru:"E-commerce, usability сайта и онлайн-мерчендайзинг; 1 500+ SKU на Kaspi; механика «Товар дня» дала +15–18% продаж."}]},
+   b:[{t:"pmcga", f:"decathlon", en:"E-commerce, website usability and online merchandising; 1,500+ SKUs listed on Kaspi; a “Product of the Day” mechanic lifted sales 15–18%.",ru:"E-commerce, usability сайта и онлайн-мерчендайзинг; 1 500+ SKU на Kaspi; механика «Товар дня» дала +15–18% продаж."}]},
   {t:{en:"Sales → Promoters Supervisor · Chocofamily",ru:"Продажи → супервайзер промоутеров · Chocofamily"}, d:"2018 — 2019",
    p:[{f:["choco139","field"], en:"139 HoReCa partners signed; field team 20 → 100, payroll −30%.",ru:"139 HoReCa-партнёров; полевая команда 20 → 100, ФОТ −30%."}],
    b:[
    {t:"mcg", f:"choco139", en:"Signed 139 HoReCa B2B partners for the Rakhmet loyalty/fintech platform, owning the full sales cycle.",ru:"Подключил 139 HoReCa B2B-партнёров к loyalty/fintech-платформе Rakhmet, полный цикл продаж."},
-   {t:"pmcg", f:"field", en:"Scaled the Rakhmet app's user-acquisition field team from 20 to 100 and cut payroll by 30% by removing fraud.",ru:"Вырастил полевую команду привлечения пользователей Rakhmet с 20 до 100 человек, сократил ФОТ на 30%, устранив фрод."}]},
+   {t:"pmcga", f:"field", en:"Scaled the Rakhmet app's user-acquisition field team from 20 to 100 and cut payroll by 30% by removing fraud.",ru:"Вырастил полевую команду привлечения пользователей Rakhmet с 20 до 100 человек, сократил ФОТ на 30%, устранив фрод."}]},
   {t:{en:"BSc Logistics · Almaty Management University",ru:"Бакалавр, логистика · Almaty Management University"}, d:"2018",
    p:[{en:"Top 50 graduates. Exchange semester at St. Cloud State University, USA.",ru:"Топ-50 выпускников. Семестр по обмену в St. Cloud State University, США."}]}
 ];
@@ -1374,7 +1413,7 @@ function tile(x){
     ${x.p?`<p>${tr(x.p)}</p>`:""}
     ${x.ph?`<button type="button" class="mini-ph" data-zoom="${x.ph.full}" data-cap="${tr(x.ph.c)}"><img src="${x.ph.src}" alt="" loading="lazy"><span>${tr(x.ph.t)}</span></button>`:""}
     ${x.chips?`<div class="chips">${x.chips.map(c=>`<span>${c}</span>`).join("")}</div>`:""}
-    ${x.minis?.length?`<div class="minis">${x.minis.map(m=>`<div><b class="num">${tr(m.b)}</b><span>${tr(m.k)}</span></div>`).join("")}</div>`:""}
+    ${x.minis?.length?`<div class="minis ${x.mc||""}">${x.minis.map(m=>`<div><b class="num">${tr(m.b)}</b><span>${tr(m.k)}</span></div>`).join("")}</div>`:""}
     ${x.link?`<a class="tlink" href="${x.link.href}" target="_blank" rel="noopener">${tr(x.link.t)}</a>`:""}
     ${x.go?`<button type="button" class="tlink" data-mode="full" data-go="${x.go.href}">${tr(x.go.t)}</button>`:""}
   </div>`;
