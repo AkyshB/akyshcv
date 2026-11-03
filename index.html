@@ -173,13 +173,15 @@ html[data-view="short"]:not([data-aud="general"]) #recs{margin-top:0; padding-to
 .aud-bar{display:flex; flex-wrap:wrap; align-items:center; gap:8px 10px}
 .aud-bar .tl{font-size:13px; font-weight:600; color:var(--ink2)}
 .aud-chips{display:flex; flex-wrap:wrap; gap:6px}
+.nw{white-space:nowrap}
 .aud-chips button{all:unset; box-sizing:border-box; cursor:pointer; font-size:13px; font-weight:600; padding:6px 13px; border-radius:980px; color:var(--ink); box-shadow:inset 0 0 0 1px var(--line); white-space:nowrap; text-align:center; transition:background .2s, color .2s, box-shadow .2s}
 .aud-chips button:hover{box-shadow:inset 0 0 0 1px var(--ink2)}
 .aud-chips button[aria-pressed="true"]{background:var(--ink); color:var(--bg); box-shadow:none}
 .aud-chips button:focus-visible{outline:2px solid var(--blue); outline-offset:2px}
 .mnav .aud-bar{margin:4px 0 12px}
 @media (max-width:860px){ .aud-bar{flex-direction:column} .aud-chips{justify-content:center} }
-@media (max-width:540px){ .aud-chips{display:grid; grid-template-columns:1fr 1fr; width:min(100%,360px)} .aud-chips button:last-child:nth-child(odd){grid-column:1/-1} .mnav .aud-bar{align-items:stretch} .mnav .aud-chips{width:100%; max-width:none} }
+@media (max-width:540px){ .aud-chips{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); width:min(100%,360px)} .aud-chips button{white-space:normal; border-radius:14px; line-height:1.25; padding:7px 10px; display:flex; align-items:center; justify-content:center} .aud-chips button[data-aud="product"]{grid-column:1/-1} .mnav .aud-bar{align-items:stretch} .mnav .aud-chips{width:100%; max-width:none} }
+@media (max-width:349px){ .aud-chips{grid-template-columns:1fr} }
 .tile.ph-tile{display:grid; grid-template-columns:minmax(0,1.15fr) minmax(0,1fr); gap:28px; align-items:center; padding:18px}
 .ph-tile .txt{display:flex; flex-direction:column; gap:10px; padding:10px 14px 10px 0; min-width:0}
 .tile-ph{all:unset; box-sizing:border-box; cursor:zoom-in; display:block; border-radius:18px; overflow:hidden; aspect-ratio:16/10; background:var(--line)}
@@ -527,9 +529,12 @@ footer .wrap{padding-block:18px 26px; display:flex; flex-wrap:wrap; justify-cont
 .sheet .opts.aud-opts button::after{content:none}
 .sheet .opts.aud-opts button small{font-size:12px; line-height:1.3}
 .sheet .opts.aud-opts button[aria-pressed="true"]{box-shadow:inset 0 0 0 1.5px var(--blue)}
-.sheet .opts.aud-opts button:last-child:nth-child(odd){grid-column:1/-1}
+/* position titles are long (Product Management / Head of Product), so the options stack one per row */
+.sheet .opts.aud-opts{grid-template-columns:1fr; gap:6px}
+.sheet .opts.aud-opts button{padding:10px 14px; gap:2px}
+.sheet .opts button .nw{display:inline}
 /* short screens (iPhone Safari with its bars shows ~660px): tighten the card so all five roles fit without scrolling */
-@media (max-height:780px){ .sheet .card{padding:24px 20px 18px} .sheet .mark{width:60px; height:60px; margin-bottom:10px} .sheet .mode-seg{margin-top:12px} .sheet .sheet-h{margin-top:10px} .sheet .opts.aud-opts button{padding:10px 12px} }
+@media (max-height:780px){ .sheet .card{padding:24px 20px 18px} .sheet .mark{width:60px; height:60px; margin-bottom:10px} .sheet .mode-seg{margin-top:12px} .sheet .sheet-h{margin-top:10px} .sheet .opts.aud-opts button{padding:9px 14px} .sheet .opts.aud-opts button small{display:none} }
 @media (max-height:700px){ .sheet .mark{display:none} }
 @keyframes fade{from{opacity:0}}
 @keyframes pop{from{transform:scale(.92) translateY(10px)}}
@@ -559,7 +564,7 @@ footer .wrap{padding-block:18px 26px; display:flex; flex-wrap:wrap; justify-cont
   <div class="card">
     <div class="mark"><img src="media/portrait-sm.jpg" alt=""></div>
     <h2 id="sheet-t" data-k="h_name">Beibit Akysh</h2>
-    <p data-k="sh_q">Choose language, format and focus</p>
+    <p data-k="sh_q">Choose language, format and position</p>
     <div class="mode-seg sheet-lang" role="group" aria-label="Language">
       <button type="button" id="pick-en" data-lang="en">English</button>
       <button type="button" id="pick-ru" data-lang="ru">Русский</button>
@@ -871,13 +876,13 @@ const T = {
  tb_cta:{en:"Get in touch →",ru:"Связаться →"},
  menu_tip:{en:"Jump to any section here",ru:"Здесь навигация по разделам"}, dl_tip:{en:"Download the PDF version here",ru:"Нажмите, чтобы скачать PDF-версию"},
  n_glance:{en:"Profile",ru:"Профиль"},
- sh_q:{en:"Choose language, format and focus",ru:"Выберите язык, формат и направление"},
+ sh_q:{en:"Choose language, format and position",ru:"Выберите язык, формат и позицию"},
  sh_short_d:{en:"The essentials for a recruiter: profile, results, recommendations, experience. The CV in PDF is one page.",ru:"Главное для рекрутера: профиль, результаты, рекомендации, опыт. Резюме в PDF на 1 страницу."},
  sh_full_d:{en:"Everything in the short version, plus case studies, experience in detail, awards, talks and the podcast. The CV in PDF is two pages.",ru:"Всё из краткой версии плюс кейсы, опыт с деталями, награды, выступления и подкаст. Резюме в PDF на 2 страницы."},
- aud_q:{en:"Who are you hiring for?",ru:"Кто вам нужен?"},
- aud_aria:{en:"Role focus",ru:"Направление"},
+ aud_q:{en:"What position are you hiring for?",ru:"На какую позицию вам нужен человек?"},
+ aud_aria:{en:"Position",ru:"Позиция"},
  n_proof:{en:"Why I fit",ru:"Почему подхожу"},
- toast_aud:{en:"Focus: ",ru:"Направление: "},
+ toast_aud:{en:"Position: ",ru:"Позиция: "},
  r_more:{en:"More results.",ru:"Ещё результаты."},
  mode_aria:{en:"Version",ru:"Версия"},
  mode_short:{en:"Short",ru:"Кратко"}, mode_full:{en:"Detailed",ru:"Подробно"},
@@ -998,10 +1003,10 @@ const JOLBORS = {href:"https://jolbors.com/en/awards/jolbors-festival-awards-202
 /* Role focus. "general" is the original page; the others re-cut the first screen, add a #proof chapter,
    pick the recommendations and serve a tailored PDF. Facts match the hh.kz and LinkedIn CVs; percentages only.
    sf: facts the focus's hero subtitle already states. */
-const AUD_IDS = ["general","product","marketing","commercial","analyst"];
+const AUD_IDS = ["general","marketing","product","commercial","analyst"];
 const AUD = {
   general:{
-    name:{en:"General profile",ru:"Общий профиль"}, chip:{en:"General",ru:"Общее"},
+    name:{en:"General profile",ru:"Общий профиль"}, chip:{en:"General profile",ru:"Общий профиль"},
     desc:{en:"Growth, marketing and commercial in one P&L",ru:"Рост, маркетинг и коммерция в одном P&L"},
     sf:["years8","ind5","b2b","teams0"], kpis:KPIS, hq:HERO_Q, recs:["alkina","drazilovic"],
     look:{en:"<strong>Head of Growth, CMO or CCO.</strong>",ru:"<strong>Head of Growth, CMO или CCO.</strong>"},
@@ -1010,7 +1015,7 @@ const AUD = {
           ru:["Почему я и масштаб METRO","Все результаты","Кейсы UltraFresh, Young Talents и проекты с партнёрами","Инструменты, которые я сделал","Награды, выступления и подкаст","Опыт с деталями","Ещё две рекомендации"]}
   },
   product:{
-    name:{en:"IT & Product",ru:"IT и продукт"}, chip:{en:"IT & Product",ru:"IT и продукт"},
+    name:"Product Management / Head of Product", chip:"Product Management / Head of Product", role:"Head of Product",
     desc:{en:"Products, data and automation",ru:"Продукты, данные, автоматизация"}, cv:"Product",
     more:{en:["Two more proofs","Why me and METRO's scale","METRO results","UltraFresh, Young Talents and partner projects","Awards, talks and the podcast","Experience in detail","Two more recommendations"],
           ru:["Ещё два доказательства","Почему я и масштаб METRO","Результаты METRO","Кейсы UltraFresh, Young Talents и проекты с партнёрами","Награды, выступления и подкаст","Опыт с деталями","Ещё две рекомендации"]},
@@ -1028,7 +1033,7 @@ const AUD = {
     recs:["alkina","hilbert"],
     pulls:{hilbert:{en:"“…a solid understanding of customer behavior, data analytics, and strategic market insights.”",ru:"«…глубокое понимание поведения клиентов, анализа данных и стратегических рыночных инсайтов»."}},
     proof:{
-      eyebrow:{en:"For the role · IT & Product",ru:"Для роли · IT и продукт"},
+      eyebrow:{en:"For the role · Head of Product",ru:"Для роли · Head of Product"},
       title:{en:"I came up with it, built it and rolled it out.",ru:"Сам придумал, собрал и внедрил."},
       sub:{en:"Using data, AI and vibe coding.",ru:"На данных, AI и vibe coding."},
       tiles:[
@@ -1042,7 +1047,7 @@ const AUD = {
     }
   },
   marketing:{
-    name:{en:"Marketing & PR",ru:"Маркетинг и PR"}, chip:{en:"Marketing & PR",ru:"Маркетинг и PR"},
+    name:"CMO / Head of Marketing", chip:"CMO / Head of Marketing", role:"CMO / Head of Marketing",
     desc:{en:"Brand, performance and PR",ru:"Бренд, перформанс и PR"}, cv:"Marketing",
     more:{en:["Two more proofs","Why me and METRO's scale","More results","UltraFresh, Young Talents and partner projects","Tools I built","Awards, talks and the podcast","Experience in detail","Two more recommendations"],
           ru:["Ещё два доказательства","Почему я и масштаб METRO","Ещё результаты","Кейсы UltraFresh, Young Talents и проекты с партнёрами","Инструменты, которые я сделал","Награды, выступления и подкаст","Опыт с деталями","Ещё две рекомендации"]},
@@ -1060,7 +1065,7 @@ const AUD = {
     recs:["alkina","hilbert"],
     pulls:{alkina:{en:"“…a highly skilled professional who excels at combining creativity with strong analytical thinking.”",ru:"«…высококвалифицированный профессионал, который умеет сочетать креативность с сильным аналитическим мышлением»."}},
     proof:{
-      eyebrow:{en:"For the role · Marketing & PR",ru:"Для роли · Маркетинг и PR"},
+      eyebrow:{en:"For the role · CMO / Head of Marketing",ru:"Для роли · CMO / Head of Marketing"},
       title:{en:"Marketing you can see in the numbers.",ru:"Маркетинг, который виден в цифрах."},
       sub:{en:"",ru:""},
       tiles:[
@@ -1075,25 +1080,25 @@ const AUD = {
     }
   },
   commercial:{
-    name:{en:"Commercial & Profitability",ru:"Коммерция и прибыльность"}, chip:{en:"Commercial",ru:"Коммерция"},
+    name:"CCO / Head of Commercial", chip:"CCO / Head of Commercial", role:"CCO / Head of Commercial",
     desc:{en:"Pricing, sales and margin",ru:"Цены, продажи и маржа"}, cv:"Commercial",
     more:{en:["Two more proofs","Why me and METRO's scale","More results","UltraFresh, Young Talents and partner projects","Tools I built","Awards, talks and the podcast","Experience in detail","Two more recommendations"],
           ru:["Ещё два доказательства","Почему я и масштаб METRO","Ещё результаты","Кейсы UltraFresh, Young Talents и проекты с партнёрами","Инструменты, которые я сделал","Награды, выступления и подкаст","Опыт с деталями","Ещё две рекомендации"]},
     t:{
       h_role:{en:"Pricing, sales and margin. One P&L.",ru:"Цены, продажи и маржа. Один P&L."},
       h_sub:{en:"I run pricing, telesales and the call center together with marketing. KPIs: margin, Total Income and price index.",ru:"Руковожу ценообразованием, телесейлз и колл-центром вместе с маркетингом. KPI: маржа, Total Income и price index."},
-      c_sub:{en:"Open to CCO, Commercial Director, Head of Revenue and Head of Pricing roles. Based in Almaty, ready for Astana and travel. Telegram, WhatsApp or phone is fastest.",ru:"Рассматриваю роли CCO, коммерческого директора, Head of Revenue и Head of Pricing. Алматы, готов к Астане и командировкам. Быстрее всего в Telegram, WhatsApp или по телефону."}
+      c_sub:{en:"Open to CCO, Head of Commercial, Commercial Director, Head of Revenue and Head of Pricing roles. Based in Almaty, ready for Astana and travel. Telegram, WhatsApp or phone is fastest.",ru:"Рассматриваю роли CCO, Head of Commercial, коммерческого директора, Head of Revenue и Head of Pricing. Алматы, готов к Астане и командировкам. Быстрее всего в Telegram, WhatsApp или по телефону."}
     },
     sf:["kpis","dept"], kpis:[],
     hq:{img:"media/rec-drazilovic.jpg", n:"Petar Drazilovic",
       q:{en:"“…a commercial mindset, clear focus on execution, and a commitment to delivering value for the organization.”",ru:"«…коммерческое мышление, фокус на исполнении и нацеленность на ценность для компании»."},
       r:{en:"Board Member, METRO Kazakhstan",ru:"Член правления METRO Kazakhstan"}},
-    look:{en:"<strong>CCO, Commercial Director or Head of Revenue / Pricing.</strong>",ru:"<strong>CCO, коммерческий директор или Head of Revenue / Pricing.</strong>"},
+    look:{en:"<strong>CCO, Head of Commercial, Commercial Director or Head of Revenue / Pricing.</strong>",ru:"<strong>CCO, Head of Commercial, коммерческий директор или Head of Revenue / Pricing.</strong>"},
     str:{f:["gov","priceperc"], en:"Pricing under regulation: I work with government authorities and own the brand's price perception.",ru:"Ценообразование под госрегулированием: работаю с госорганами и отвечаю за price perception бренда."},
     recs:["drazilovic","alkina"],
     pulls:{drazilovic:{en:"“His strong relationships across the industry and close connection with key opinion leaders provide valuable perspectives…”",ru:"«…прочные связи в индустрии и близкий контакт с лидерами мнений дают ему ценный взгляд…»"}},
     proof:{
-      eyebrow:{en:"For the role · Commercial & Profitability",ru:"Для роли · Коммерция и прибыльность"},
+      eyebrow:{en:"For the role · CCO / Head of Commercial",ru:"Для роли · CCO / Head of Commercial"},
       title:{en:"Growth that stays in the margin.",ru:"Рост, который остаётся в марже."},
       sub:{en:"Numbers I was accountable for.",ru:"Цифры, за которые я отвечал."},
       tiles:[
@@ -1107,26 +1112,26 @@ const AUD = {
     }
   },
   analyst:{
-    name:{en:"Business Analyst",ru:"Бизнес-аналитик"}, chip:{en:"Business Analyst",ru:"Бизнес-аналитик"},
+    name:"Head of Analytics", chip:"Head of Analytics", role:"Head of Analytics",
     desc:{en:"Metrics, dashboards and data-driven decisions",ru:"Метрики, дашборды и решения на данных"}, cv:"Analyst",
     more:{en:["Three more proofs","Why me and METRO's scale","More results","UltraFresh, Young Talents and partner projects","Awards, talks and the podcast","Experience in detail","Two more recommendations"],
           ru:["Ещё три доказательства","Почему я и масштаб METRO","Ещё результаты","Кейсы UltraFresh, Young Talents и проекты с партнёрами","Награды, выступления и подкаст","Опыт с деталями","Ещё две рекомендации"]},
     t:{
-      h_role:{en:"Business analysis that turns data into decisions.",ru:"Бизнес-аналитика, которая превращает данные в решения."},
+      h_role:{en:"Analytics that turns data into decisions.",ru:"Аналитика, которая превращает данные в решения."},
       h_sub:{en:"I analyse pricing, customers and the funnel, automate reporting and turn business needs into working tools.",ru:"Анализирую цены, клиентов и воронку, автоматизирую отчётность и перевожу задачи бизнеса в рабочие инструменты."},
-      c_sub:{en:"Open to Lead or Senior Business Analyst and Head of Business Analytics roles. Based in Almaty, ready for Astana and travel. Telegram, WhatsApp or phone is fastest.",ru:"Рассматриваю роли Lead или Senior Business Analyst и руководителя бизнес-аналитики. Алматы, готов к Астане и командировкам. Быстрее всего в Telegram, WhatsApp или по телефону."}
+      c_sub:{en:"Open to Head of Analytics and Head of Business Analytics roles. Based in Almaty, ready for Astana and travel. Telegram, WhatsApp or phone is fastest.",ru:"Рассматриваю роли Head of Analytics и руководителя аналитики или бизнес-аналитики. Алматы, готов к Астане и командировкам. Быстрее всего в Telegram, WhatsApp или по телефону."}
     },
     sf:[], kpis:[],
     hq:{img:"media/rec-alkina.jpg", n:"Aizhan Alkina",
       q:{en:"“…always looks for ways to optimize existing processes and address challenges at their root.”",ru:"«…всегда ищет, как оптимизировать процессы и решать проблемы в корне»."},
       r:HERO_Q.r},
-    look:{en:"<strong>Lead or Senior Business Analyst, Head of Business Analytics.</strong> Analysis where pricing, sales, marketing and the customer meet.",ru:"<strong>Lead или Senior Business Analyst, руководитель бизнес-аналитики.</strong> Анализ на стыке цен, продаж, маркетинга и клиента."},
+    look:{en:"<strong>Head of Analytics or Head of Business Analytics.</strong> Analytics where pricing, sales, marketing and the customer meet.",ru:"<strong>Head of Analytics, руководитель аналитики или бизнес-аналитики.</strong> Аналитика на стыке цен, продаж, маркетинга и клиента."},
     str:{f:"intcourses", en:"I speak both business and data. I work in Power BI, Looker Studio, Jira and AI, and teach colleagues Looker Studio and AI in internal METRO courses.",ru:"Говорю на языке бизнеса и данных. Работаю в Power BI, Looker Studio, Jira и с AI; по Looker Studio и AI веду внутренние курсы METRO."},
     recs:["alkina","hilbert"],
     pulls:{alkina:{en:"“…a highly skilled professional who excels at combining creativity with strong analytical thinking.”",ru:"«…высококвалифицированный профессионал, который умеет сочетать креативность с сильным аналитическим мышлением»."},
            hilbert:{en:"“…a solid understanding of customer behavior, data analytics, and strategic market insights.”",ru:"«…глубокое понимание поведения клиентов, анализа данных и стратегических рыночных инсайтов»."}},
     proof:{
-      eyebrow:{en:"For the role · Business Analyst",ru:"Для роли · Бизнес-аналитик"},
+      eyebrow:{en:"For the role · Head of Analytics",ru:"Для роли · Head of Analytics"},
       title:{en:"I find the answer in the data and take it to the result.",ru:"Нахожу ответ в данных и довожу его до результата."},
       sub:{en:"Pricing, customers, the funnel and processes.",ru:"Цены, клиенты, воронка и процессы."},
       tiles:[
@@ -1429,14 +1434,16 @@ function render(){
   $("#pod-back").textContent = ru() ? "−15 с" : "−15 s"; $("#pod-fwd").textContent = ru() ? "+30 с" : "+30 s";
   const navOn = ([h,,v]) => (!v || v===M) && (h!=="#proof" || A!=="general") && !(h==="#results" && M==="short" && A!=="general");
   const navHtml = NAV.filter(navOn).map(([h,k])=>`<a href="${h}">${tr(T[k])}</a>`).join("");
-  const audHtml = `<span class="tl">${tr(T.aud_q)}</span><div class="aud-chips" role="group" aria-label="${tr(T.aud_aria)}">${AUD_IDS.map(id=>`<button type="button" data-aud="${id}" aria-pressed="${id===A}">${tr(AUD[id].chip)}</button>`).join("")}</div>`;
+  /* position titles break only after the slash: "CMO /" over "Head of Marketing" */
+  const roleHtml = (s, nw) => s.split(" / ").map(x=>nw?`<span class="nw">${x}</span>`:x).join("&nbsp;/ ");
+  const audHtml = `<span class="tl">${tr(T.aud_q)}</span><div class="aud-chips" role="group" aria-label="${tr(T.aud_aria)}">${AUD_IDS.map(id=>`<button type="button" data-aud="${id}" aria-pressed="${id===A}"><span>${roleHtml(tr(AUD[id].chip), true)}</span></button>`).join("")}</div>`;
   const segHtml = ["short","full"].map(m=>`<button type="button" data-mode="${m}" aria-pressed="${m===M}">${tr(T["mode_"+m])}<small>${tr(T["mode_"+m+"_t"])}</small></button>`).join("");
   $("#links").innerHTML = navHtml; $("#mnav").innerHTML = `<div class="mode-seg" role="group" aria-label="${tr(T.mode_aria)}">${segHtml}</div><div class="aud-bar">${audHtml}</div>` + navHtml;
   $(".mode-bar .mode-seg").innerHTML = segHtml; $(".mode-bar .mode-seg").setAttribute("aria-label", tr(T.mode_aria));
   $("#aud-hero").innerHTML = audHtml;
   $(".sheet-view").innerHTML = segHtml; $(".sheet-view").setAttribute("aria-label", tr(T.mode_aria));
   $("#sheet-desc").textContent = tr(M==="short" ? T.sh_short_d : T.sh_full_d);
-  $("#aud-opts").innerHTML = AUD_IDS.map(id=>`<button type="button" data-aud="${id}" aria-pressed="${id===A}"><b>${tr(AUD[id].name)}</b><small>${tr(AUD[id].desc)}</small></button>`).join("");
+  $("#aud-opts").innerHTML = AUD_IDS.map(id=>`<button type="button" data-aud="${id}" aria-pressed="${id===A}"><b>${roleHtml(tr(AUD[id].name), true)}</b><small>${tr(AUD[id].desc)}</small></button>`).join("");
   document.querySelectorAll(".sheet-lang [data-lang]").forEach(b=>b.setAttribute("aria-pressed", String(b.dataset.lang===L)));
   $("#more-list").innerHTML = aud.more[L].map(x=>`<li>${x}</li>`).join("");
   $("#more .btn").dataset.go = aud.proof ? "#proof" : "#why";
@@ -1524,7 +1531,7 @@ function render(){
     } else lead = first([...(j.p || []), ...(j.s || [])]);
     return `<div class="job"><h3>${tr(j.t)}</h3><span class="d num">${tr(j.d)}</span>${lead?`<p>${tr(lead)}</p>`:""}${b.length?`<ul class="jb">${b.map(x=>`<li>${tr(x)}</li>`).join("")}</ul>`:""}</div>`;
   }).join("");
-  if(full && aud.proof) $('#path [data-k="p_eyebrow"]').textContent = `${tr(T.p_eyebrow)} · ${tr(aud.chip)}`;
+  if(full && aud.proof) $('#path [data-k="p_eyebrow"]').textContent = `${tr(T.p_eyebrow)} · ${tr(aud.role || aud.chip)}`;
 
   /* the focus picks the two quotes for the short view and leads with them in the detailed one */
   const byId = id => QUOTES.find(q=>q.id===id);
