@@ -1601,15 +1601,15 @@ function endDlTip(next=true){
   if(next) menuTip();
 }
 addEventListener("resize", ()=>{ if(!$("#dl-tip").hidden) placeDlTip(); });
-/* mobile only: point at the burger once per session, after the language is chosen */
+/* mobile only: right after the PDF tip, on every visit, say that the burger holds the section navigation */
 function menuTip(){
   if(getComputedStyle($("#menu-btn")).display==="none") return;
-  try{ if(sessionStorage.getItem("ba-tip")) return; sessionStorage.setItem("ba-tip","1"); }catch(e){}
+  clearTimeout(menuTip.t);
   menuTip.t = setTimeout(()=>{
     if($("#menu-btn").getAttribute("aria-expanded")==="true") return;
     $("#menu-tip").hidden = false; $("#menu-btn").classList.add("hint");
     menuTip.t = setTimeout(hideTip, 6000);
-  }, 700);
+  }, 350);
 }
 function hideTip(){
   const tip=$("#menu-tip"); clearTimeout(menuTip.t); $("#menu-btn").classList.remove("hint");
