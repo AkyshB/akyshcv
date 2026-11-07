@@ -1233,9 +1233,8 @@ const RES = [
   {f:"top300", big:"+84%", c:"blue", k:{en:"HoReCa TOP300 since launch",ru:"HoReCa TOP300 с запуска"}},
   {f:"bev38", big:"+38%", c:"blue", k:{en:"Beverages & beer",ru:"Напитки и пиво"}},
   {s:1, cls:"w4 dark", f:"tele", big:"31% → 74%", k:{en:"Telesales, built from zero",ru:"Телесейлз с нуля"}, p:{en:"Sales-team KPI attainment. Reached <strong>91%</strong> of Almaty's HoReCa base and about <strong>130%</strong> of pilot targets.",ru:"Выполнение KPI командой продаж. Охват <strong>91%</strong> HoReCa-базы Алматы и около <strong>130%</strong> целей пилота."}},
-  {s:1, f:"mc158", big:"+158%", c:"gold", k:{en:"Shrimp sales on chef master-class days",ru:"Продажи креветок в дни мастер-классов шефов"}},
-  {s:1, f:"onb5", big:"&lt;5 min", c:"blue", k:{en:"To onboard a B2B customer, down from 25–30",ru:"На заведение B2B-клиента вместо 25–30"}},
-  {s:1, f:["train400","intcourses"], big:"~400", c:"blue", k:{en:"Employees trained in BI",ru:"Сотрудников обучил BI"}, p:{en:"Looker Studio and DataLens instead of static Excel reports.",ru:"Looker Studio и DataLens вместо статичных отчётов в Excel."}}
+  {s:1, cls:"w3", f:"onb5", big:"&lt;5 min", c:"blue", k:{en:"To onboard a B2B customer, down from 25–30",ru:"На заведение B2B-клиента вместо 25–30"}},
+  {s:1, cls:"w3", f:["train400","intcourses"], big:"~400", c:"blue", k:{en:"Employees trained in BI",ru:"Сотрудников обучил BI"}, p:{en:"Looker Studio and DataLens instead of static Excel reports.",ru:"Looker Studio и DataLens вместо статичных отчётов в Excel."}}
 ];
 
 /* Written-up cases. A tile showing any fact in `on` gets a "+" and opens the case; within one view each case attaches to
@@ -1269,12 +1268,6 @@ const CASES = {
        {h:{en:"Result",ru:"Результат"},
         p:{en:"Sales doubled year over year on a budget 2.5 times smaller. The campaign became more profitable, and the teams were not overloaded.",
            ru:"Продажи ×2 к прошлому году при бюджете в 2,5 раза меньше. Кампания стала прибыльнее, а команды не перегружены."}}]},
-  mc:{on:["mc158"], co:{en:"METRO Kazakhstan · Case",ru:"METRO Kazakhstan · Кейс"},
-    t:{en:"Chef master classes on the sales floor",ru:"Мастер-классы шефов в торговом зале"},
-    m:[{b:"+158%",k:{en:"shrimp sales on master-class days",ru:"продажи креветок в дни мастер-классов"}}],
-    s:[{h:{en:"What we did",ru:"Что делали"},
-        p:{en:"From time to time, chefs ran master classes right on the open sales floor of our stores. They showed how to cook a product at home, for example how to cook shrimp properly, and then shoppers tasted the dish.",
-           ru:"Время от времени шефы проводили мастер-классы прямо в открытой торговой зоне наших магазинов. Показывали, как приготовить продукт дома, например как правильно готовить креветки, а потом покупатели пробовали блюдо."}}]},
   edu:{on:["train400","intcourses"], co:{en:"METRO Kazakhstan · Case",ru:"METRO Kazakhstan · Кейс"},
     t:{en:"Training: from Excel to live dashboards and AI tools",ru:"Обучение: от Excel к живым дашбордам и AI-инструментам"},
     m:[{b:"~400",c:"blue",k:{en:"employees in MS Teams trainings",ru:"сотрудников на тренингах в MS Teams"}}],
