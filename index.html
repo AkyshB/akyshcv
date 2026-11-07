@@ -544,6 +544,44 @@ footer .wrap{padding-block:18px 26px; display:flex; flex-wrap:wrap; justify-cont
 .lightbox video{background:#000}
 .lightbox p{color:#fff; text-align:center; margin-top:12px; font-size:15px}
 .lightbox button{all:unset; cursor:pointer; position:absolute; top:max(16px,env(safe-area-inset-top,0px)); right:max(16px,env(safe-area-inset-right,0px)); color:#fff; font-size:14px; padding:8px 14px; border-radius:980px; background:rgba(255,255,255,.15)}
+/* Case cards: a tile that has a written-up case carries a "+" and opens the full story in a dialog (a bottom sheet on phones) */
+.tile.has-case{cursor:pointer}
+.tile.has-case .k{padding-right:40px}
+.case-plus{all:unset; box-sizing:border-box; position:absolute; top:18px; right:18px; width:30px; height:30px; border-radius:50%; background:var(--ink); cursor:pointer; transition:transform .25s cubic-bezier(.2,.8,.2,1)}
+.case-plus::before,.case-plus::after{content:""; position:absolute; left:50%; top:50%; width:12px; height:2px; border-radius:1px; background:var(--bg); transform:translate(-50%,-50%)}
+.case-plus::after{transform:translate(-50%,-50%) rotate(90deg)}
+.tile.has-case:hover .case-plus{transform:scale(1.12)}
+.case-plus:focus-visible{outline:2px solid var(--blue); outline-offset:3px}
+.tile.dark .case-plus{background:var(--dark-ink)}
+.tile.dark .case-plus::before,.tile.dark .case-plus::after{background:var(--dark)}
+.cs-wrap{position:fixed; inset:0; z-index:75; background:rgba(0,0,0,.5); -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px); display:flex; align-items:center; justify-content:center; padding:24px; animation:fade .25s ease}
+.cs-card{position:relative; display:flex; flex-direction:column; width:min(680px,100%); max-height:calc(100vh - 48px); max-height:calc(100dvh - 48px); overflow:hidden; background:var(--tile); color:var(--ink); border-radius:28px; box-shadow:0 30px 80px rgba(0,0,0,.35); animation:pop .45s cubic-bezier(.2,.8,.2,1)}
+.cs-body{overflow:auto; overscroll-behavior:contain; padding:48px 44px 40px; outline:none}
+.cs-x{all:unset; box-sizing:border-box; position:absolute; top:16px; right:16px; z-index:1; width:34px; height:34px; border-radius:50%; background:var(--bg2); cursor:pointer}
+.cs-x::before,.cs-x::after{content:""; position:absolute; left:50%; top:50%; width:14px; height:2px; border-radius:1px; background:var(--ink2); transform:translate(-50%,-50%) rotate(45deg)}
+.cs-x::after{transform:translate(-50%,-50%) rotate(-45deg)}
+.cs-x:focus-visible{outline:2px solid var(--blue); outline-offset:2px}
+.cs-co{margin:0 40px 8px 0; font-size:14px; font-weight:600; color:var(--ink2)}
+.cs-body h3{margin:0 0 24px; font-size:clamp(26px,3.4vw,34px); font-weight:700; line-height:1.12; letter-spacing:-.025em}
+.cs-m{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin:0 0 6px}
+.cs-m div{background:var(--bg2); border-radius:18px; padding:16px 18px; display:flex; flex-direction:column; gap:6px; min-width:0}
+.cs-m b{font-size:30px; font-weight:700; line-height:1; letter-spacing:-.03em; color:var(--gold)}
+.cs-m b.blue{color:var(--blue)}
+.cs-m span{font-size:14px; line-height:1.35; color:var(--ink2)}
+.cs-sec{margin-top:24px}
+.cs-sec h4{margin:0 0 6px; font-size:17px; font-weight:600; line-height:1.3}
+.cs-sec p{margin:0; font-size:16px; line-height:1.5; color:var(--ink2)}
+@keyframes sheetUp{from{transform:translateY(48px)}}
+@media (max-width:540px){
+  .cs-wrap{align-items:flex-end; padding:0}
+  .cs-card{width:100%; max-height:92vh; max-height:92dvh; border-radius:24px 24px 0 0; animation:sheetUp .35s cubic-bezier(.2,.8,.2,1)}
+  .cs-body{padding:46px 22px calc(28px + env(safe-area-inset-bottom,0px))}
+  .cs-m{grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px}
+  .cs-m div{padding:14px}
+  .cs-m div:last-child:nth-child(odd){grid-column:1/-1}
+  .cs-m b{font-size:26px}
+}
+@media (prefers-reduced-motion:reduce){ .cs-wrap,.cs-card{animation:none} }
 .toast{position:fixed; left:50%; bottom:max(22px, calc(env(safe-area-inset-bottom,0px) + 14px)); transform:translate(-50%,16px); background:var(--ink); color:var(--bg); font-size:14px; padding:11px 18px; border-radius:980px; opacity:0; pointer-events:none; transition:all .3s; z-index:80}
 .toast.on{opacity:1; transform:translate(-50%,0)}
 
@@ -905,7 +943,7 @@ const T = {
  s_sub:{en:"The country's first international wholesaler.",ru:"Первый международный оптовик в стране."},
  r_eyebrow:{en:"Results",ru:"Результаты"},
  r_title:{en:"Growth you can measure.",ru:"Рост, который видно в цифрах."},
- r_sub:{en:"METRO Kazakhstan, 2024–2026.",ru:"METRO Kazakhstan, 2024–2026."},
+ r_sub:{en:"METRO Kazakhstan and Interna Clinic, 2022–2026. Cards with + open the full case.",ru:"METRO Kazakhstan и Interna Clinic, 2022–2026. Карточки с + открывают кейс целиком."},
  rc_eyebrow:{en:"Recommendations",ru:"Рекомендации"},
  rc_title:{en:"In their words.",ru:"Их словами."},
  rc_sub:{en:"",ru:"Перевод с английского."},
@@ -1196,8 +1234,80 @@ const RES = [
   {f:"top300", big:"+84%", c:"blue", k:{en:"HoReCa TOP300 since launch",ru:"HoReCa TOP300 с запуска"}},
   {f:"bev38", big:"+38%", c:"blue", k:{en:"Beverages & beer",ru:"Напитки и пиво"}},
   {s:1, cls:"w4 dark", f:"tele", big:"31% → 74%", k:{en:"Telesales, built from zero",ru:"Телесейлз с нуля"}, p:{en:"Sales-team KPI attainment. Reached <strong>91%</strong> of Almaty's HoReCa base and about <strong>130%</strong> of pilot targets.",ru:"Выполнение KPI командой продаж. Охват <strong>91%</strong> HoReCa-базы Алматы и около <strong>130%</strong> целей пилота."}},
-  {s:1, f:"mc158", big:"+158%", c:"gold", k:{en:"Shrimp sales on chef master-class days",ru:"Продажи креветок в дни мастер-классов шефов"}}
+  {s:1, f:"mc158", big:"+158%", c:"gold", k:{en:"Shrimp sales on chef master-class days",ru:"Продажи креветок в дни мастер-классов шефов"}},
+  {s:1, f:"onb5", big:"&lt;5 min", c:"blue", k:{en:"To onboard a B2B customer, down from 25–30",ru:"На заведение B2B-клиента вместо 25–30"}},
+  {s:1, f:"lm16", big:"16/16", c:"gold", k:{en:"Inpatient beds filled, Interna Clinic",ru:"Коек стационара заняты, Interna Clinic"}, p:{en:"A lead magnet instead of a 12–18 month waitlist for the professor.",ru:"Лид-магнит вместо очереди к профессору на 12–18 месяцев."}},
+  {s:1, f:["train400","intcourses"], big:"~400", c:"blue", k:{en:"Employees trained in BI",ru:"Сотрудников обучил BI"}, p:{en:"Looker Studio and DataLens instead of static Excel reports.",ru:"Looker Studio и DataLens вместо статичных отчётов в Excel."}}
 ];
+
+/* Written-up cases. A tile showing any fact in `on` gets a "+" and opens the case; within one view each case attaches to
+   the first such tile only. Only percentages, ratios and counts here: no money amounts (METRO figures are confidential). */
+const CASES = {
+  onb:{on:["reg39","buy32","onb5"], co:{en:"METRO Kazakhstan · Case",ru:"METRO Kazakhstan · Кейс"},
+    t:{en:"B2B onboarding: the application is filled in at the meeting",ru:"Онбординг B2B-клиентов: заявка заполняется прямо на встрече"},
+    m:[{b:"+39%",c:"blue",k:{en:"B2B registrations, year over year",ru:"B2B-регистраций, год к году"}},
+       {b:"+32%",c:"blue",k:{en:"buying B2B customers, same acquisition budget",ru:"покупающих B2B-клиентов, без роста бюджета на привлечение"}},
+       {b:{en:"&lt;5 min",ru:"&lt;5 мин"},k:{en:"to set up a customer, down from 25–30",ru:"на заведение клиента вместо 25–30"}}],
+    s:[{h:{en:"Before",ru:"Что было"},
+        p:{en:"Marketing and field sales brought in B2B leads, but about 50% were lost at onboarding. Reps passed contacts on through WhatsApp, Telegram and calls. The call center rang chefs and store owners, often at a bad time, to collect 100+ fields by hand: legal entity, alcohol license, the exact location of the loading dock.",
+           ru:"Маркетинг и торговые приводили B2B-лиды, но около 50% терялись на онбординге. Контакты передавали через WhatsApp, Telegram и звонки. Колл-центр обзванивал шефов и владельцев магазинов, часто в неудобное время, и вручную собирал 100+ полей: юрлицо, лицензию на алкоголь, точку разгрузки."}},
+       {h:{en:"What I did",ru:"Что сделал"},
+        p:{en:"A landing-page form with every required field and document upload that the rep fills in together with the client during the meeting. Data goes to Google Sheets, and a Looker Studio dashboard shows reps the status of each application in real time.",
+           ru:"Лендинг-анкету со всеми полями и загрузкой документов: торговый заполняет её вместе с клиентом на встрече. Данные уходят в Google Sheets, а дашборд в Looker Studio показывает торговым статус каждой заявки в реальном времени."}},
+       {h:{en:"What didn't work at first",ru:"Что не сработало сначала"},
+        p:{en:"Reps saw 100 fields as busywork. I added smart defaults, conditional fields (the alcohol license appears only when needed), document compression and a leaderboard in Looker Studio. Then the call center became the bottleneck: operators copied data by hand into 7 unconnected systems. I turned the sheet into a batch queue and trained the shift on macros, and setting up a customer dropped from 25–30 minutes to under 5.",
+           ru:"Торговые сочли 100 полей бюрократией. Добавил умные значения по умолчанию, условные поля (лицензия на алкоголь появляется, только если нужна), сжатие документов и лидерборд в Looker Studio. Потом узким местом стал колл-центр: операторы вручную копировали данные в 7 несвязанных систем. Превратил таблицу в очередь пакетной обработки и обучил смену макросам, и заведение клиента сократилось с 25–30 минут до 5 и меньше."}}]},
+  ann:{on:["ann2x"], co:{en:"METRO Kazakhstan · Case",ru:"METRO Kazakhstan · Кейс"},
+    t:{en:"Anniversary campaign: fewer offers, twice the sales",ru:"Юбилейная кампания: меньше акций, вдвое больше продаж"},
+    m:[{b:"2×",k:{en:"sales vs. the previous year",ru:"продажи к прошлому году"}},
+       {b:{en:"2.5×",ru:"2,5×"},k:{en:"smaller budget",ru:"меньше бюджет"}},
+       {b:"16",c:"blue",k:{en:"offers instead of 60",ru:"акций вместо 60"}}],
+    s:[{h:{en:"The 15th anniversary",ru:"Как прошло 15-летие"},
+        p:{en:"METRO Kazakhstan launched “60 days, 60 offers” before I joined: a new aggressive one-day discount every day. It used 20% of the annual marketing budget. Sales reached 4× the spend, but with a 10–15% net retail margin the profit was thin. B2C shoppers didn't drive to out-of-town stores for a one-day deal, core B2B customers (HoReCa and convenience stores) were left aside, and the buying, marketing and store teams burned out after 60 launches in a row.",
+           ru:"Кампанию «60 дней — 60 предложений» METRO Kazakhstan запустила до моего прихода: каждый день новая агрессивная скидка на один день. Она заняла 20% годового маркетингового бюджета. Продажи в 4 раза превысили вложения, но при чистой марже ритейла 10–15% прибыль оказалась слабой. B2C-покупатели не ехали в гипермаркеты на окраинах ради скидки одного дня, ключевые B2B-клиенты (HoReCa и магазины у дома) остались в стороне, а закупки, маркетинг и магазины выгорели после 60 запусков подряд."}},
+       {h:{en:"What I did for the 16th",ru:"Что я сделал к 16-летию"},
+        p:{en:"I rebuilt the mechanics on data: 16 offers instead of 60, two a week. Monday to Thursday for B2B: restaurants, hotels and convenience stores got discounts on their core assortment on their slow days. Friday to Sunday for B2C: a family assortment in smaller packs.",
+           ru:"Пересобрал механику по данным: 16 акций вместо 60, по две в неделю. Пн–Чт для B2B: рестораны, отели и магазины у дома получали скидки на свой ключевой ассортимент в спокойные для них дни. Пт–Вс для B2C: семейный ассортимент в малой фасовке."}},
+       {h:{en:"Result",ru:"Результат"},
+        p:{en:"Sales doubled year over year on a budget 2.5 times smaller. The campaign became more profitable, and the teams were not overloaded.",
+           ru:"Продажи ×2 к прошлому году при бюджете в 2,5 раза меньше. Кампания стала прибыльнее, а команды не перегружены."}}]},
+  mc:{on:["mc158"], co:{en:"METRO Kazakhstan · Case",ru:"METRO Kazakhstan · Кейс"},
+    t:{en:"Chef master classes on the sales floor",ru:"Мастер-классы шефов в торговом зале"},
+    m:[{b:"+158%",k:{en:"shrimp sales on master-class days",ru:"продажи креветок в дни мастер-классов"}}],
+    s:[{h:{en:"What we did",ru:"Что делали"},
+        p:{en:"From time to time, chefs ran master classes right on the open sales floor of our stores. They showed how to cook a product at home, for example how to cook shrimp properly, and then shoppers tasted the dish.",
+           ru:"Время от времени шефы проводили мастер-классы прямо в открытой торговой зоне наших магазинов. Показывали, как приготовить продукт дома, например как правильно готовить креветки, а потом покупатели пробовали блюдо."}}]},
+  lm:{on:["lm16"], co:{en:"Interna Clinic · Case",ru:"Interna Clinic · Кейс"},
+    t:{en:"Clinic lead magnet: the professor's rounds instead of a waitlist",ru:"Лид-магнит клиники: обход профессора вместо очереди"},
+    m:[{b:"16/16",k:{en:"inpatient beds filled",ru:"коек стационара заняты"}},
+       {b:"0%",c:"blue",k:{en:"doctor's commission on inpatient stays, 70% on consultations",ru:"комиссии врачу в стационаре, на приёме 70%"}},
+       {b:{en:"12–18 mo",ru:"12–18 мес"},c:"blue",k:{en:"waitlist the patient skips",ru:"очереди, которую пациент обходит"}}],
+    s:[{h:{en:"The problem",ru:"Проблема"},
+        p:{en:"Patients came for the medical director, a professor with a strong reputation: his consultation cost 3.5 times the market rate and was booked 12–18 months ahead. A new 16-bed inpatient unit was underused: a 3-day minimum stay, high running costs, and patients saw no reason to check in without meeting the professor.",
+           ru:"Пациенты шли к медицинскому директору, профессору с большим именем: его консультация стоила в 3,5 раза дороже рынка, запись была на 12–18 месяцев вперёд. Новый стационар на 16 коек пустовал: минимум 3 дня, высокие расходы, и пациенты не видели смысла ложиться без встречи с профессором."}},
+       {h:{en:"The offer",ru:"Механика"},
+        p:{en:"We set aside an hour before clinic hours on Monday, Wednesday and Friday for the professor's rounds of the inpatient unit. A patient skips the waitlist by checking in for a 3-day diagnostics and observation package and gets a guaranteed personal review by the professor, 10–15 minutes.",
+           ru:"Выделили час перед приёмом в понедельник, среду и пятницу на обход стационара профессором. Пациент обходит очередь, если ложится на 3-дневный пакет диагностики и наблюдения, и гарантированно получает личный разбор у профессора, 10–15 минут."}},
+       {h:{en:"Why it pays",ru:"Почему это выгодно"},
+        p:{en:"The patient skips the queue and gets all diagnostics under one roof, with no outside tests before the consultation. The clinic fills all 16 beds. On consultations the doctor takes 70%, on inpatient stays 0%, so the whole ward margin goes to cover running costs.",
+           ru:"Пациент обходит очередь и проходит всю диагностику под одной крышей, без внешних анализов перед консультацией. Клиника заполняет все 16 коек. На приёме врач получает 70%, в стационаре 0%, поэтому вся маржа палаты идёт на покрытие расходов."}}]},
+  edu:{on:["train400","intcourses"], co:{en:"METRO Kazakhstan · Case",ru:"METRO Kazakhstan · Кейс"},
+    t:{en:"Training: from Excel to live dashboards and AI tools",ru:"Обучение: от Excel к живым дашбордам и AI-инструментам"},
+    m:[{b:"~400",c:"blue",k:{en:"employees in MS Teams trainings",ru:"сотрудников на тренингах в MS Teams"}}],
+    s:[{h:{en:"Data and BI",ru:"Данные и BI"},
+        p:{en:"Reporting lived in static Excel sheets. I ran company-wide MS Teams trainings for about 400 employees on Google Looker Studio and Yandex DataLens, and reporting moved to real-time dashboards.",
+           ru:"Отчётность жила в статичных таблицах Excel. Я провёл общекорпоративные тренинги в MS Teams для ~400 сотрудников по Google Looker Studio и Yandex DataLens, и отчётность перешла на дашборды в реальном времени."}},
+       {h:{en:"AI and no-code",ru:"AI и no-code"},
+        p:{en:"I taught the team to build browser-based HTML tools with AI that work offline and need no installed software, and to use prompts and copilots for presentations and content. I taught marketing strategy and no-code landing pages, and helped the pricing team build AI tools that automate pricing.",
+           ru:"Учил команду собирать с помощью AI браузерные HTML-инструменты, которые работают офлайн и не требуют установки программ, и использовать промпты и копилоты для презентаций и контента. Учил маркетинговой стратегии и no-code лендингам, помог отделу ценообразования собрать на AI инструменты автоматизации цен."}}]}
+};
+const caseSeen = new Set();
+function caseOf(x){
+  const ks = [].concat(x.f || []);
+  const id = Object.keys(CASES).find(c=>!caseSeen.has(c) && CASES[c].on.some(k=>ks.includes(k)));
+  if(id) caseSeen.add(id);
+  return id;
+}
 
 const QUOTES = [
   {id:"alkina", n:"Aizhan Alkina", img:"media/rec-alkina.jpg", top:1, d:{en:"27 Oct 2026",ru:"27 октября 2026"},
@@ -1411,7 +1521,9 @@ function tile(x){
     <button type="button" class="tile-ph" data-zoom="${x.photo.full}" data-cap="${tr(x.photo.c)}"><img src="${x.photo.src}" alt="${tr(x.photo.t)}" loading="lazy"></button>
     <div class="txt">${x.k?`<p class="k">${tr(x.k)}</p>`:""}${x.h?`<h3>${tr(x.h)}</h3>`:""}${x.p?`<p>${tr(x.p)}</p>`:""}</div>
   </div>`;
-  return `<div class="tile rv ${x.cls||""}">
+  const cs = caseOf(x);
+  return `<div class="tile rv ${x.cls||""}${cs?" has-case":""}"${cs?` data-case="${cs}"`:""}>
+    ${cs?`<button type="button" class="case-plus" aria-haspopup="dialog" aria-label="${ru()?"Открыть кейс":"Open the case"}: ${tr(CASES[cs].t)}"></button>`:""}
     ${x.k?`<p class="k">${tr(x.k)}</p>`:""}
     ${x.big?`<div class="big num ${x.c||""}">${fmtBig(x.big)}</div>`:""}
     ${x.h?`<h3>${tr(x.h)}</h3>`:""}
@@ -1424,6 +1536,7 @@ function tile(x){
   </div>`;
 }
 function render(){
+  caseSeen.clear();
   document.documentElement.lang = L;
   document.documentElement.dataset.aud = A;
   const aud = AUD[A], TX = k => aud.t?.[k] ?? T[k];
@@ -1678,6 +1791,8 @@ document.addEventListener("click", e=>{
     try{ navigator.clipboard.writeText(cp.dataset.copy).then(()=>toast(ru()?"Скопировано":"Copied"), fallback); }catch(_){ fallback(); }
     return;
   }
+  const ct = e.target.closest(".tile.has-case");
+  if(ct && !e.target.closest("a,[data-zoom],[data-go]") && !String(getSelection()).trim()){ openCase(ct.dataset.case, ct.querySelector(".case-plus")); return; }
   const z = e.target.closest("[data-zoom]");
   if(z){ lightbox(z.dataset.zoom, z.dataset.cap, z.dataset.video); }
 });
@@ -1694,6 +1809,26 @@ function lightbox(src,cap,video){
   const esc=e=>{ if(e.key==="Escape") close(); };
   d.addEventListener("click",e=>{ if(e.target===d||e.target.tagName==="BUTTON") close(); });
   addEventListener("keydown",esc); document.body.appendChild(d); d.querySelector("button").focus();
+}
+
+/* a case opens as a dialog (a bottom sheet on phones); Esc, the cross or a tap outside closes it and focus returns to the "+" */
+function openCase(id, opener){
+  const c = CASES[id]; if(!c) return;
+  const d = document.createElement("div"); d.className = "cs-wrap";
+  d.setAttribute("role","dialog"); d.setAttribute("aria-modal","true"); d.setAttribute("aria-labelledby","cs-t");
+  d.innerHTML = `<article class="cs-card"><button type="button" class="cs-x" aria-label="${ru()?"Закрыть":"Close"}"></button>
+    <div class="cs-body" tabindex="-1"><p class="cs-co">${tr(c.co)}</p><h3 id="cs-t">${tr(c.t)}</h3>
+    <div class="cs-m">${c.m.map(m=>`<div><b class="num ${m.c||""}">${tr(m.b)}</b><span>${tr(m.k)}</span></div>`).join("")}</div>
+    ${c.s.map(x=>`<div class="cs-sec"><h4>${tr(x.h)}</h4><p>${tr(x.p)}</p></div>`).join("")}</div></article>`;
+  const root = document.documentElement, ov = root.style.overflow, body = d.querySelector(".cs-body"), xb = d.querySelector(".cs-x");
+  const close = () => { d.remove(); root.style.overflow = ov; removeEventListener("keydown", key); opener && opener.focus({preventScroll:true}); };
+  const key = e => {
+    if(e.key==="Escape") close();
+    else if(e.key==="Tab"){ e.preventDefault(); (document.activeElement===xb ? body : xb).focus(); }
+  };
+  d.addEventListener("click", e=>{ if(e.target===d || e.target.closest(".cs-x")) close(); });
+  addEventListener("keydown", key); root.style.overflow = "hidden";
+  document.body.appendChild(d); body.focus({preventScroll:true});
 }
 
 /* ===== carousel ===== */
