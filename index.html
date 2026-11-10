@@ -1016,7 +1016,7 @@ const GLANCE = [
     {f:"ind5", en:"5 industries: HoReCa, wholesale, retail, health and fintech.", ru:"5 индустрий: HoReCa, опт, ритейл, медицина, финтех."},
     {f:"b2b", en:"B2B and B2C.", ru:"B2B и B2C."}]},
   {l:{en:"Management",ru:"Управление"}, parts:[
-    {f:["func12","teams4"], en:"A department of 4 teams and 12 functions.", ru:"Департамент из 4 команд и 12 функций."},
+    {f:["func8","teams4"], en:"A department of 4 teams and 8 functions.", ru:"Департамент из 4 команд и 8 функций."},
     {f:"budget", en:"I own the annual budget.", ru:"Отвечаю за годовой бюджет."},
     {f:"board", en:"I work directly with the Board of Directors.", ru:"Работаю напрямую с советом директоров."},
     {f:"vp", en:"Presented our results to the VP of METRO AG for Eastern Europe.", ru:"Защищал итоги перед вице-президентом METRO AG по Восточной Европе."}]},
@@ -1219,10 +1219,10 @@ const SCALE = [
 /* METRO Kazakhstan's 2025 in one minute: a reel of the team's work (video from Beibit) */
 const METRO_CLIP = {video:"media/v-metro.mp4", prev:"media/v-metro-p.mp4", src:"media/v-metro.jpg", c:{en:"METRO Kazakhstan's 2025 in one minute",ru:"2025 год METRO Kazakhstan за минуту"}};
 /* the department tile tells the team's make-up in full, so it owns these facts in the detailed view */
-const ORG_F = ["func12","teams4","dept","mkt_teams"];
+const ORG_F = ["func8","teams4","dept","mkt_teams"];
 const ORG = [
-  {t:{en:"Growth",ru:"Рост"}, items:["CRM","Digital marketing","E-commerce","Social media","ATL / BTL","PR & GR","Contact center","Telesales"]},
-  {t:{en:"Profitability",ru:"Прибыльность"}, items:["Price implementation","Performance development","Traders pricing","HoReCa pricing"]}
+  {t:{en:"Growth",ru:"Рост"}, items:["Performance Marketing","SMM","PR","ATL / BTL","Telesales","Call Center"]},
+  {t:{en:"Profitability",ru:"Прибыльность"}, items:["Pricing Analytics","Pricing Operations"]}
 ];
 
 const RES = [
@@ -1396,7 +1396,7 @@ const CHAPTERS = []; /* [{t:seconds, l:{en,ru}}] */
    where several lines are given, the first whose facts are still free is shown. */
 const JOBS = [
   {t:{en:"Head of Growth & Profitability · METRO Kazakhstan",ru:"Head of Growth & Profitability · METRO Kazakhstan"}, d:{en:"2025 — now",ru:"2025 — н.в."},
-   s:[{f:"teams4", en:"Lead the Growth & Profitability department of 4 teams: Marketing & PR, Pricing & Revenue, Telesales and Call Center.",ru:"Руковожу департаментом Growth & Profitability из 4 команд: Marketing & PR, Pricing & Revenue, Telesales и Call Center."},
+   s:[{f:"teams4", en:"Lead the Growth & Profitability department: 4 teams and 8 functions (Performance Marketing, SMM, PR, ATL/BTL, Telesales, Call Center, Pricing Analytics, Pricing Operations).",ru:"Руковожу департаментом Growth & Profitability: 4 команды и 8 функций (Performance Marketing, SMM, PR, ATL/BTL, Telesales, Call Center, Pricing Analytics, Pricing Operations)."},
       {f:"growthown", en:"Own customer-base growth and the profitability of customers, stores and delivery.",ru:"Отвечаю за рост клиентской базы и прибыльность клиентов, магазинов и доставки."}],
    sc:[
    {t:"pmcga", f:"kpis", en:"KPIs: store traffic, online orders, active customers, gross margin, contribution margin, Total Income and price index.",ru:"KPI: трафик магазинов, онлайн-заказы, активные клиенты, gross margin, contribution margin, Total Income, price index."},
@@ -1412,7 +1412,7 @@ const JOBS = [
    {t:"pc", f:"match", en:"Built a sales tool matching customer purchase lists to METRO's range (7 days → 15 minutes).",ru:"Сделал инструмент сопоставления закупочных списков клиентов с ассортиментом (7 дней → 15 минут)."},
    {t:"pa", f:"intcourses", en:"Internal courses on Tilda, Looker Studio, AI at work and vibe coding.",ru:"Внутренние курсы по Tilda, Looker Studio, AI в работе и vibe coding."}]},
   {t:{en:"Head of Marketing & PR · METRO Kazakhstan",ru:"Руководитель маркетинга и PR · METRO Kazakhstan"}, d:"2024 — 2025",
-   s:[{f:["mkt_teams","brands"], en:"Led the Marketing & PR function: 5 teams (Performance Marketing, SMM, PR, ATL/BTL, Call Center); METRO, private labels and the MyMart franchise.",ru:"Руководил функцией Marketing & PR: 5 команд (Performance Marketing, SMM, PR, ATL/BTL, Call Center); METRO, СТМ и франшиза MyMart."},
+   s:[{f:["mkt_teams","brands"], en:"Led the Marketing & PR function: 2 teams and 5 functions (Performance Marketing, SMM, PR, ATL/BTL, Call Center); METRO, private labels and the MyMart franchise.",ru:"Руководил функцией Marketing & PR: 2 команды и 5 функций (Performance Marketing, SMM, PR, ATL/BTL, Call Center); METRO, СТМ и франшиза MyMart."},
       {f:"brands", en:"Led the Marketing & PR function for METRO, private labels and the MyMart franchise.",ru:"Руководил функцией Marketing & PR: METRO, СТМ и франшиза MyMart."}],
    sc:[
    {t:"pmcga", f:"acq", en:"Customer acquisition, activation and retention; global and local campaigns and channel performance.",ru:"Привлечение, активация и удержание клиентов; глобальные и локальные кампании, эффективность каналов."},
@@ -1588,7 +1588,7 @@ function render(){
     $("#scale-grid").innerHTML = pack(keep(SCALE)).map(s=>tile({k:s.k, big:s.big, c:s.c, cls:s.cls})).join("");
     $("#scale-clip").innerHTML = `<button type="button" class="zoom" ${zoomData(METRO_CLIP)}>${tileMedia(METRO_CLIP, tr(METRO_CLIP.c))}<span class="cap">${tr(METRO_CLIP.c)}</span></button>`;
     $("#scale-dept").innerHTML =
-      `<div class="tile w6 dark rv"><p class="k">${ru()?"Мой департамент":"My department"}</p><h3>${ru()?"4 команды и 12 функций в двух блоках: рост и прибыльность.":"4 teams and 12 functions in two blocks: growth and profitability."}</h3>
+      `<div class="tile w6 dark rv"><p class="k">${ru()?"Мой департамент":"My department"}</p><h3>${ru()?"4 команды и 8 функций в двух блоках: рост и прибыльность.":"4 teams and 8 functions in two blocks: growth and profitability."}</h3>
        <div class="org">${ORG.map(g=>`<div><b>${tr(g.t)}</b>${g.items.map(i=>`<span>${i}</span>`).join("")}</div>`).join("")}</div></div>`;
     claim({f:ORG_F});
     $("#why-grid").innerHTML = pack(WHY.map(w=>{
