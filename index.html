@@ -482,6 +482,8 @@ section .tile{background:var(--bg2)}
 .job p{grid-column:1/-1; font-size:15px; color:var(--ink2)}
 .job .jb{grid-column:1/-1; display:grid; gap:7px; margin:8px 0 2px; padding:0; list-style:none}
 .job .jb li{position:relative; padding-left:18px; font-size:15px; line-height:1.45; color:var(--ink)}
+.job .jsub{margin-top:10px; font-size:12px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--ink)}
+.job .jsub + .jb{margin-top:4px}
 .job .jb li::before{content:""; position:absolute; left:3px; top:.62em; width:5px; height:5px; border-radius:50%; background:var(--blue)}
 @media (max-width:540px){ .job{grid-template-columns:1fr} }
 
@@ -1014,7 +1016,7 @@ const GLANCE = [
     {f:"ind5", en:"5 industries: HoReCa, wholesale, retail, health and fintech.", ru:"5 индустрий: HoReCa, опт, ритейл, медицина, финтех."},
     {f:"b2b", en:"B2B and B2C.", ru:"B2B и B2C."}]},
   {l:{en:"Management",ru:"Управление"}, parts:[
-    {f:"func12", en:"A department of 12 functions.", ru:"Департамент из 12 функций."},
+    {f:["func12","teams8"], en:"A department of 8 teams and 12 functions.", ru:"Департамент из 8 команд и 12 функций."},
     {f:"budget", en:"I own the annual budget.", ru:"Отвечаю за годовой бюджет."},
     {f:"board", en:"I work directly with the Board of Directors.", ru:"Работаю напрямую с советом директоров."},
     {f:"vp", en:"Presented our results to the VP of METRO AG for Eastern Europe.", ru:"Защищал итоги перед вице-президентом METRO AG по Восточной Европе."}]},
@@ -1090,7 +1092,7 @@ const AUD = {
     more:{en:["Two more proofs","Why me and METRO's scale","More results","UltraFresh, Young Talents and partner projects","Tools I built","Awards, talks and the podcast","Experience in detail","Two more recommendations"],
           ru:["Ещё два доказательства","Почему я и масштаб METRO","Ещё результаты","Кейсы UltraFresh, Young Talents и проекты с партнёрами","Инструменты, которые я сделал","Награды, выступления и подкаст","Опыт с деталями","Ещё две рекомендации"]},
     t:{
-      h_role:{en:"Brand, performance and PR that drive growth.",ru:"Бренд, перформанс и PR, которые дают рост."},
+      h_role:{en:"Marketing measured in revenue and customers, not reach.",ru:"Маркетинг, который считают в выручке и клиентах, а не в охватах."},
       h_sub:{en:"8+ years in marketing and PR, agency side and in-house.",ru:"8+ лет в маркетинге и PR, в агентстве и in-house."},
       c_sub:{en:"Open to CMO, Head of Marketing and Head of Marketing & PR roles. Based in Almaty, ready for Astana and travel. Telegram, WhatsApp or phone is fastest.",ru:"Рассматриваю роли CMO, Head of Marketing и Head of Marketing & PR. Алматы, готов к Астане и командировкам. Быстрее всего в Telegram, WhatsApp или по телефону."}
     },
@@ -1217,7 +1219,7 @@ const SCALE = [
 /* METRO Kazakhstan's 2025 in one minute: a reel of the team's work (video from Beibit) */
 const METRO_CLIP = {video:"media/v-metro.mp4", prev:"media/v-metro-p.mp4", src:"media/v-metro.jpg", c:{en:"METRO Kazakhstan's 2025 in one minute",ru:"2025 год METRO Kazakhstan за минуту"}};
 /* the department tile tells the team's make-up in full, so it owns these facts in the detailed view */
-const ORG_F = ["func12","dept","mkt_teams"];
+const ORG_F = ["func12","teams8","dept","mkt_teams"];
 const ORG = [
   {t:{en:"Growth",ru:"Рост"}, items:["CRM","Digital marketing","E-commerce","Social media","ATL / BTL","PR & GR","Contact center","Telesales"]},
   {t:{en:"Profitability",ru:"Прибыльность"}, items:["Price implementation","Performance development","Traders pricing","HoReCa pricing"]}
@@ -1389,33 +1391,51 @@ const SLIDES = [
 const POD = {src:"media/oylaout-s2e11.mp3", title:{en:"Why do restaurants cut corners on your safety?",ru:"Почему рестораны экономят на вашей безопасности?"}};
 const CHAPTERS = []; /* [{t:seconds, l:{en,ru}}] */
 
-/* Experience, kept by hand next to cv/cv-data.js. s: the role's scope, p: one-line summaries for the short view,
-   b: the detailed view's bullets, tagged g/p/m/c/a so the chosen focus's come first. Every line names its facts in f;
+/* Experience, kept by hand next to cv/cv-data.js. s: the role's lead line, sc: its scope (detailed view), p: one-line summaries
+   for the short view, b: the detailed view's key results, tagged g/p/m/c/a so the chosen focus's come first. Every line names its facts in f;
    where several lines are given, the first whose facts are still free is shown. */
 const JOBS = [
   {t:{en:"Head of Growth & Profitability · METRO Kazakhstan",ru:"Head of Growth & Profitability · METRO Kazakhstan"}, d:{en:"2025 — now",ru:"2025 — н.в."},
-   s:[{f:"dept", en:"Took on pricing, revenue and telesales on top of marketing & PR.",ru:"К маркетингу и PR добавились ценообразование, выручка и телесейлз."}],
+   s:[{f:"teams8", en:"Lead the Growth & Profitability department of 8 teams: marketing & PR, pricing, telesales and the call center.",ru:"Руковожу департаментом Growth & Profitability из 8 команд: маркетинг и PR, ценообразование, телесейлз и колл-центр."},
+      {f:"growthown", en:"Own customer-base growth and the profitability of customers, stores and delivery.",ru:"Отвечаю за рост клиентской базы и прибыльность клиентов, магазинов и доставки."}],
+   sc:[
+   {t:"pmcga", f:"kpis", en:"KPIs: store traffic, online orders, active customers, gross margin, contribution margin, Total Income and price index.",ru:"KPI: трафик магазинов, онлайн-заказы, активные клиенты, gross margin, contribution margin, Total Income, price index."},
+   {t:"mg", f:["brandstrat","priceperc","budget"], en:"Marketing and PR strategy, the annual marketing budget, brand awareness and price perception.",ru:"Маркетинговая и PR-стратегия, годовой маркетинговый бюджет, знание бренда и ценовое восприятие."},
+   {t:"mg", f:["brandstrat","priceperc"], en:"Marketing and PR strategy, brand awareness and price perception.",ru:"Маркетинговая и PR-стратегия, знание бренда и ценовое восприятие."},
+   {t:"cga", f:["revmgmt","segments"], en:"Pricing strategy and revenue management across 5 segments: HoReCa, International QSR, Traders, B2B2C and B2C.",ru:"Ценовая стратегия и revenue management в 5 сегментах: HoReCa, International QSR, Traders, B2B2C, B2C."},
+   {t:"pmcga", f:["metroag","gov"], en:"Local rollout of METRO AG global initiatives; work with METRO AG headquarters and government authorities on pricing.",ru:"Запуск глобальных инициатив METRO AG на рынке, работа с HQ METRO AG и госорганами по ценообразованию."},
+   {t:"pmcga", f:"metroag", en:"Local rollout of METRO AG global initiatives and work with METRO AG headquarters.",ru:"Запуск глобальных инициатив METRO AG на рынке и работа с HQ METRO AG."}],
    b:[
-   {t:"cga", f:"kpis", en:"Pricing strategy and revenue management; KPIs: gross margin, contribution margin, Total Income and price index.",ru:"Pricing strategy и revenue management; KPI: gross margin, contribution margin, Total Income и price index."},
-   {t:"mg", f:["brandstrat","priceperc"], en:"Own brand awareness, price perception and the Marketing & PR strategy.",ru:"Отвечаю за brand awareness, price perception, маркетинговую и PR-стратегию."},
-   {t:"cga", f:"gov", en:"Work with government authorities on pricing.",ru:"Взаимодействие с госорганами по ценообразованию."},
-   {t:"pa", f:["dash360","intcourses"], en:"Analytics tools with a 360° view of key metrics; internal courses on Tilda, Looker Studio, AI at work and vibe coding.",ru:"Аналитические инструменты с 360° view ключевых метрик; внутренние курсы по Tilda, Looker Studio, AI в работе и vibe coding."}]},
+   {t:"cga", f:"vat", en:"Repriced the full assortment after the VAT increase from 12% to 16%, with no operational disruption.",ru:"Переоценил весь ассортимент после повышения НДС с 12% до 16% без сбоев в операционке."},
+   {t:"pmcga", f:"posm", en:"Built a POSM creation tool (2 days → 20 minutes), adopted by METRO/MAKRO in Serbia, Romania, Spain and Portugal.",ru:"Сделал инструмент для POSM (2 дня → 20 минут), его внедрили METRO/MAKRO в Сербии, Румынии, Испании и Португалии."},
+   {t:"pcga", f:["pidx","dash360"], en:"Moved the company from manual Excel reports to real-time dashboards: Price Index and a 360° view of key metrics.",ru:"Перевёл компанию с ручных Excel-отчётов на real-time дашборды: Price Index и 360° view ключевых метрик."},
+   {t:"pc", f:"match", en:"Built a sales tool matching customer purchase lists to METRO's range (7 days → 15 minutes).",ru:"Сделал инструмент сопоставления закупочных списков клиентов с ассортиментом (7 дней → 15 минут)."},
+   {t:"pa", f:"intcourses", en:"Internal courses on Tilda, Looker Studio, AI at work and vibe coding.",ru:"Внутренние курсы по Tilda, Looker Studio, AI в работе и vibe coding."}]},
   {t:{en:"Head of Marketing & PR · METRO Kazakhstan",ru:"Руководитель маркетинга и PR · METRO Kazakhstan"}, d:"2024 — 2025",
-   s:[{f:["mkt_teams","brands"], en:"Performance, SMM, PR and ATL/BTL teams; METRO, private labels and the MyMart franchise.",ru:"Команды Performance, SMM, PR и ATL/BTL; METRO, СТМ и франшиза MyMart."},
-      {f:"brands", en:"Brands: METRO, private labels and the MyMart franchise.",ru:"Бренды: METRO, СТМ и франшиза MyMart."}],
+   s:[{f:["mkt_teams","brands"], en:"Led the Marketing & PR function: 5 teams (Performance Marketing, SMM, PR, ATL/BTL, Call Center); METRO, private labels and the MyMart franchise.",ru:"Руководил функцией Marketing & PR: 5 команд (Performance Marketing, SMM, PR, ATL/BTL, Call Center); METRO, СТМ и франшиза MyMart."},
+      {f:"brands", en:"Led the Marketing & PR function for METRO, private labels and the MyMart franchise.",ru:"Руководил функцией Marketing & PR: METRO, СТМ и франшиза MyMart."}],
+   sc:[
+   {t:"pmcga", f:"acq", en:"Customer acquisition, activation and retention; global and local campaigns and channel performance.",ru:"Привлечение, активация и удержание клиентов; глобальные и локальные кампании, эффективность каналов."},
+   {t:"pmca", f:"funnel", en:"Funnel and unit economics: CPM, cost per registration, CAC, retention and LTV.",ru:"Воронка и юнит-экономика: CPM, стоимость регистрации, CAC, retention, LTV."},
+   {t:"pm", f:"cjcx", en:"Digital channels: the MCompanion app and the MShop e-commerce delivery site, owning CJ and CX.",ru:"Цифровые каналы: приложение MCompanion и e-commerce-доставка MShop, отвечал за CJ и CX."}],
    b:[
-   {t:"mg", f:"traffic", en:"Year over year: social audience +21%, website traffic +31%, store traffic +13%.",ru:"Год к году: аудитория соцсетей +21%, трафик сайта +31%, посещаемость магазинов +13%."},
-   {t:"ma", f:"funnel", en:"Managed the funnel and unit economics: CPM, cost per registration, CAC, retention and LTV.",ru:"Управлял воронкой и юнит-экономикой: CPM, стоимость регистрации, CAC, retention, LTV."},
+   {t:"mga", f:"traffic", en:"Year over year: social audience +21%, website traffic +31%, store traffic +13%.",ru:"Год к году: аудитория соцсетей +21%, трафик сайта +31%, посещаемость магазинов +13%."},
+   {t:"mcga", f:["reg39","buy32","onb5"], en:"New B2B registrations +39% and buying B2B customers +32% in a year with no budget increase; customer setup 25–30 minutes → under 5.",ru:"Новые B2B-регистрации +39%, покупающие B2B-клиенты +32% за год без роста бюджета; заведение клиента 25–30 минут → меньше 5."},
+   {t:"mga", f:["ann2x","ram2x"], en:"Anniversary campaign sales 2× year over year on a 2.5× smaller budget; Ramadan campaign at 2× the forecast.",ru:"Продажи юбилейной кампании ×2 к прошлому году при бюджете в 2,5 раза меньше; Рамадан в 2 раза выше прогноза."},
+   {t:"cg", f:"tele", en:"Built a telesales team from zero: sales-team KPI attainment 31% → 74%.",ru:"Создал телесейлз с нуля: выполнение KPI командой 31% → 74%."},
    {t:"pmga", f:"b2bplat", en:"Built a digital B2B registration platform that centralized lead and customer data.",ru:"Создал цифровую платформу регистрации B2B-клиентов, централизовал лиды и клиентские данные."},
    {t:"mga", f:["partners","research"], en:"Partnerships with WhereToEat 2025 and Qonaq Expo 2026; research of 1,300 HoReCa and retail businesses in 9 cities.",ru:"Партнёрства с WhereToEat 2025 и Qonaq Expo 2026; исследование 1 300 предприятий HoReCa и ритейла в 9 городах."}]},
   {t:{en:"Head of Marketing → Commercial · Interna Clinic",ru:"Маркетинг → коммерция · Interna Clinic"}, d:"2022 — 2024",
    p:[{f:["clinic","int_occ","int_rep"], en:"Launched a clinic from zero; occupancy from 40% to 130%, repeat visits from 15% to 70%.",ru:"Запустил клинику с нуля: загрузка с 40% до 130%, повторные визиты с 15% до 70%."},
       {f:"clinic", en:"Launched a clinic from zero.",ru:"Запустил клинику с нуля."}],
+   s:[{f:"intscope", en:"Owned the whole commercial function of a new clinic: marketing, sales, the call center and the patient base.",ru:"Отвечал за весь коммерческий блок новой клиники: маркетинг, продажи, колл-центр и клиентскую базу."}],
+   sc:[
+   {t:"pmcga", f:"intstrat", en:"Commercial and marketing strategy, revenue and occupancy, pricing and service packages.",ru:"Коммерческая и маркетинговая стратегия, выручка и загрузка, ценовая политика и пакеты услуг."},
+   {t:"pmcga", f:"clinic", en:"Brand from zero: naming, brand identity, website, CRM and go-to-market.",ru:"Бренд с нуля: нейминг, айдентика, сайт, CRM и выход на рынок."}],
    b:[
-   {t:"pmcga", f:"clinic", en:"Launched a new healthcare business from zero: naming, brand identity, go-to-market, website, CRM and customer communications.",ru:"Запустил клинику с нуля: нейминг, айдентика, go-to-market, сайт, CRM и клиентские коммуникации."},
    {t:"pmcga", f:"int_occ", en:"Clinic occupancy 40% → 130%, with a waiting list.",ru:"Загрузка клиники 40% → 130%, появился лист ожидания."},
-   {t:"pmcga", f:["int_crm","int_ticket"], en:"CRM segmentation of 15,000+ patients raised the average ticket by 20%.",ru:"CRM-сегментация 15 000+ пациентов подняла средний чек на 20%."},
-   {t:"pcga", f:"int_rep", en:"Launched a call center; repeat-visit conversion 15% → 70%.",ru:"Запустил колл-центр; конверсия в повторный визит 15% → 70%."}]},
+   {t:"pcga", f:"int_rep", en:"Launched a call center; repeat visits 15% → 70%.",ru:"Запустил колл-центр; повторные визиты 15% → 70%."},
+   {t:"pmcga", f:["int_crm","int_ticket"], en:"CRM segmentation of 15,000+ patients raised the average ticket by 20%.",ru:"CRM-сегментация 15 000+ пациентов подняла средний чек на 20%."}]},
   {t:{en:"Marketing Manager · Metayasi, Abu Dhabi",ru:"Маркетинг-менеджер · Metayasi, Абу-Даби"}, d:"2022",
    p:[{f:"dd", en:"Go-to-market for Digital Dirham, a Web3 product.",ru:"Вывод на рынок Web3-продукта Digital Dirham."}],
    b:[{t:"pmcga", f:"dd", en:"Go-to-market for Digital Dirham, a new Web3 product: positioning, visual concept and communication platform; built the marketing team.",ru:"Вывод на рынок Web3-продукта Digital Dirham: позиционирование, визуальная концепция и коммуникационная платформа; собрал маркетинговую команду."}]},
@@ -1568,7 +1588,7 @@ function render(){
     $("#scale-grid").innerHTML = pack(keep(SCALE)).map(s=>tile({k:s.k, big:s.big, c:s.c, cls:s.cls})).join("");
     $("#scale-clip").innerHTML = `<button type="button" class="zoom" ${zoomData(METRO_CLIP)}>${tileMedia(METRO_CLIP, tr(METRO_CLIP.c))}<span class="cap">${tr(METRO_CLIP.c)}</span></button>`;
     $("#scale-dept").innerHTML =
-      `<div class="tile w6 dark rv"><p class="k">${ru()?"Мой департамент":"My department"}</p><h3>${ru()?"12 функций в двух блоках: рост и прибыльность.":"12 functions in two blocks: growth and profitability."}</h3>
+      `<div class="tile w6 dark rv"><p class="k">${ru()?"Мой департамент":"My department"}</p><h3>${ru()?"8 команд и 12 функций в двух блоках: рост и прибыльность.":"8 teams and 12 functions in two blocks: growth and profitability."}</h3>
        <div class="org">${ORG.map(g=>`<div><b>${tr(g.t)}</b>${g.items.map(i=>`<span>${i}</span>`).join("")}</div>`).join("")}</div></div>`;
     claim({f:ORG_F});
     $("#why-grid").innerHTML = pack(WHY.map(w=>{
@@ -1612,14 +1632,20 @@ function render(){
   const tag = A==="general" ? "g" : A[0];
   const first = list => { const x = (list || []).find(free); return x ? claim(x) : null; };
   $("#jobs").innerHTML = JOBS.map(j=>{
-    let lead, b = [];
+    let lead, sc = [], b = [];
+    const byTag = list => (list || []).slice().sort((x,y)=>y.t.includes(tag) - x.t.includes(tag));
     if(full){
+      /* the hh.kz format: what the role covered (lead and scope), then its 3–4 main results */
       lead = first(j.s);
-      b = keep((j.b || []).slice().sort((x,y)=>y.t.includes(tag) - x.t.includes(tag))).slice(0,4);
-      if(!lead && !b.length) lead = first(j.p);
-      if(!lead && b.length===1) lead = b.pop();
+      sc = keep(byTag(j.sc)).slice(0,4);
+      b = keep(byTag(j.b)).slice(0,4);
+      if(!lead && !sc.length && !b.length) lead = first(j.p);
+      if(!lead && !sc.length && b.length===1) lead = b.pop();
     } else lead = first([...(j.p || []), ...(j.s || [])]);
-    return `<div class="job"><h3>${tr(j.t)}</h3><span class="d num">${tr(j.d)}</span>${lead?`<p>${tr(lead)}</p>`:""}${b.length?`<ul class="jb">${b.map(x=>`<li>${tr(x)}</li>`).join("")}</ul>`:""}</div>`;
+    const ul = xs => `<ul class="jb">${xs.map(x=>`<li>${tr(x)}</li>`).join("")}</ul>`;
+    return `<div class="job"><h3>${tr(j.t)}</h3><span class="d num">${tr(j.d)}</span>${lead?`<p>${tr(lead)}</p>`:""}`
+      + (sc.length ? `<p class="jsub">${ru()?"Зона ответственности":"Scope"}</p>${ul(sc)}` : "")
+      + (b.length ? (sc.length ? `<p class="jsub">${ru()?"Ключевые результаты":"Key results"}</p>` : "") + ul(b) : "") + `</div>`;
   }).join("");
   if(full && aud.proof) $('#path [data-k="p_eyebrow"]').textContent = `${tr(T.p_eyebrow)} · ${tr(aud.role || aud.chip)}`;
 
