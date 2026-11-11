@@ -63,6 +63,7 @@ body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-in
 .links a{font-size:12px; color:var(--ink); opacity:.8; white-space:nowrap}
 .links a:hover{opacity:1; text-decoration:none}
 .links a.on{opacity:1; font-weight:600}
+.links a.nav-ext{opacity:1; color:var(--blue); font-weight:600}
 .pill-btn{all:unset; cursor:pointer; font-size:12px; font-weight:500; padding:5px 11px; border-radius:980px; background:var(--blue); color:#fff; white-space:nowrap}
 .pill-btn:focus-visible{outline:2px solid var(--blue); outline-offset:2px}
 .lang-sw{all:unset; cursor:pointer; font-size:12px; color:var(--ink2); white-space:nowrap}
@@ -189,6 +190,22 @@ html[data-view="short"]:not([data-aud="general"]) #recs{margin-top:0; padding-to
 .tile-ph:hover img{transform:scale(1.03)}
 .tile-ph:focus-visible,.mini-ph:focus-visible{outline:2px solid var(--blue); outline-offset:3px}
 @media (max-width:760px){ .tile.ph-tile{grid-template-columns:1fr; gap:16px; padding:14px} .ph-tile .txt{padding:0 8px 10px} }
+.demo-btn{all:unset; box-sizing:border-box; cursor:pointer; display:grid; grid-template-columns:88px minmax(0,1fr); gap:12px; align-items:center; padding:8px 12px 8px 8px; border-radius:16px; background:var(--bg2); margin-top:auto}
+.demo-btn:hover{box-shadow:inset 0 0 0 1px var(--blue)}
+.demo-btn:focus-visible{outline:2px solid var(--blue); outline-offset:2px}
+.demo-btn img{width:88px; aspect-ratio:16/10; object-fit:cover; border-radius:10px; display:block}
+.demo-btn span{display:grid; gap:2px}
+.demo-btn b{font-size:15px; font-weight:600; color:var(--blue)}
+.demo-btn b::before{content:"▶ "; font-size:11px; vertical-align:1px}
+.demo-btn small{font-size:12px; color:var(--ink2)}
+.cs-card.tool{width:min(900px,100%)}
+.cs-card.tool .cs-body{padding-top:40px}
+.tool-vid{position:relative; margin:0 0 18px; border-radius:16px; overflow:hidden; background:#000; aspect-ratio:16/10}
+.tool-vid video{position:absolute; inset:0; width:100%; height:100%; display:block; background:#000}
+.tool-vid .dp-tag{position:absolute; right:10px; top:10px; z-index:1; pointer-events:none; font-size:11px; font-weight:600; color:#fff; background:rgba(0,0,0,.55); padding:5px 9px; border-radius:980px}
+.tool-disc{margin-top:22px; font-size:13px; line-height:1.4; color:var(--ink2)}
+.tools-more{display:grid; justify-items:center; gap:8px; margin-top:22px; text-align:center}
+.tools-more small{font-size:13px; color:var(--ink2); max-width:40em}
 .mini-ph{all:unset; box-sizing:border-box; cursor:zoom-in; display:grid; grid-template-columns:104px minmax(0,1fr); gap:12px; align-items:center; padding:8px; border-radius:16px; background:var(--bg2); margin-top:4px}
 .mini-ph:hover{box-shadow:inset 0 0 0 1px var(--blue)}
 .mini-ph img{width:104px; aspect-ratio:16/10; object-fit:cover; object-position:50% 30%; border-radius:10px; display:block}
@@ -806,8 +823,13 @@ footer .wrap{padding-block:18px 26px; display:flex; flex-wrap:wrap; justify-cont
       <div class="chap-head center rv" style="margin-top:110px" id="tools-head">
         <p class="eyebrow" data-k="t_eyebrow"></p>
         <h2 class="h2" data-k="t_title"></h2>
+        <p class="sub" data-k="t_sub"></p>
       </div>
       <div class="bento" id="tools-grid"></div>
+      <div class="tools-more rv" id="tools-more">
+        <a class="btn" id="tools-all" href="tools/" target="_blank" rel="noopener" data-k="t_all"></a>
+        <small data-k="t_disc"></small>
+      </div>
     </div>
   </section>
 
@@ -910,7 +932,7 @@ footer .wrap{padding-block:18px 26px; display:flex; flex-wrap:wrap; justify-cont
 
 <script>
 const T = {
- n_why:{en:"Why me",ru:"Почему я"}, n_res:{en:"Results",ru:"Результаты"}, n_recs:{en:"Recommendations",ru:"Рекомендации"}, n_story:{en:"Stories",ru:"Кейсы"}, n_awards:{en:"Awards",ru:"Награды"}, n_media:{en:"Media",ru:"Медиа"}, n_path:{en:"Experience",ru:"Опыт"}, n_contact:{en:"Contact",ru:"Контакты"},
+ n_why:{en:"Why me",ru:"Почему я"}, n_res:{en:"Results",ru:"Результаты"}, n_recs:{en:"Recommendations",ru:"Рекомендации"}, n_story:{en:"Stories",ru:"Кейсы"}, n_tools:{en:"Tool demos",ru:"Демо инструментов"}, n_awards:{en:"Awards",ru:"Награды"}, n_media:{en:"Media",ru:"Медиа"}, n_path:{en:"Experience",ru:"Опыт"}, n_contact:{en:"Contact",ru:"Контакты"},
  dl_s:{en:"Download CV (PDF, 1 page)",ru:"Скачать резюме (PDF, 1 стр.)"}, dl_f:{en:"Download CV (PDF, 2 pages)",ru:"Скачать резюме (PDF, 2 стр.)"}, dl_short:{en:"CV",ru:"Резюме"},
  tb_text:{en:"Open to new roles as METRO exits the Kazakhstan market",ru:"Открыт к предложениям в связи с уходом METRO с рынка Казахстана"},
  tb_cta:{en:"Get in touch →",ru:"Связаться →"},
@@ -975,6 +997,9 @@ const T = {
  pp_sub:{en:"Formats my team and I ran together with METRO's partners. Tap a clip to watch it with sound.",ru:"Форматы, которые мы с командой делали вместе с партнёрами METRO. Нажмите на ролик, чтобы посмотреть его со звуком."},
  t_eyebrow:{en:"Tools I built",ru:"Инструменты, которые я сделал"},
  t_title:{en:"Days of work, now minutes.",ru:"Дни работы теперь занимают минуты."},
+ t_sub:{en:"Each tool works offline and sends no data to third parties. Open a demo to see it in action.",ru:"Каждый инструмент работает офлайн и не передаёт данные третьим лицам. Откройте демо, чтобы увидеть его в работе."},
+ t_all:{en:"All demos with voice-over",ru:"Все демо с озвучкой"},
+ t_disc:{en:"All numbers and data in the demos are fictional and shown only to demonstrate capabilities.",ru:"Все цифры и данные в демо вымышлены и показаны только для демонстрации возможностей."},
  a_eyebrow:{en:"Awards",ru:"Награды"},
  a_title:{en:"Recognized for results.",ru:"Признание за результат."},
  m_eyebrow:{en:"Media",ru:"Медиа"},
@@ -998,7 +1023,7 @@ const T = {
 };
 
 /* third field: shown only in that view; #proof exists only for a role focus, where it stands in for #results in the short view */
-const NAV = [["#proof","n_proof"],["#glance","n_glance","short"],["#why","n_why","full"],["#results","n_res"],["#recs","n_recs"],["#stories","n_story","full"],["#awards","n_awards","full"],["#media","n_media","full"],["#path","n_path"],["#contact","n_contact"]];
+const NAV = [["#proof","n_proof"],["#glance","n_glance","short"],["#why","n_why","full"],["#results","n_res"],["#recs","n_recs"],["#stories","n_story","full"],["#awards","n_awards","full"],["#media","n_media","full"],["#path","n_path"],["#contact","n_contact"],["tools/","n_tools"]];
 
 /* One fact, one place. Items carry fact keys in f; render() lets the block that tells a fact most fully claim it,
    and any later item that would repeat a claimed fact is left out (see the claim order in render). */
@@ -1371,10 +1396,32 @@ const PP = [
 ];
 
 const TOOLS = [
-  {f:"posm", big:"2 d → 20 min", k:{en:"POSM generator",ru:"Генератор POSM"}, p:{en:"Adopted by METRO/MAKRO in Serbia, Romania, Spain and Portugal.",ru:"Внедрён METRO/MAKRO в Сербии, Румынии, Испании и Португалии."}},
-  {f:"match", big:"7 d → 15 min", k:{en:"Assortment matcher",ru:"Матчер ассортимента"}, p:{en:"Customer purchase lists matched to METRO's range for same-day offers.",ru:"Закупочные списки клиентов сопоставляются с ассортиментом для предложения в тот же день."}},
+  {f:"posm", demo:"pos", big:"2 d → 20 min", k:{en:"POSM generator",ru:"Генератор POSM"}, p:{en:"Adopted by METRO/MAKRO in Serbia, Romania, Spain and Portugal.",ru:"Внедрён METRO/MAKRO в Сербии, Румынии, Испании и Португалии."}},
+  {f:"match", demo:"match", big:"7 d → 15 min", k:{en:"Assortment matcher",ru:"Матчер ассортимента"}, p:{en:"Customer purchase lists matched to METRO's range for same-day offers.",ru:"Закупочные списки клиентов сопоставляются с ассортиментом для предложения в тот же день."}},
+  {f:"ana_tool", demo:"ana", big:"3 d → hours", k:{en:"Sales analytics & forecast",ru:"Аналитика продаж и прогноз"}, p:{en:"A report that took up to 3 days now takes hours; the Simulation tab forecasts next month from price and promo sensitivity and price volatility.",ru:"Отчёт, который собирался до 3 дней, готов за часы; вкладка «Симуляция» прогнозирует следующий месяц с учётом прайс- и промо-сенситивности и волатильности цен."}},
+  {f:"sat_tool", demo:"sat", big:"0–100", k:{en:"Supplier ranking",ru:"Рейтинг поставщиков"}, p:{en:"One score across 10 criteria with a recommendation, and up to 4 suppliers compared side by side.",ru:"Один балл по 10 критериям с рекомендацией и сравнение до 4 поставщиков бок о бок."}},
   {f:["vat","pidx"], big:"12% → 16%", k:{en:"VAT repricing",ru:"Переоценка при НДС"}, p:{en:"Full assortment repriced with no disruption; a real-time Price Index replaced manual checks.",ru:"Весь ассортимент переоценён без сбоев; real-time Price Index заменил ручные мониторинги."}}
 ];
+
+/* pop-up per tool demo: video (RU/EN) plus problem, solution and result. Videos use fictional data only. */
+const TOOL_DEMO = {
+  pos:{m:[{b:"2 d → 20 min",k:{en:"to lay out one catalogue",ru:"вёрстка одного каталога"}},{b:"KZ + RU",k:{en:"both languages automatically",ru:"два языка автоматически"}}],
+    s:[{h:{en:"Problem",ru:"Проблема"},p:{en:"Every promotion waited for a designer: prices, Kazakh translation, checks and endless edits. One catalogue took two days.",ru:"Каждая акция ждала дизайнера: цены, перевод на казахский, сверка и правки по кругу. Один каталог верстался два дня."}},
+       {h:{en:"Solution",ru:"Решение"},p:{en:"The product base with photos loads from Excel. A manager pastes article codes and gets cards with photos, names in two languages, old and new price and discount, then exports a branded PDF.",ru:"База товаров с фото загружается из Excel. Менеджер вставляет артикулы и получает карточки с фото, названиями на двух языках, старой и новой ценой и скидкой, затем выгружает PDF в фирменном стиле."}},
+       {h:{en:"Result",ru:"Результат"},p:{en:"A print-ready catalogue in 20 minutes; discounts calculate themselves.",ru:"Каталог к печати за 20 минут, скидка считается сама."}}]},
+  match:{m:[{b:"7 d → 15 min",k:{en:"to match one client list",ru:"сопоставление листа клиента"}},{b:{en:"Same day",ru:"В тот же день"},k:{en:"offer to the client",ru:"предложение клиенту"}}],
+    s:[{h:{en:"Problem",ru:"Проблема"},p:{en:"Restaurants and shops send free-form lists with typos and Latin spellings. Matching them to articles by hand took up to seven days.",ru:"Рестораны и магазины присылают списки в свободной форме, с опечатками и латиницей. Ручной подбор артикулов занимал до семи дней."}},
+       {h:{en:"Solution",ru:"Решение"},p:{en:"Paste the list as is: the tool finds articles despite typos and transliteration and shows price with VAT, stock per store and private labels first.",ru:"Лист вставляется как есть: инструмент находит артикулы с учётом опечаток и транслитерации, показывает цену с НДС, остаток по магазину и собственные марки первыми."}},
+       {h:{en:"Result",ru:"Результат"},p:{en:"An offer for the whole basket in 15 minutes, exported to Excel in one click.",ru:"Предложение на всю корзину за 15 минут, выгрузка в Excel в один клик."}}]},
+  ana:{m:[{b:"3 d → hours",k:{en:"per analytical report",ru:"на один отчёт"}},{b:{en:"+1 month",ru:"+1 месяц"},k:{en:"auto-forecast in Simulation",ru:"автопрогноз в «Симуляции»"}}],
+    s:[{h:{en:"Problem",ru:"Проблема"},p:{en:"A sales export of millions of rows does not fit in Excel; one report took up to three days.",ru:"Выгрузка продаж на миллионы строк не помещается в Excel, один отчёт собирался до трёх дней."}},
+       {h:{en:"Solution",ru:"Решение"},p:{en:"Drop in the export: price and purchase-cost dynamics, margin, promo, who buys what, where, at what price and with what basket. The Simulation tab forecasts next month from price and promo sensitivity and price volatility.",ru:"Выгрузка перетаскивается в инструмент: динамика цен и закупа, маржа, промо, кто, что, где и по какой цене берёт и с какой корзиной. Вкладка «Симуляция» прогнозирует следующий месяц с учётом прайс- и промо-сенситивности и волатильности цен."}},
+       {h:{en:"Result",ru:"Результат"},p:{en:"Reports and insights in hours, and a view of what to expect if the current pace is not kept.",ru:"Отчёты и выводы за часы и понимание, чего ждать, если не удержать текущий темп."}}]},
+  sat:{m:[{b:"0–100",k:{en:"score across 10 criteria",ru:"балл по 10 критериям"}},{b:"4",k:{en:"suppliers side by side",ru:"поставщика в сравнении"}}],
+    s:[{h:{en:"Problem",ru:"Проблема"},p:{en:"Sales, margin, service level and lead times sat in different reports, and every category manager judged suppliers their own way.",ru:"Продажи, маржа, сервис и сроки поставки лежали в разных отчётах, и каждый категорийный менеджер оценивал поставщика по-своему."}},
+       {h:{en:"Solution",ru:"Решение"},p:{en:"Two reports load in one move; the tool scores each supplier 0–100 with a recommendation and compares up to four side by side.",ru:"Два отчёта загружаются одним движением; инструмент ставит поставщику балл 0–100 с рекомендацией и сравнивает до четырёх бок о бок."}},
+       {h:{en:"Result",ru:"Результат"},p:{en:"One method for every category; every score shows its source and formula.",ru:"Одна методика для всех категорий, у каждого балла видны источник и формула."}}]}
+};
 
 const AWARDS = [
   {cls:"dark", f:["mvp","talent"], big:"MVP", k:{en:"METRO Bravo 2025",ru:"METRO Bravo 2025"}, p:{en:"In my first year at METRO Kazakhstan. Also selected as a METRO International Talent.",ru:"В первый же год в METRO Kazakhstan. Также отобран в METRO International Talent."}},
@@ -1494,7 +1541,7 @@ const tileMedia = (p, alt) => p.video
   : `<img src="${p.src}" alt="${alt}" loading="lazy">`;
 const zoomData = p => `data-zoom="${p.src}"${p.video?` data-video="${p.video}" aria-label="${tr(p.c)} · ${ru()?"смотреть видео":"watch the video"}"`:""} data-cap="${tr(p.c)}"`;
 const ru = () => L==="ru";
-const fmtBig = b => ru() ? b.replace(/(\d),(\d)/g,"$1\u202F$2").replace(" d → "," д → ").replace(" min"," мин") : b;
+const fmtBig = b => ru() ? b.replace(/(\d),(\d)/g,"$1\u202F$2").replace(" d → "," д → ").replace(" min"," мин").replace("hours","часы") : b;
 
 /* bento rows are 6 columns wide: tiles keep their order and each row is stretched so it never ends in a gap */
 const SPAN = {w3:3, w4:4, w6:6};
@@ -1525,6 +1572,7 @@ function tile(x){
     ${x.big?`<div class="big num ${x.c||""}">${fmtBig(x.big)}</div>`:""}
     ${x.h?`<h3>${tr(x.h)}</h3>`:""}
     ${x.p?`<p>${tr(x.p)}</p>`:""}
+    ${x.demo?`<button type="button" class="demo-btn" data-tool="${x.demo}" aria-haspopup="dialog"><img src="tools/media/${x.demo}_${L}.jpg" alt="" loading="lazy"><span><b>${ru()?"Смотреть демо":"Watch the demo"}</b><small>${ru()?"видео с озвучкой":"video with voice-over"}</small></span></button>`:""}
     ${x.ph?`<button type="button" class="mini-ph" data-zoom="${x.ph.full}" data-cap="${tr(x.ph.c)}"><img src="${x.ph.src}" alt="" loading="lazy"><span>${tr(x.ph.t)}</span></button>`:""}
     ${x.chips?`<div class="chips">${x.chips.map(c=>`<span>${c}</span>`).join("")}</div>`:""}
     ${x.minis?.length?`<div class="minis ${x.mc||""}">${x.minis.map(m=>`<div><b class="num">${tr(m.b)}</b><span>${tr(m.k)}</span></div>`).join("")}</div>`:""}
@@ -1543,7 +1591,7 @@ function render(){
   $("#lang-sw").textContent = ru() ? "EN" : "RU";
   $("#pod-back").textContent = ru() ? "−15 с" : "−15 s"; $("#pod-fwd").textContent = ru() ? "+30 с" : "+30 s";
   const navOn = ([h,,v]) => (!v || v===M) && (h!=="#proof" || A!=="general") && !(h==="#results" && M==="short" && A!=="general");
-  const navHtml = NAV.filter(navOn).map(([h,k])=>`<a href="${h}">${tr(T[k])}</a>`).join("");
+  const navHtml = NAV.filter(navOn).map(([h,k])=>h[0]==="#" ? `<a href="${h}">${tr(T[k])}</a>` : `<a class="nav-ext" href="${h}?lang=${L}" target="_blank" rel="noopener">${tr(T[k])} ↗</a>`).join("");
   /* position titles break only after the slash: "CMO /" over "Head of Marketing" */
   const roleHtml = (s, nw) => s.split(" / ").map(x=>nw?`<span class="nw">${x}</span>`:x).join("&nbsp;/ ");
   const audHtml = `<span class="tl">${tr(T.aud_q)}</span><div class="aud-chips" role="group" aria-label="${tr(T.aud_aria)}">${AUD_IDS.map(id=>`<button type="button" data-aud="${id}" aria-pressed="${id===A}"><span>${roleHtml(tr(AUD[id].chip), true)}</span></button>`).join("")}</div>`;
@@ -1600,8 +1648,9 @@ function render(){
     $("#pp-reels").innerHTML = keep(PP).map(p=>`<figure class="reel"><button type="button" class="zoom" ${zoomData(p)}>${tileMedia(p, tr(p.c))}</button>
       <figcaption><h4>${tr(p.c)}</h4><p>${tr(p.p)}</p></figcaption></figure>`).join("");
     const tools = keep(TOOLS);
-    $("#tools-grid").innerHTML = pack(tools.map(t=>({k:t.k, big:t.big, c:"blue", p:t.p}))).map(tile).join("");
-    $("#tools-head").hidden = $("#tools-grid").hidden = !tools.length;
+    $("#tools-grid").innerHTML = pack(tools.map(t=>({k:t.k, big:t.big, c:"blue", p:t.p, demo:t.demo}))).map(tile).join("");
+    $("#tools-all").href = `tools/?lang=${L}`;
+    $("#tools-head").hidden = $("#tools-grid").hidden = $("#tools-more").hidden = !tools.length;
     const aw = keep(AWARDS);
     $("#awards-grid").classList.toggle("one", aw.length===1);
     $("#awards-grid").innerHTML = aw.map(a=>`<div class="award rv ${a.cls||""}"><div class="big">${a.big}</div><p class="k">${tr(a.k)}</p><p>${tr(a.p)}</p>${a.link?`<div class="alinks"><a class="tlink" href="${a.link.href}" target="_blank" rel="noopener">${tr(a.link.t)}</a></div>`:""}</div>`).join("");
@@ -1794,6 +1843,8 @@ document.addEventListener("click", e=>{
     try{ navigator.clipboard.writeText(cp.dataset.copy).then(()=>toast(ru()?"Скопировано":"Copied"), fallback); }catch(_){ fallback(); }
     return;
   }
+  const db = e.target.closest(".demo-btn");
+  if(db){ openTool(db.dataset.tool, db); return; }
   const ct = e.target.closest(".tile.has-case");
   if(ct && !e.target.closest("a,[data-zoom],[data-go]") && !String(getSelection()).trim()){ openCase(ct.dataset.case, ct.querySelector(".case-plus")); return; }
   const z = e.target.closest("[data-zoom]");
@@ -1802,8 +1853,9 @@ document.addEventListener("click", e=>{
 function toast(m){ const t=$("#toast"); t.textContent=m; t.classList.add("on"); clearTimeout(toast.h); toast.h=setTimeout(()=>t.classList.remove("on"),1800); }
 function lightbox(src,cap,video){
   const d=document.createElement("div"); d.className="lightbox"; d.setAttribute("role","dialog"); d.setAttribute("aria-modal","true");
-  d.innerHTML=`<button type="button">${ru()?"Закрыть":"Close"}</button><figure>${video ? `<video src="${video}" poster="${src}" controls autoplay playsinline></video>` : `<img src="${src}" alt="">`}<p></p></figure>`;
+  d.innerHTML=`<button type="button">${ru()?"Закрыть":"Close"}</button><figure>${video ? `<video src="${video}" poster="${src}" controls autoplay playsinline controlslist="nodownload noplaybackrate" disablepictureinpicture></video>` : `<img src="${src}" alt="">`}<p></p></figure>`;
   d.querySelector("p").textContent = cap || "";
+  d.addEventListener("contextmenu", e=>{ if(e.target.tagName==="VIDEO") e.preventDefault(); });
   /* the muted tile pauses while its clip plays here with sound, and resumes on close if still on screen */
   const held = video ? [...document.querySelectorAll("video.inl")].filter(v=>!v.paused) : [];
   held.forEach(v=>v.pause());
@@ -1812,6 +1864,29 @@ function lightbox(src,cap,video){
   const esc=e=>{ if(e.key==="Escape") close(); };
   d.addEventListener("click",e=>{ if(e.target===d||e.target.tagName==="BUTTON") close(); });
   addEventListener("keydown",esc); document.body.appendChild(d); d.querySelector("button").focus();
+}
+
+/* a tool demo opens in its own dialog, so the CV stays light; the video loads only here */
+function openTool(id, opener){
+  const t = TOOLS.find(x=>x.demo===id), c = TOOL_DEMO[id]; if(!t || !c) return;
+  const d = document.createElement("div"); d.className = "cs-wrap";
+  d.setAttribute("role","dialog"); d.setAttribute("aria-modal","true"); d.setAttribute("aria-labelledby","cs-t");
+  d.innerHTML = `<article class="cs-card tool"><button type="button" class="cs-x" aria-label="${ru()?"Закрыть":"Close"}"></button>
+    <div class="cs-body" tabindex="-1"><p class="cs-co">${ru()?"Инструмент, который я сделал":"A tool I built"}</p><h3 id="cs-t">${tr(t.k)}</h3>
+    <div class="tool-vid"><span class="dp-tag">${ru()?"Демо · данные вымышлены":"Demo · fictional data"}</span><video src="tools/media/${id}_${L}.mp4" poster="tools/media/${id}_${L}.jpg" controls playsinline preload="metadata" controlslist="nodownload noplaybackrate" disablepictureinpicture></video></div>
+    <div class="cs-m">${c.m.map(m=>`<div><b class="num blue">${fmtBig(tr(m.b))}</b><span>${tr(m.k)}</span></div>`).join("")}</div>
+    ${c.s.map(x=>`<div class="cs-sec"><h4>${tr(x.h)}</h4><p>${tr(x.p)}</p></div>`).join("")}
+    <p class="tool-disc">${tr(T.t_disc)} ${ru()?"Работает офлайн и не передаёт данные третьим лицам.":"Works offline and sends no data to third parties."}</p></div></article>`;
+  const root = document.documentElement, ov = root.style.overflow, body = d.querySelector(".cs-body"), xb = d.querySelector(".cs-x"), v = d.querySelector("video");
+  v.addEventListener("contextmenu", e=>e.preventDefault());
+  const held = [...document.querySelectorAll("video.inl")].filter(x=>!x.paused); held.forEach(x=>x.pause());
+  const close = () => { v.pause(); d.remove(); root.style.overflow = ov; removeEventListener("keydown", key); opener && opener.focus({preventScroll:true});
+    held.forEach(x=>{ const r=x.getBoundingClientRect(); if(r.bottom>0 && r.top<innerHeight) x.play().catch(()=>{}); }); };
+  const key = e => { if(e.key==="Escape") close(); };
+  d.addEventListener("click", e=>{ if(e.target===d || e.target.closest(".cs-x")) close(); });
+  addEventListener("keydown", key); root.style.overflow = "hidden";
+  document.body.appendChild(d); body.focus({preventScroll:true});
+  v.play().catch(()=>{});
 }
 
 /* a case opens as a dialog (a bottom sheet on phones); Esc, the cross or a tap outside closes it and focus returns to the "+" */
@@ -1868,7 +1943,7 @@ au.src = POD.src;
 
 /* ===== nav highlight ===== */
 function navUpdate(){
-  const links=[...document.querySelectorAll("#links a")]; let cur=null;
+  const links=[...document.querySelectorAll('#links a[href^="#"]')]; let cur=null;
   links.forEach(a=>{ const s=document.querySelector(a.getAttribute("href")); if(s && s.getBoundingClientRect().top<140) cur=a; });
   links.forEach(a=>a.classList.toggle("on",a===cur));
 }
