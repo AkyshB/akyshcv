@@ -198,6 +198,8 @@ html[data-view="short"]:not([data-aud="general"]) #recs{margin-top:0; padding-to
 .demo-btn b{font-size:15px; font-weight:600; color:var(--blue)}
 .demo-btn b::before{content:"▶ "; font-size:11px; vertical-align:1px}
 .demo-btn small{font-size:12px; color:var(--ink2)}
+.cs-demo{margin-top:18px; width:100%}
+.cs-jump{margin-top:16px; display:inline-block}
 .cs-card.tool{width:min(900px,100%)}
 .cs-card.tool .cs-body{padding-top:40px}
 .tool-vid{position:relative; margin:0 0 18px; border-radius:16px; overflow:hidden; background:#000; aspect-ratio:16/10}
@@ -1267,7 +1269,7 @@ const RES = [
 /* Written-up cases. A tile showing any fact in `on` gets a "+" and opens the case; within one view each case attaches to
    the first such tile only. Only percentages, ratios and counts here: no money amounts (METRO figures are confidential). */
 const CASES = {
-  onb:{on:["reg39","buy32","onb5"], co:{en:"METRO Kazakhstan · Case",ru:"METRO Kazakhstan · Кейс"},
+  onb:{on:["reg39","buy32","onb5"], demo:"onb", co:{en:"METRO Kazakhstan · Case",ru:"METRO Kazakhstan · Кейс"},
     t:{en:"B2B onboarding: the application is filled in at the meeting",ru:"Онбординг B2B-клиентов: заявка заполняется прямо на встрече"},
     m:[{b:"+39%",c:"blue",k:{en:"B2B registrations, year over year",ru:"B2B-регистраций, год к году"}},
        {b:"+32%",c:"blue",k:{en:"buying B2B customers, same acquisition budget",ru:"покупающих B2B-клиентов, без роста бюджета на привлечение"}},
@@ -1400,6 +1402,7 @@ const TOOLS = [
   {f:"match", demo:"match", big:"7 d → 15 min", k:{en:"Assortment matcher",ru:"Матчер ассортимента"}, p:{en:"Customer purchase lists matched to METRO's range for same-day offers.",ru:"Закупочные списки клиентов сопоставляются с ассортиментом для предложения в тот же день."}},
   {f:"ana_tool", demo:"ana", big:"3 d → hours", k:{en:"Sales analytics & forecast",ru:"Аналитика продаж и прогноз"}, p:{en:"A report that took up to 3 days now takes hours; the Simulation tab forecasts next month from price and promo sensitivity and price volatility.",ru:"Отчёт, который собирался до 3 дней, готов за часы; вкладка «Симуляция» прогнозирует следующий месяц с учётом прайс- и промо-сенситивности и волатильности цен."}},
   {f:"sat_tool", demo:"sat", big:"0–100", k:{en:"Supplier ranking",ru:"Рейтинг поставщиков"}, p:{en:"One score across 10 criteria with a recommendation, and up to 4 suppliers compared side by side.",ru:"Один балл по 10 критериям с рекомендацией и сравнение до 4 поставщиков бок о бок."}},
+  {f:"onbtool", demo:"onb", big:"4 steps", k:{en:"B2B onboarding form",ru:"Анкета онбординга B2B"}, p:{en:"A Tilda form the rep fills in with the client at the meeting; requests land in Google Sheets with a live status for each.",ru:"Анкета на Tilda, которую торговый заполняет вместе с клиентом на встрече; заявки сразу попадают в Google Sheets, у каждой виден статус."}},
   {f:["vat","pidx"], big:"12% → 16%", k:{en:"VAT repricing",ru:"Переоценка при НДС"}, p:{en:"Full assortment repriced with no disruption; a real-time Price Index replaced manual checks.",ru:"Весь ассортимент переоценён без сбоев; real-time Price Index заменил ручные мониторинги."}}
 ];
 
@@ -1417,6 +1420,10 @@ const TOOL_DEMO = {
     s:[{h:{en:"Problem",ru:"Проблема"},p:{en:"A sales export of millions of rows does not fit in Excel; one report took up to three days.",ru:"Выгрузка продаж на миллионы строк не помещается в Excel, один отчёт собирался до трёх дней."}},
        {h:{en:"Solution",ru:"Решение"},p:{en:"Drop in the export: price and purchase-cost dynamics, margin, promo, who buys what, where, at what price and with what basket. The Simulation tab forecasts next month from price and promo sensitivity and price volatility.",ru:"Выгрузка перетаскивается в инструмент: динамика цен и закупа, маржа, промо, кто, что, где и по какой цене берёт и с какой корзиной. Вкладка «Симуляция» прогнозирует следующий месяц с учётом прайс- и промо-сенситивности и волатильности цен."}},
        {h:{en:"Result",ru:"Результат"},p:{en:"Reports and insights in hours, and a view of what to expect if the current pace is not kept.",ru:"Отчёты и выводы за часы и понимание, чего ждать, если не удержать текущий темп."}}]},
+  onb:{cloud:1, cs:"onb", m:[{b:{en:"&lt;5 min",ru:"&lt;5 мин"},k:{en:"to set up a customer, down from 25–30",ru:"на заведение клиента вместо 25–30"}},{b:"+39%",k:{en:"B2B registrations in a year",ru:"B2B-регистраций за год"}}],
+    s:[{h:{en:"Problem",ru:"Проблема"},p:{en:"About half of B2B leads were lost at onboarding: data came through messengers, and the call center collected 100+ fields by phone and retyped them into 7 systems.",ru:"Около половины B2B-лидов терялись на онбординге: данные приходили в мессенджерах, а колл-центр собирал 100+ полей по телефону и перепечатывал в 7 систем."}},
+       {h:{en:"Solution",ru:"Решение"},p:{en:"A 4-step Tilda form filled in at the meeting: fields adapt to the answers (store → its managers, customer type → its segments), phone photos of documents are compressed, the address is a map pin. Requests land in Google Sheets, and the “Check status” link on the same page opens a Looker Studio dashboard with the status and the call center's comment.",ru:"Анкета на Tilda из 4 шагов, которую заполняют на встрече: поля подстраиваются под ответы (ТЦ → свои менеджеры, тип клиента → свои направления), фото документов сжимаются, адрес ставится точкой на карте. Заявки попадают в Google Sheets, а ссылка «Проверить статус» на той же странице открывает дашборд Looker Studio со статусом и комментарием колл-центра."}},
+       {h:{en:"Result",ru:"Результат"},p:{en:"Buying B2B customers +32% with no budget increase.",ru:"Покупающие B2B-клиенты +32% без роста бюджета."}}]},
   sat:{m:[{b:"0–100",k:{en:"score across 10 criteria",ru:"балл по 10 критериям"}},{b:"4",k:{en:"suppliers side by side",ru:"поставщика в сравнении"}}],
     s:[{h:{en:"Problem",ru:"Проблема"},p:{en:"Sales, margin, service level and lead times sat in different reports, and every category manager judged suppliers their own way.",ru:"Продажи, маржа, сервис и сроки поставки лежали в разных отчётах, и каждый категорийный менеджер оценивал поставщика по-своему."}},
        {h:{en:"Solution",ru:"Решение"},p:{en:"Two reports load in one move; the tool scores each supplier 0–100 with a recommendation and compares up to four side by side.",ru:"Два отчёта загружаются одним движением; инструмент ставит поставщику балл 0–100 с рекомендацией и сравнивает до четырёх бок о бок."}},
@@ -1876,14 +1883,16 @@ function openTool(id, opener){
     <div class="tool-vid"><span class="dp-tag">${ru()?"Демо · данные вымышлены":"Demo · fictional data"}</span><video src="tools/media/${id}_${L}.mp4" poster="tools/media/${id}_${L}.jpg" controls playsinline preload="metadata" controlslist="nodownload noplaybackrate" disablepictureinpicture></video></div>
     <div class="cs-m">${c.m.map(m=>`<div><b class="num blue">${fmtBig(tr(m.b))}</b><span>${tr(m.k)}</span></div>`).join("")}</div>
     ${c.s.map(x=>`<div class="cs-sec"><h4>${tr(x.h)}</h4><p>${tr(x.p)}</p></div>`).join("")}
-    <p class="tool-disc">${tr(T.t_disc)} ${ru()?"Работает офлайн и не передаёт данные третьим лицам.":"Works offline and sends no data to third parties."}</p></div></article>`;
+    ${c.cs&&CASES[c.cs]?`<button type="button" class="tlink cs-jump" data-jump-case="${c.cs}">${ru()?"Читать кейс целиком":"Read the full case"}</button>`:""}
+    <p class="tool-disc">${tr(T.t_disc)} ${c.cloud?(ru()?"Работает в корпоративных аккаунтах METRO (Tilda, Google Sheets, Looker Studio), данные не уходят третьим лицам.":"Runs in METRO's corporate accounts (Tilda, Google Sheets, Looker Studio); no data goes to third parties."):(ru()?"Работает офлайн и не передаёт данные третьим лицам.":"Works offline and sends no data to third parties.")}</p></div></article>`;
   const root = document.documentElement, ov = root.style.overflow, body = d.querySelector(".cs-body"), xb = d.querySelector(".cs-x"), v = d.querySelector("video");
   v.addEventListener("contextmenu", e=>e.preventDefault());
   const held = [...document.querySelectorAll("video.inl")].filter(x=>!x.paused); held.forEach(x=>x.pause());
   const close = () => { v.pause(); d.remove(); root.style.overflow = ov; removeEventListener("keydown", key); opener && opener.focus({preventScroll:true});
     held.forEach(x=>{ const r=x.getBoundingClientRect(); if(r.bottom>0 && r.top<innerHeight) x.play().catch(()=>{}); }); };
   const key = e => { if(e.key==="Escape") close(); };
-  d.addEventListener("click", e=>{ if(e.target===d || e.target.closest(".cs-x")) close(); });
+  d.addEventListener("click", e=>{ if(e.target===d || e.target.closest(".cs-x")) close();
+    const j = e.target.closest("[data-jump-case]"); if(j){ close(); openCase(j.dataset.jumpCase, opener); } });
   addEventListener("keydown", key); root.style.overflow = "hidden";
   document.body.appendChild(d); body.focus({preventScroll:true});
   v.play().catch(()=>{});
@@ -1897,14 +1906,16 @@ function openCase(id, opener){
   d.innerHTML = `<article class="cs-card"><button type="button" class="cs-x" aria-label="${ru()?"Закрыть":"Close"}"></button>
     <div class="cs-body" tabindex="-1"><p class="cs-co">${tr(c.co)}</p><h3 id="cs-t">${tr(c.t)}</h3>
     <div class="cs-m">${c.m.map(m=>`<div><b class="num ${m.c||""}">${tr(m.b)}</b><span>${tr(m.k)}</span></div>`).join("")}</div>
-    ${c.s.map(x=>`<div class="cs-sec"><h4>${tr(x.h)}</h4><p>${tr(x.p)}</p></div>`).join("")}</div></article>`;
+    ${c.s.map(x=>`<div class="cs-sec"><h4>${tr(x.h)}</h4><p>${tr(x.p)}</p></div>`).join("")}
+    ${c.demo&&TOOL_DEMO[c.demo]?`<button type="button" class="demo-btn cs-demo" data-jump-tool="${c.demo}"><img src="tools/media/${c.demo}_${L}.jpg" alt="" loading="lazy"><span><b>${ru()?"Смотреть демо инструмента":"Watch the tool demo"}</b><small>${ru()?"видео с озвучкой · данные вымышлены":"video with voice-over · fictional data"}</small></span></button>`:""}</div></article>`;
   const root = document.documentElement, ov = root.style.overflow, body = d.querySelector(".cs-body"), xb = d.querySelector(".cs-x");
   const close = () => { d.remove(); root.style.overflow = ov; removeEventListener("keydown", key); opener && opener.focus({preventScroll:true}); };
   const key = e => {
     if(e.key==="Escape") close();
     else if(e.key==="Tab"){ e.preventDefault(); (document.activeElement===xb ? body : xb).focus(); }
   };
-  d.addEventListener("click", e=>{ if(e.target===d || e.target.closest(".cs-x")) close(); });
+  d.addEventListener("click", e=>{ if(e.target===d || e.target.closest(".cs-x")) close();
+    const j = e.target.closest("[data-jump-tool]"); if(j){ close(); openTool(j.dataset.jumpTool, opener); } });
   addEventListener("keydown", key); root.style.overflow = "hidden";
   document.body.appendChild(d); body.focus({preventScroll:true});
 }

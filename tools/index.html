@@ -86,12 +86,12 @@ body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-in
 .disclaimer h2{font-size:clamp(24px,3.8vw,38px); line-height:1.1; font-weight:800; color:var(--warn-ink); text-transform:uppercase; letter-spacing:-.02em}
 .disclaimer p{margin-top:10px; font-size:clamp(16px,1.9vw,19px); line-height:1.45; color:var(--warn-ink); max-width:46em}
 
-.toc{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin-top:28px; width:100%}
+.toc{display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:12px; margin-top:28px; width:100%}
 .toc a{display:grid; gap:8px; text-align:left; background:var(--bg2); border-radius:22px; padding:14px 14px 16px; color:var(--ink); transition:transform .25s ease}
 .toc a:hover{text-decoration:none; transform:translateY(-3px)}
 .toc img{width:100%; aspect-ratio:16/10; object-fit:cover; border-radius:12px; display:block; background:#000}
 .toc .k{font-size:12px; font-weight:600; color:var(--gold)}
-.toc .t{font-size:16px; font-weight:600; line-height:1.25}
+.toc .t{font-size:15px; font-weight:600; line-height:1.25}
 
 /* tool chapter */
 .tool{padding-block:110px 0}
@@ -187,6 +187,7 @@ body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-in
 .trio .ic svg{width:22px; height:22px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round}
 .trio h3{font-size:22px; font-weight:700}
 .trio p{color:#A1A1A6}
+.pnote{margin:14px 0 0;font-size:14px;color:var(--ink2,#6e6e73);line-height:1.5}
 .pgrid{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; margin-top:14px}
 .pgrid > div{background:var(--bg2); border-radius:22px; padding:26px; display:grid; gap:8px}
 .pgrid h3{font-size:22px; font-weight:700}
@@ -233,6 +234,7 @@ footer strong{color:var(--ink); font-size:15px}
       <a href="#sat"><span class="ru">Поставщики</span><span class="en">Suppliers</span></a>
       <a href="#match"><span class="ru">Закупочные листы</span><span class="en">Purchase lists</span></a>
       <a href="#pos"><span class="ru">Каталоги</span><span class="en">Catalogues</span></a>
+      <a href="#onb"><span class="ru">Онбординг B2B</span><span class="en">B2B onboarding</span></a>
     </div>
     <div class="lang" role="group" aria-label="Language">
       <button type="button" data-set="ru" aria-pressed="true">RU</button>
@@ -246,13 +248,13 @@ footer strong{color:var(--ink); font-size:15px}
     <div class="wrap">
       <p class="eyebrow"><span class="ru">Бейбіт Акыш · METRO Cash &amp; Carry Kazakhstan</span><span class="en">Beibit Akysh · METRO Cash &amp; Carry Kazakhstan</span></p>
       <h1><span class="ru">Инструменты, которые заменили ручную рутину</span><span class="en">Tools that replaced manual routine</span></h1>
-      <p class="sub"><span class="ru">Четыре инструмента, которые я спроектировал и собрал для коммерческих команд METRO Kazakhstan. Генератор каталогов уже внедрили METRO и MAKRO в Сербии и Румынии, а также передали в Испанию и Португалию.</span><span class="en">Four tools I designed and built for the commercial teams of METRO Kazakhstan. The catalogue generator has been adopted by METRO and MAKRO in Serbia and Romania, and also handed over to Spain and Portugal.</span></p>
+      <p class="sub"><span class="ru">Пять инструментов, которые я спроектировал и собрал для коммерческих команд METRO Kazakhstan. Генератор каталогов уже внедрили METRO и MAKRO в Сербии и Румынии, а также передали в Испанию и Португалию.</span><span class="en">Five tools I designed and built for the commercial teams of METRO Kazakhstan. The catalogue generator has been adopted by METRO and MAKRO in Serbia and Romania, and also handed over to Spain and Portugal.</span></p>
 
       <div class="wins num">
         <div class="win"><small><span class="ru">Аналитический отчёт</span><span class="en">Analytical report</span></small><b><s class="ru">до 3 дней</s><s class="en">up to 3 days</s> → <em class="ru">часы</em><em class="en">hours</em></b></div>
         <div class="win"><small><span class="ru">Закупочный лист клиента</span><span class="en">Client purchase list</span></small><b><s class="ru">7 дней</s><s class="en">7 days</s> → <em class="ru">15 минут</em><em class="en">15 min</em></b></div>
         <div class="win"><small><span class="ru">Вёрстка каталога</span><span class="en">Catalogue layout</span></small><b><s class="ru">2 дня</s><s class="en">2 days</s> → <em class="ru">20 минут</em><em class="en">20 min</em></b></div>
-        <div class="win"><small><span class="ru">Все инструменты</span><span class="en">All tools</span></small><b><em class="ru">Офлайн</em><em class="en">Offline</em> <span class="ru">и без третьих лиц</span><span class="en">with no third parties</span></b></div>
+        <div class="win"><small><span class="ru">Заведение B2B-клиента</span><span class="en">B2B customer set-up</span></small><b><s class="ru">25–30 мин</s><s class="en">25–30 min</s> → <em class="ru">&lt; 5 мин</em><em class="en">&lt; 5 min</em></b></div>
       </div>
 
       <aside class="disclaimer" role="note" aria-labelledby="disc-h">
@@ -268,6 +270,7 @@ footer strong{color:var(--ink); font-size:15px}
         <a href="#sat"><img class="ru" src="media/sat_ru.jpg" alt="" loading="lazy"><img class="en" src="media/sat_en.jpg" alt="" loading="lazy"><span class="k"><span class="ru">Поставщики</span><span class="en">Suppliers</span></span><span class="t"><span class="ru">Рейтинг 0–100 и сравнение</span><span class="en">Score 0–100 and comparison</span></span></a>
         <a href="#match"><img class="ru" src="media/match_ru.jpg" alt="" loading="lazy"><img class="en" src="media/match_en.jpg" alt="" loading="lazy"><span class="k"><span class="ru">Закупочные листы</span><span class="en">Purchase lists</span></span><span class="t"><span class="ru">Список клиента → артикулы</span><span class="en">Client list → articles</span></span></a>
         <a href="#pos"><img class="ru" src="media/pos_ru.jpg" alt="" loading="lazy"><img class="en" src="media/pos_en.jpg" alt="" loading="lazy"><span class="k"><span class="ru">Каталоги</span><span class="en">Catalogues</span></span><span class="t"><span class="ru">Каталог KZ + RU в PDF</span><span class="en">KZ + RU catalogue as PDF</span></span></a>
+        <a href="#onb"><img class="ru" src="media/onb_ru.jpg" alt="" loading="lazy"><img class="en" src="media/onb_en.jpg" alt="" loading="lazy"><span class="k"><span class="ru">Онбординг B2B</span><span class="en">B2B onboarding</span></span><span class="t"><span class="ru">Анкета на встрече → статус</span><span class="en">Form at the meeting → status</span></span></a>
       </div>
     </div>
   </section>
@@ -423,6 +426,36 @@ footer strong{color:var(--ink); font-size:15px}
     </div>
   </section>
 
+  <!-- 5. B2B onboarding -->
+  <section class="tool" id="onb">
+    <div class="wrap">
+      <div class="tool-head">
+        <p class="eyebrow"><span class="ru">Онбординг B2B-клиентов · Tilda + Google Sheets + Looker Studio</span><span class="en">B2B customer onboarding · Tilda + Google Sheets + Looker Studio</span></p>
+        <h2><span class="ru">Клиент заведён прямо на встрече: меньше 5 минут вместо получаса</span><span class="en">The customer is set up during the meeting: under 5 minutes instead of half an hour</span></h2>
+      </div>
+      <div class="stage" data-key="onb"></div>
+      <ol class="chapters" data-for="onb"></ol>
+      <div class="psr">
+        <div><h3><span class="ru">Проблема</span><span class="en">Problem</span></h3><p><span class="ru">Около половины B2B-лидов терялись на онбординге: анкета на 100+ полей, данные приходили в мессенджерах, колл-центр перезванивал клиенту и вручную переносил всё в 7 несвязанных систем. Заведение одного клиента занимало 25–30 минут.</span><span class="en">About half of B2B leads were lost at onboarding: a 100+ field form, data arriving through messengers, and a call center calling the client back and retyping everything into 7 unconnected systems. Setting up one customer took 25–30 minutes.</span></p></div>
+        <div><h3><span class="ru">Решение</span><span class="en">Solution</span></h3><p><span class="ru">Лендинг-анкета на Tilda, которую торговый заполняет вместе с клиентом на встрече: 4 шага, поля подстраиваются под ответы (ТЦ → свои менеджеры, тип клиента → свои направления), документы с телефона сжимаются, адрес ставится точкой на карте. Заявка сразу падает в Google Sheets, а дашборд Looker Studio, встроенный в ту же страницу, показывает статус и комментарий колл-центра. Для колл-центра — пакетная очередь и макросы.</span><span class="en">A Tilda landing-page form the sales rep fills in with the client during the meeting: 4 steps, fields adapt to the answers (store → its managers, customer type → its segments), phone photos of documents are compressed, and the address is a pin on a map. The request lands in Google Sheets at once, and a Looker Studio dashboard embedded in the same page shows the status and the call center’s comment. The call center gets a batch queue and macros.</span></p></div>
+        <div class="res"><h3><span class="ru">Что это даёт</span><span class="en">Result</span></h3><p class="big-num"><s class="ru">25–30 мин</s><s class="en">25–30 min</s> → <em class="ru">&lt; 5 мин</em><em class="en">&lt; 5 min</em></p><p><span class="ru">За год: регистрации B2B +39%, покупающие B2B-клиенты +32% без роста бюджета. Сопротивление торговых сняли умными полями и лидербордом в Looker Studio.</span><span class="en">In one year: B2B registrations +39%, buying B2B customers +32% with no budget increase. Sales reps’ resistance was overcome with smart fields and a Looker Studio leaderboard.</span></p></div>
+      </div>
+      <ul class="trust">
+        <li><span class="ru">Данные только в аккаунтах METRO</span><span class="en">Data stays in METRO accounts</span></li>
+        <li><span class="ru">Без разработки: Tilda, Google Sheets, Looker Studio</span><span class="en">No-code: Tilda, Google Sheets, Looker Studio</span></li>
+        <li><span class="ru">Доступ по паролю</span><span class="en">Password-protected</span></li>
+      </ul>
+      <ul class="feat">
+        <li class="ob"><span class="ru">Анкета на встрече с телефона</span><span class="en">Form filled on a phone at the meeting</span></li>
+        <li class="ob"><span class="ru">«Проверить статус» → дашборд Looker на той же странице</span><span class="en">“Check status” → Looker dashboard on the same page</span></li>
+        <li><span class="ru">Условные поля</span><span class="en">Conditional fields</span></li>
+        <li><span class="ru">Сжатие документов</span><span class="en">Document compression</span></li>
+        <li><span class="ru">Адрес точкой на карте</span><span class="en">Address as a map pin</span></li>
+        <li><span class="ru">Пакетная очередь для колл-центра</span><span class="en">Batch queue for the call center</span></li>
+      </ul>
+    </div>
+  </section>
+
   <section class="principles">
     <div class="wrap">
       <h2><span class="ru">Общие принципы</span><span class="en">Shared principles</span></h2>
@@ -431,6 +464,7 @@ footer strong{color:var(--ink); font-size:15px}
         <div><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></span><h3><span class="ru">Данные не уходят третьим лицам</span><span class="en">No data reaches third parties</span></h3><p><span class="ru">Отчёты обрабатываются на компьютере пользователя и никуда не отправляются: ни в облако, ни во внешние сервисы.</span><span class="en">Reports are processed on the user’s computer and sent nowhere: no cloud, no external services.</span></p></div>
         <div><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg></span><h3><span class="ru">Полностью соответствует комплаенсу</span><span class="en">Fully compliant</span></h3><p><span class="ru">Коммерческие данные не покидают периметр компании, поэтому инструменты соответствуют требованиям комплаенса без доработок.</span><span class="en">Commercial data never leaves the company perimeter, so the tools meet compliance requirements as they are.</span></p></div>
       </div>
+      <p class="pnote"><span class="ru">Принципы «офлайн» и «на компьютере пользователя» относятся к четырём локальным инструментам. Онбординг B2B работает в облаке, но только в корпоративных аккаунтах METRO: Tilda, Google Sheets и Looker Studio.</span><span class="en">“Offline” and “on the user’s computer” apply to the four local tools. B2B onboarding runs in the cloud, but only in METRO’s corporate accounts: Tilda, Google Sheets and Looker Studio.</span></p>
       <div class="pgrid">
         <div><h3><span class="ru">Учит сам</span><span class="en">Teaches itself</span></h3><p><span class="ru">Встроенный онбординг-тур при первом запуске и подсказки на каждом поле. Новому сотруднику не нужно отдельное обучение.</span><span class="en">A built-in onboarding tour on first launch and hints on every field. New staff need no separate training.</span></p></div>
         <div><h3><span class="ru">Сделано под реальные выгрузки</span><span class="en">Built for real exports</span></h3><p><span class="ru">Инструменты читают те отчёты, которые команды уже получают. Ничего не нужно переделывать.</span><span class="en">The tools read the reports the teams already receive. Nothing needs to be rebuilt.</span></p></div>
@@ -447,7 +481,7 @@ footer strong{color:var(--ink); font-size:15px}
 </footer>
 
 <script>
-var STEPS = /*STEPS*/{"ana": {"ru": {"dur": 49.8, "outro": 44.22, "steps": [{"t": 8.48, "text": "Выгрузка продаж + тур по метрикам"}, {"t": 14.69, "text": "Продажи, маржа, промо, CIP — один экран"}, {"t": 20.37, "text": "Кто, где, как часто и с какой корзиной"}, {"t": 23.55, "text": "Динамика цен, закупа и маржи"}, {"t": 29.05, "text": "Прайс- и промо-сенситивность"}, {"t": 32.07, "text": "Симуляция: прогноз на следующий месяц"}]}, "en": {"dur": 41.7, "outro": 36.6, "steps": [{"t": 7.03, "text": "Sales export + guided tour"}, {"t": 13.08, "text": "Sales, margin, promo, CIP — one screen"}, {"t": 17.45, "text": "Who buys, where, how often, what basket"}, {"t": 20.37, "text": "Price, purchase cost and margin trends"}, {"t": 25.52, "text": "Price and promo sensitivity"}, {"t": 28.49, "text": "Simulation: next-month forecast"}]}}, "sat": {"ru": {"dur": 44.4, "outro": 38.34, "steps": [{"t": 11.78, "text": "Онбординг: язык и тур"}, {"t": 16.91, "text": "Два отчёта — тип определяется сам"}, {"t": 21.14, "text": "Балл 0–100 по 10 критериям"}, {"t": 26.52, "text": "Сравнение до 4 поставщиков"}]}, "en": {"dur": 46.8, "outro": 40.75, "steps": [{"t": 9.21, "text": "Onboarding: language and tour"}, {"t": 20.53, "text": "Two reports, type detected automatically"}, {"t": 24.09, "text": "Score 0–100 across 10 criteria"}, {"t": 29.53, "text": "Compare up to 4 suppliers"}]}}, "match": {"ru": {"dur": 32.8, "outro": 26.77, "steps": [{"t": 7.7, "text": "Онбординг-тур из 11 шагов"}, {"t": 11.61, "text": "Загружаем выгрузку ассортимента"}, {"t": 13.92, "text": "Вставляем лист клиента как есть"}, {"t": 17.18, "text": "Артикулы, цены с НДС, остатки, СТМ"}, {"t": 23.6, "text": "Выгрузка в Excel в один клик"}]}, "en": {"dur": 29.5, "outro": 23.51, "steps": [{"t": 6.4, "text": "Onboarding tour, 11 steps"}, {"t": 10.3, "text": "Load the assortment export"}, {"t": 12.06, "text": "Paste the client list as is"}, {"t": 15.1, "text": "Articles, prices with VAT, stock, private labels"}, {"t": 21.49, "text": "Export to Excel in one click"}]}}, "pos": {"ru": {"dur": 46.8, "outro": 40.32, "steps": [{"t": 10, "text": "Загружаем базу товаров с фото"}, {"t": 12.99, "text": "Онбординг по редактору"}, {"t": 16.24, "text": "Заголовок сразу на двух языках"}, {"t": 19.39, "text": "Артикулы → готовые карточки"}, {"t": 25.83, "text": "PDF к печати в один клик"}, {"t": 29.72, "text": "PDF в WhatsApp → товар → заказ на сайте"}]}, "en": {"dur": 42.4, "outro": 35.61, "steps": [{"t": 8.31, "text": "Load the product base with photos"}, {"t": 10.93, "text": "Onboarding through the editor"}, {"t": 14.24, "text": "Headline in two languages at once"}, {"t": 17.07, "text": "Article codes → ready product cards"}, {"t": 23.42, "text": "Print-ready PDF in one click"}, {"t": 26.34, "text": "PDF on WhatsApp → product → order online"}]}}};
+var STEPS = /*STEPS*/{"ana": {"ru": {"dur": 49.8, "outro": 44.22, "steps": [{"t": 8.48, "text": "Выгрузка продаж + тур по метрикам"}, {"t": 14.69, "text": "Продажи, маржа, промо, CIP — один экран"}, {"t": 20.37, "text": "Кто, где, как часто и с какой корзиной"}, {"t": 23.55, "text": "Динамика цен, закупа и маржи"}, {"t": 29.05, "text": "Прайс- и промо-сенситивность"}, {"t": 32.07, "text": "Симуляция: прогноз на следующий месяц"}]}, "en": {"dur": 41.7, "outro": 36.6, "steps": [{"t": 7.03, "text": "Sales export + guided tour"}, {"t": 13.08, "text": "Sales, margin, promo, CIP — one screen"}, {"t": 17.45, "text": "Who buys, where, how often, what basket"}, {"t": 20.37, "text": "Price, purchase cost and margin trends"}, {"t": 25.52, "text": "Price and promo sensitivity"}, {"t": 28.49, "text": "Simulation: next-month forecast"}]}}, "sat": {"ru": {"dur": 44.4, "outro": 38.34, "steps": [{"t": 11.78, "text": "Онбординг: язык и тур"}, {"t": 16.91, "text": "Два отчёта — тип определяется сам"}, {"t": 21.14, "text": "Балл 0–100 по 10 критериям"}, {"t": 26.52, "text": "Сравнение до 4 поставщиков"}]}, "en": {"dur": 46.8, "outro": 40.75, "steps": [{"t": 9.21, "text": "Onboarding: language and tour"}, {"t": 20.53, "text": "Two reports, type detected automatically"}, {"t": 24.09, "text": "Score 0–100 across 10 criteria"}, {"t": 29.53, "text": "Compare up to 4 suppliers"}]}}, "match": {"ru": {"dur": 32.8, "outro": 26.77, "steps": [{"t": 7.7, "text": "Онбординг-тур из 11 шагов"}, {"t": 11.61, "text": "Загружаем выгрузку ассортимента"}, {"t": 13.92, "text": "Вставляем лист клиента как есть"}, {"t": 17.18, "text": "Артикулы, цены с НДС, остатки, СТМ"}, {"t": 23.6, "text": "Выгрузка в Excel в один клик"}]}, "en": {"dur": 29.5, "outro": 23.51, "steps": [{"t": 6.4, "text": "Onboarding tour, 11 steps"}, {"t": 10.3, "text": "Load the assortment export"}, {"t": 12.06, "text": "Paste the client list as is"}, {"t": 15.1, "text": "Articles, prices with VAT, stock, private labels"}, {"t": 21.49, "text": "Export to Excel in one click"}]}}, "pos": {"ru": {"dur": 46.8, "outro": 40.32, "steps": [{"t": 10, "text": "Загружаем базу товаров с фото"}, {"t": 12.99, "text": "Онбординг по редактору"}, {"t": 16.24, "text": "Заголовок сразу на двух языках"}, {"t": 19.39, "text": "Артикулы → готовые карточки"}, {"t": 25.83, "text": "PDF к печати в один клик"}, {"t": 29.72, "text": "PDF в WhatsApp → товар → заказ на сайте"}]}, "en": {"dur": 42.4, "outro": 35.61, "steps": [{"t": 8.31, "text": "Load the product base with photos"}, {"t": 10.93, "text": "Onboarding through the editor"}, {"t": 14.24, "text": "Headline in two languages at once"}, {"t": 17.07, "text": "Article codes → ready product cards"}, {"t": 23.42, "text": "Print-ready PDF in one click"}, {"t": 26.34, "text": "PDF on WhatsApp → product → order online"}]}}, "onb": {"ru": {"dur": 48.1, "outro": 38.39, "steps": [{"t": 9.28, "text": "Торговый заполняет анкету на встрече"}, {"t": 14.21, "text": "Поля подстраиваются под ответы"}, {"t": 18.19, "text": "Документы с телефона, адрес на карте"}, {"t": 25.92, "text": "Заявка сразу в Google Sheets"}, {"t": 29.5, "text": "«Проверить статус» → дашборд Looker Studio"}]}, "en": {"dur": 43.6, "outro": 35.72, "steps": [{"t": 9.5, "text": "The rep fills in the form at the meeting"}, {"t": 14.35, "text": "Fields adapt to the answers"}, {"t": 18.33, "text": "Documents by phone, address on a map"}, {"t": 26.08, "text": "Straight into Google Sheets"}, {"t": 29.28, "text": "“Check status” → Looker Studio dashboard"}]}}};
 (function(){
   var ICON = {
     play:'<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>',
@@ -609,7 +643,7 @@ var STEPS = /*STEPS*/{"ana": {"ru": {"dur": 49.8, "outro": 44.22, "steps": [{"t"
     var nio = new IntersectionObserver(function(es){
       es.forEach(function(e){ if (e.isIntersecting){ links.forEach(function(a){ a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id); }); } });
     }, {rootMargin:'-45% 0px -50% 0px'});
-    ['sales','sat','match','pos'].forEach(function(id){ var el = document.getElementById(id); if (el) nio.observe(el); });
+    ['sales','sat','match','pos','onb'].forEach(function(id){ var el = document.getElementById(id); if (el) nio.observe(el); });
   }
 })();
 </script>
