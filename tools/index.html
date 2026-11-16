@@ -222,6 +222,13 @@ footer strong{color:var(--ink); font-size:15px}
   .win b{font-size:18px}
 }
 @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} .toc a,.big{transition:none} }
+/* phone pass 2026-11-16: 44-px touch targets and nothing smaller than 12 px */
+@media (max-width:520px){
+  .lang button{padding:11px 13px; font-size:13px}
+  .tag{font-size:12px}
+  .toc .k{font-size:13px}
+  .chapters button{min-height:44px}
+}
 </style>
 </head>
 <body>
