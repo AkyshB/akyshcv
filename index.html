@@ -671,7 +671,8 @@ footer .wrap{padding-block:18px 26px; display:flex; flex-wrap:wrap; justify-cont
   .hero .aud-chips button{flex:none; white-space:nowrap; border-radius:980px; min-height:40px; padding:0 15px; font-size:14px; scroll-snap-align:start}
   .hero .aud-chips button[data-aud="product"]{grid-column:auto}
   .hero-grid{gap:16px}
-  .hero-photo{width:min(148px,40vw); border-radius:22px}
+  .hero-photo{width:min(128px,36vw); border-radius:20px}
+  .hero .eyebrow{font-size:14px; margin-bottom:4px}
   .hero h1{font-size:clamp(40px,12vw,52px)}
   .hero .role{margin-top:8px; font-size:21px}
   .hero .sub{margin-top:10px; font-size:17px; line-height:1.4}
@@ -2046,7 +2047,7 @@ function navUpdate(){
   const root=document.documentElement, vh=innerHeight;
   const heroBtns=$(".hero .btns").getBoundingClientRect(), contact=$("#contact").getBoundingClientRect();
   root.classList.toggle("past-hero", $(".hero").getBoundingClientRect().bottom < 80);
-  root.classList.toggle("show-mbar", heroBtns.bottom < 0 && contact.top > vh - 120 && $("#sheet").hidden);
+  root.classList.toggle("show-mbar", (heroBtns.bottom < 0 || heroBtns.top > vh - 40) && contact.top > vh - 120 && $("#sheet").hidden);
 }
 addEventListener("resize",navUpdate,{passive:true});
 addEventListener("scroll",navUpdate,{passive:true});

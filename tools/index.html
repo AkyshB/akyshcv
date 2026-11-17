@@ -229,6 +229,33 @@ footer strong{color:var(--ink); font-size:15px}
   .toc .k{font-size:13px}
   .chapters button{min-height:44px}
 }
+/* tools page, 2026-11-17: way back to the CV, a closing call to action, a section bar on phones */
+.cv-link{flex:none; font-size:13px; font-weight:600; color:var(--link); padding:8px 4px; white-space:nowrap}
+.cv-link:hover{text-decoration:none; opacity:.8}
+.cta-end{padding-block:96px 0; text-align:center}
+.cta-end .wrap{display:grid; gap:16px; justify-items:center}
+.cta-end h2{font-size:clamp(32px,5.4vw,56px); font-weight:700; line-height:1.06; letter-spacing:-.035em; max-width:14em}
+.cta-end p{font-size:clamp(17px,2vw,21px); line-height:1.4; color:var(--ink2); max-width:32em}
+.cta-btns{display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:10px}
+.cta-btns a{display:inline-flex; align-items:center; justify-content:center; min-height:48px; padding:0 24px; border-radius:980px; font-size:17px; font-weight:600; background:var(--ink); color:var(--bg)}
+.cta-btns a.ghost{background:transparent; color:var(--ink); box-shadow:inset 0 0 0 1.5px var(--line)}
+.cta-btns a:hover{text-decoration:none; opacity:.88}
+@media (max-width:820px){
+  .toc a:last-child:nth-child(odd){grid-column:1/-1; grid-template-columns:minmax(0,1fr) minmax(0,1fr); column-gap:14px; align-items:center}
+  .toc a:last-child:nth-child(odd) img{grid-row:span 2}
+  .toc a:last-child:nth-child(odd) .k{align-self:end}
+  .toc a:last-child:nth-child(odd) .t{align-self:start}
+}
+@media (max-width:520px){
+  html{scroll-padding-top:108px}
+  .nav .wrap{flex-wrap:wrap; height:auto; row-gap:0; column-gap:8px}
+  .nav .brand{flex:1; line-height:48px}
+  .links{display:flex; order:3; flex:0 0 calc(100% + 32px); margin:0 -16px; padding:0 16px 8px; gap:4px; justify-content:flex-start}
+  .links a{font-size:14px; padding:8px 13px; border-radius:980px; opacity:1; color:var(--ink2)}
+  .links a.on{background:var(--ink); color:var(--bg); font-weight:500}
+  .cta-end{padding-top:72px}
+  .cta-btns{width:100%; flex-direction:column; align-items:stretch}
+}
 </style>
 </head>
 <body>
@@ -243,6 +270,7 @@ footer strong{color:var(--ink); font-size:15px}
       <a href="#pos"><span class="ru">Каталоги</span><span class="en">Catalogues</span></a>
       <a href="#onb"><span class="ru">Онбординг B2B</span><span class="en">B2B onboarding</span></a>
     </div>
+    <a class="cv-link" id="cv-link" href="https://akyshb.github.io/akyshcv/"><span class="ru">Резюме</span><span class="en">CV</span></a>
     <div class="lang" role="group" aria-label="Language">
       <button type="button" data-set="ru" aria-pressed="true">RU</button>
       <button type="button" data-set="en" aria-pressed="false">EN</button>
@@ -478,6 +506,16 @@ footer strong{color:var(--ink); font-size:15px}
       </div>
     </div>
   </section>
+  <section class="cta-end" id="contact">
+    <div class="wrap">
+      <h2><span class="ru">Сделаю так же для вашей команды</span><span class="en">I can do the same for your team</span></h2>
+      <p><span class="ru">Нахожу ручную работу, которая съедает дни, и превращаю её в инструменты, которые справляются за минуты.</span><span class="en">I find the manual work that eats up days and turn it into tools that do it in minutes.</span></p>
+      <div class="cta-btns">
+        <a href="https://t.me/AkyshB" target="_blank" rel="noopener"><span class="ru">Написать в Telegram</span><span class="en">Message me on Telegram</span></a>
+        <a class="ghost" id="cv-link2" href="https://akyshb.github.io/akyshcv/"><span class="ru">Открыть резюме</span><span class="en">Open my CV</span></a>
+      </div>
+    </div>
+  </section>
 </main>
 
 <footer>
@@ -640,6 +678,7 @@ var STEPS = /*STEPS*/{"ana": {"ru": {"dur": 49.8, "outro": 44.22, "steps": [{"t"
     document.querySelectorAll('.lang button').forEach(function(b){ b.setAttribute('aria-pressed', b.getAttribute('data-set') === l ? 'true' : 'false'); });
     document.querySelector('.nav').setAttribute('aria-label', l === 'en' ? 'Sections' : 'Разделы');
     try { localStorage.setItem('tools-lang', l); } catch(e){}
+    ['cv-link','cv-link2'].forEach(function(id){ var a = document.getElementById(id); if (a) a.href = 'https://akyshb.github.io/akyshcv/?lang=' + l; });
     players.forEach(function(P){ P.setLang(); });
   }
   document.querySelectorAll('.lang button').forEach(function(b){ b.addEventListener('click', function(){ setLang(b.getAttribute('data-set')); }); });
@@ -648,7 +687,8 @@ var STEPS = /*STEPS*/{"ana": {"ru": {"dur": 49.8, "outro": 44.22, "steps": [{"t"
   var links = [].slice.call(document.querySelectorAll('.links a'));
   if ('IntersectionObserver' in window){
     var nio = new IntersectionObserver(function(es){
-      es.forEach(function(e){ if (e.isIntersecting){ links.forEach(function(a){ a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id); }); } });
+      es.forEach(function(e){ if (e.isIntersecting){ links.forEach(function(a){ var hit = a.getAttribute('href') === '#' + e.target.id; a.classList.toggle('on', hit);
+        if (hit && a.parentNode.scrollWidth > a.parentNode.clientWidth){ var c = a.parentNode; c.scrollTo({left: a.offsetLeft - (c.clientWidth - a.offsetWidth) / 2, behavior: reduce ? 'auto' : 'smooth'}); } }); } });
     }, {rootMargin:'-45% 0px -50% 0px'});
     ['sales','sat','match','pos','onb'].forEach(function(id){ var el = document.getElementById(id); if (el) nio.observe(el); });
   }
