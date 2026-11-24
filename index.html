@@ -1530,7 +1530,7 @@ const CHAPTERS = []; /* [{t:seconds, l:{en,ru}}] */
    for the short view, b: the detailed view's key results, tagged g/p/m/c/a so the chosen focus's come first. Every line names its facts in f;
    where several lines are given, the first whose facts are still free is shown. */
 const JOBS = [
-  {t:{en:"Head of Growth & Profitability · METRO Kazakhstan",ru:"Head of Growth & Profitability · METRO Kazakhstan"}, d:{en:"Oct 2025 — now",ru:"окт 2025 — н.в."},
+  {t:{en:"Head of Marketing → Head of Growth & Profitability · METRO Kazakhstan",ru:"Руководитель отдела маркетинга → Head of Growth & Profitability · METRO Kazakhstan"}, d:{en:"Oct 2024 — now",ru:"окт 2024 — н.в."}, scmax:5, bmax:6,
    s:[{f:"teams4", en:"Lead the Growth & Profitability department: 4 teams and 8 functions (Performance Marketing, SMM, PR, ATL/BTL, Telesales, Call Center, Pricing Analytics, Pricing Operations).",ru:"Руковожу департаментом Growth & Profitability: 4 команды и 8 функций (Performance Marketing, SMM, PR, ATL/BTL, Telesales, Call Center, Pricing Analytics, Pricing Operations)."},
       {f:["growthown","ecom"], en:"Own customer-base growth and profitability across stores and e-commerce: the METRO Companion app and the m-shop delivery site.",ru:"Отвечаю за рост клиентской базы и прибыльность магазинов и e-commerce: приложения METRO Companion и сайта доставки m-shop."},
       {f:"growthown", en:"Own customer-base growth and the profitability of customers, stores and delivery.",ru:"Отвечаю за рост клиентской базы и прибыльность клиентов, магазинов и доставки."}],
@@ -1540,28 +1540,23 @@ const JOBS = [
    {t:"mg", f:["brandstrat","priceperc"], en:"Marketing and PR strategy, brand awareness and price perception.",ru:"Маркетинговая и PR-стратегия, знание бренда и ценовое восприятие."},
    {t:"cga", f:["revmgmt","segments"], en:"Pricing strategy and revenue management across 5 segments: HoReCa, International QSR, Traders, B2B2C and B2C.",ru:"Ценовая стратегия и revenue management в 5 сегментах: HoReCa, International QSR, Traders, B2B2C, B2C."},
    {t:"pmcga", f:["metroag","gov"], en:"Local rollout of METRO AG global initiatives; work with METRO AG headquarters and government authorities on pricing.",ru:"Запуск глобальных инициатив METRO AG на рынке, работа с HQ METRO AG и госорганами по ценообразованию."},
-   {t:"pmcga", f:"metroag", en:"Local rollout of METRO AG global initiatives and work with METRO AG headquarters.",ru:"Запуск глобальных инициатив METRO AG на рынке и работа с HQ METRO AG."}],
+   {t:"pmcga", f:"metroag", en:"Local rollout of METRO AG global initiatives and work with METRO AG headquarters.",ru:"Запуск глобальных инициатив METRO AG на рынке и работа с HQ METRO AG."},
+   {t:"pmcga", f:"acq", en:"Customer acquisition, activation and retention; global and local campaigns and channel performance.",ru:"Привлечение, активация и удержание клиентов; глобальные и локальные кампании, эффективность каналов."},
+   {t:"pmca", f:"funnel", en:"Funnel and unit economics: CPM, cost per registration, CAC, retention and LTV.",ru:"Воронка и юнит-экономика: CPM, стоимость регистрации, CAC, retention, LTV."}
+   ],
    b:[
    {t:"cga", f:"vat", en:"Repriced the full assortment after the VAT increase from 12% to 16%, with no operational disruption.",ru:"Переоценил весь ассортимент после повышения НДС с 12% до 16% без сбоев в операционке."},
    {t:"pmcga", f:"posm", en:"Built a POSM creation tool (2 days → 20 minutes), adopted by METRO/MAKRO in Serbia and Romania, and also handed over to Spain and Portugal.",ru:"Сделал инструмент для POSM (2 дня → 20 минут), его внедрили METRO/MAKRO в Сербии и Румынии, а также передали в Испанию и Португалию."},
    {t:"pcga", f:["pidx","dash360"], en:"Moved the company from manual Excel reports to real-time dashboards: Price Index and a 360° view of key metrics.",ru:"Перевёл компанию с ручных Excel-отчётов на real-time дашборды: Price Index и 360° view ключевых метрик."},
    {t:"pc", f:"match", en:"Built a sales tool matching customer purchase lists to METRO's range (7 days → 15 minutes).",ru:"Сделал инструмент сопоставления закупочных списков клиентов с ассортиментом (7 дней → 15 минут)."},
-   {t:"pa", f:"intcourses", en:"Internal courses on Tilda, Looker Studio, AI at work and vibe coding.",ru:"Внутренние курсы по Tilda, Looker Studio, AI в работе и vibe coding."}]},
-  {t:{en:"Head of Marketing & PR · METRO Kazakhstan",ru:"Руководитель маркетинга и PR · METRO Kazakhstan"}, d:{en:"Oct 2024 — Oct 2025",ru:"окт 2024 — окт 2025"},
-   s:[{f:["mkt_teams","brands","ecom_mkt"], en:"Led the Marketing & PR function: 2 teams and 5 functions (Performance Marketing, SMM, PR, ATL/BTL, Call Center); METRO, private labels, the MyMart franchise and the online channels, the METRO Companion app and the m-shop site.",ru:"Руководил функцией Marketing & PR: 2 команды и 5 функций (Performance Marketing, SMM, PR, ATL/BTL, Call Center); METRO, СТМ, франшиза MyMart и онлайн-каналы: приложение METRO Companion и сайт m-shop."},
-      {f:["mkt_teams","brands"], en:"Led the Marketing & PR function: 2 teams and 5 functions (Performance Marketing, SMM, PR, ATL/BTL, Call Center); METRO, private labels and the MyMart franchise.",ru:"Руководил функцией Marketing & PR: 2 команды и 5 функций (Performance Marketing, SMM, PR, ATL/BTL, Call Center); METRO, СТМ и франшиза MyMart."},
-      {f:"brands", en:"Led the Marketing & PR function for METRO, private labels and the MyMart franchise.",ru:"Руководил функцией Marketing & PR: METRO, СТМ и франшиза MyMart."}],
-   sc:[
-   {t:"pmcga", f:"acq", en:"Customer acquisition, activation and retention; global and local campaigns and channel performance.",ru:"Привлечение, активация и удержание клиентов; глобальные и локальные кампании, эффективность каналов."},
-   {t:"pmca", f:"funnel", en:"Funnel and unit economics: CPM, cost per registration, CAC, retention and LTV.",ru:"Воронка и юнит-экономика: CPM, стоимость регистрации, CAC, retention, LTV."},
-   {t:"pmcga", f:"ecom_mkt", en:"E-commerce marketing: growing the METRO Companion app and the m-shop delivery site, owning CJ and CX.",ru:"Маркетинг e-commerce: продвижение приложения METRO Companion и сайта доставки m-shop, CJ и CX."}],
-   b:[
+   {t:"pa", f:"intcourses", en:"Internal courses on Tilda, Looker Studio, AI at work and vibe coding.",ru:"Внутренние курсы по Tilda, Looker Studio, AI в работе и vibe coding."},
    {t:"mga", f:"traffic", en:"Year over year: social audience +21%, website traffic +31%, store traffic +13%.",ru:"Год к году: аудитория соцсетей +21%, трафик сайта +31%, посещаемость магазинов +13%."},
    {t:"mcga", f:["reg39","buy32","onb5"], en:"New B2B registrations +39% and buying B2B customers +32% in a year with no budget increase; customer setup 25–30 minutes → under 5.",ru:"Новые B2B-регистрации +39%, покупающие B2B-клиенты +32% за год без роста бюджета; заведение клиента 25–30 минут → меньше 5."},
    {t:"mga", f:["ann2x","ram2x"], en:"Anniversary campaign sales 2× year over year on a 2.5× smaller budget; Ramadan campaign at 2× the forecast.",ru:"Продажи юбилейной кампании ×2 к прошлому году при бюджете в 2,5 раза меньше; Рамадан в 2 раза выше прогноза."},
    {t:"cg", f:"tele", en:"Built a telesales team from zero: sales-team KPI attainment 31% → 74%.",ru:"Создал телесейлз с нуля: выполнение KPI командой 31% → 74%."},
    {t:"pmga", f:"b2bplat", en:"Built a digital B2B registration platform that centralized lead and customer data.",ru:"Создал цифровую платформу регистрации B2B-клиентов, централизовал лиды и клиентские данные."},
-   {t:"mga", f:["partners","research"], en:"Partnerships with WhereToEat 2025 and Qonaq Expo 2026; research of 1,300 HoReCa and retail businesses in 9 cities.",ru:"Партнёрства с WhereToEat 2025 и Qonaq Expo 2026; исследование 1 300 предприятий HoReCa и ритейла в 9 городах."}]},
+   {t:"mga", f:["partners","research"], en:"Partnerships with WhereToEat 2025 and Qonaq Expo 2026; research of 1,300 HoReCa and retail businesses in 9 cities.",ru:"Партнёрства с WhereToEat 2025 и Qonaq Expo 2026; исследование 1 300 предприятий HoReCa и ритейла в 9 городах."}
+   ]},
   {t:{en:"Head of Marketing (project) · GAISSINA",ru:"Руководитель службы маркетинга (проект) · GAISSINA"}, d:{en:"Jul — Sep 2024",ru:"июл — сен 2024"},
    p:[{f:"gaissina", en:"Market analysis ahead of the brand's first Moscow showroom at Afimall.",ru:"Анализ перед запуском первого шоурума бренда в Москве, ТЦ Афимолл."}]},
   {t:{en:"Head of Marketing → Commercial Director · Interna Clinic",ru:"Руководитель маркетинга → коммерческий директор · Interna Clinic"}, d:{en:"Sep 2022 — Jun 2024",ru:"сен 2022 — июн 2024"},
@@ -1781,8 +1776,8 @@ function render(){
     if(full){
       /* the hh.kz format: what the role covered (lead and scope), then its 3–4 main results */
       lead = first(j.s);
-      sc = keep(byTag(j.sc)).slice(0,4);
-      b = keep(byTag(j.b)).slice(0,4);
+      sc = keep(byTag(j.sc)).slice(0, j.scmax || 4);
+      b = keep(byTag(j.b)).slice(0, j.bmax || 4);
       if(!lead && !sc.length && !b.length) lead = first(j.p);
       if(!lead && !sc.length && b.length===1) lead = b.pop();
     } else lead = first([...(j.p || []), ...(j.s || [])]);
