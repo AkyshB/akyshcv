@@ -1146,7 +1146,10 @@ const VP_PHOTO = {src:"media/vp-review-w.jpg", full:"media/vp-review.jpg",
   t:{en:"Presenting the Marketing & PR and Pricing review to the VP of METRO AG for Eastern Europe: 1.5 hours, 70+ slides.",ru:"Итоги и планы по маркетингу, PR и ценообразованию для вице-президента METRO AG по Восточной Европе: 1,5 часа, 70+ слайдов."},
   c:{en:"After the Marketing & PR and Pricing review with Adrian Ariciu, VP of METRO AG for Eastern Europe, and Mesut Doğukan. 2025.",ru:"После презентации итогов по маркетингу, PR и ценообразованию с Adrian Ariciu, вице-президентом METRO AG по Восточной Европе, и Mesut Doğukan. 2025."}};
 
-const JOLBORS = {href:"https://jolbors.com/en/awards/jolbors-festival-awards-2021/entry/615/?list_type=winners", t:{en:"The entry on jolbors.com, credited as Account Manager",ru:"Работа на jolbors.com, в титрах как Account Manager"}};
+const JOLBORS = [
+  {href:"https://jolbors.com/en/awards/jolbors-festival-awards-2021/archive/winners/#digital", t:{en:"All Jolbors 2021 winners",ru:"Все победители Jolbors 2021"}},
+  {href:"https://jolbors.com/en/awards/jolbors-festival-awards-2021/entry/620/?list_type=winners", t:{en:"The project on jolbors.com",ru:"Проект на jolbors.com"}}
+];
 
 /* Role focus. "general" is the original page; the others re-cut the first screen, add a #proof chapter,
    pick the recommendations and serve a tailored PDF. Facts match the hh.kz and LinkedIn CVs; percentages only.
@@ -1297,7 +1300,7 @@ const AUD = {
 
 const BADGES = [
   {f:"mvp", b:"MVP", t:{en:"METRO Bravo 2025",ru:"METRO Bravo 2025"}},
-  {f:"rj", b:"3×", t:{en:"Red Jolbors 2021",ru:"Red Jolbors 2021"}},
+  {f:"rj", b:"4×", t:{en:"Jolbors 2021",ru:"Jolbors 2021"}},
   {f:"wte", b:"", t:{en:"Expert · WhereToEat",ru:"Эксперт · WhereToEat"}},
   {f:["qonaq_s","qonaq_j"], b:"", t:{en:"Jury & speaker · Qonaq Expo",ru:"Жюри и спикер · Qonaq Expo"}}
 ];
@@ -1513,7 +1516,7 @@ const TOOL_DEMO = {
 
 const AWARDS = [
   {cls:"dark", f:["mvp","talent"], big:"MVP", k:{en:"METRO Bravo 2025",ru:"METRO Bravo 2025"}, p:{en:"In my first year at METRO Kazakhstan. Also selected as a METRO International Talent.",ru:"В первый же год в METRO Kazakhstan. Также отобран в METRO International Talent."}},
-  {f:"rj", big:"3×", k:{en:"Red Jolbors 2021",ru:"Red Jolbors 2021"}, p:{en:"Awards at Kazakhstan's advertising festival for agency campaigns I led.",ru:"Награды казахстанского фестиваля рекламы за агентские кампании, которые я вёл."}, link:JOLBORS}
+  {f:"rj", big:"4×", k:{en:"Jolbors 2021",ru:"Jolbors 2021"}, p:{en:"Three silvers (PR Campaigns, B2B services, Financial services) and a bronze (Integrated) for “Our clients — our best Ad” for Alfa-Bank. A GForce Grey team project; I am credited as Account Manager.",ru:"Три серебра (PR Campaigns, B2B services, Financial services) и бронза (Integrated) за проект «Our clients — our best Ad» для Alfa-Bank. Проект команды GForce Grey, в титрах я указан как Account Manager."}, link:JOLBORS}
 ];
 const SLIDES = [
   {f:"qonaq_v", video:"media/v-qonaq.mp4", prev:"media/v-qonaq-p.mp4", src:"media/v-qonaq.jpg", c:{en:"Qonaq Expo · highlights",ru:"Qonaq Expo · как это было"}},
@@ -1743,7 +1746,7 @@ function render(){
     $("#tools-head").hidden = $("#tools-grid").hidden = $("#tools-more").hidden = !tools.length;
     const aw = keep(AWARDS);
     $("#awards-grid").classList.toggle("one", aw.length===1);
-    $("#awards-grid").innerHTML = aw.map(a=>`<div class="award rv ${a.cls||""}"><div class="big">${a.big}</div><p class="k">${tr(a.k)}</p><p>${tr(a.p)}</p>${a.link?`<div class="alinks"><a class="tlink" href="${a.link.href}" target="_blank" rel="noopener">${tr(a.link.t)}</a></div>`:""}</div>`).join("");
+    $("#awards-grid").innerHTML = aw.map(a=>`<div class="award rv ${a.cls||""}"><div class="big">${a.big}</div><p class="k">${tr(a.k)}</p><p>${tr(a.p)}</p>${a.link?`<div class="alinks">${[].concat(a.link).map(l=>`<a class="tlink" href="${l.href}" target="_blank" rel="noopener">${tr(l.t)}</a>`).join("")}</div>`:""}</div>`).join("");
     const slides = keep(SLIDES);
     $("#track").style.setProperty("--n", Math.min(4, Math.max(3, slides.length)));  /* on desktop a short set fills the row instead of leaving a gap */
     $("#track").innerHTML = slides.map(s=>`<button type="button" class="slide" ${zoomData(s)}>${tileMedia(s, tr(s.c))}<span class="cap">${tr(s.c)}</span></button>`).join("");
